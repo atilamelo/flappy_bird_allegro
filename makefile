@@ -19,8 +19,6 @@ CXX = g++
 CXXFLAGS = -std=c++17 -g -Wall
 
 # Flags de linkagem:
-# Usa pkg-config para encontrar e adicionar as flags necessárias para a Allegro 5
-# Isso torna o Makefile mais portável entre sistemas.
 LDFLAGS = $(shell pkg-config --libs allegro-5 allegro_font-5 allegro_image-5 allegro_primitives-5 allegro_audio-5 allegro_acodec-5)
 
 # --- Diretórios ---
@@ -35,7 +33,7 @@ CXXFLAGS += -I$(INCDIR)
 
 # --- Arquivos ---
 # Nome do executável final
-TARGET = $(BINDIR)/game
+TARGET = $(BINDIR)/flappy_bird
 
 # Encontra todos os arquivos .cpp no diretório 'src'
 SOURCES = $(wildcard $(SRCDIR)/*.cpp)
