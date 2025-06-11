@@ -46,9 +46,7 @@ bool Game::init() {
     al_register_event_source(queue, al_get_timer_event_source(timer));
     
     // Adiciona o pássaro no centro da tela
-    int center_x = al_get_display_width(display) / 2;
-    int center_y = al_get_display_height(display) / 2;
-    bird = new Bird(center_x - (BIRD_WIDTH / 2), center_y - (BIRD_HEIGHT / 2), BIRD_WIDTH, BIRD_HEIGHT);
+    bird = new Bird(BIRD_START_X, BIRD_START_Y, BIRD_HEIGHT, BIRD_WIDTH);
     pipePool = new PipePool(0);
 
     return 1;
