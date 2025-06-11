@@ -50,8 +50,15 @@ bool Game::init() {
     al_register_event_source(queue, al_get_display_event_source(display));
     al_register_event_source(queue, al_get_timer_event_source(timer));
     
+    // Adiciona o pássaro no centro da tela
+    int center_x = al_get_display_width(display) / 2;
+    int center_y = al_get_display_height(display) / 2;
+    gameObjects.push_back(new Bird(center_x-(BIRD_WIDTH/2), center_y-(BIRD_HEIGHT/2), BIRD_WIDTH, BIRD_HEIGHT));
 
-    gameObjects.push_back(new Bird(50, 50, 20, 20, 100));
+
+    // Adiciona os canos
+    
+
     return 1;
 
 }

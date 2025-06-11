@@ -6,4 +6,9 @@ constexpr int BUFFER_W = 9 * 50;
 constexpr int BUFFER_H = 16 * 50;
 
 // --- Configurações do Jogo ---
-constexpr float gravity = 0.5f; // Força da gravidade
+constexpr float GRAVITY = 500.0f;
+constexpr float JUMP_FORCE = 250.0f;
+constexpr float TERMINAL_VELOCITY = 300.0f;
+
+constexpr int BIRD_WIDTH = 20;
+constexpr int BIRD_HEIGHT = 20; 

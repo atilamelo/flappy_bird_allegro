@@ -1,14 +1,10 @@
 #include "actors/Bird.hpp"
-
 #include <allegro5/allegro_primitives.h>
 #include <iostream>
+#include "Constants.hpp"
 
-#define GRAVITY 500.0f
-#define JUMP_FORCE 250.0f
-#define TERMINAL_VELOCITY 300.0f
-
-Bird::Bird(float x, float y, float w, float h,  float vy) : GameObject(x, y, w, h) {
-    this->velocityY = vy;
+Bird::Bird(float x, float y, float w, float h) : GameObject(x, y, w, h) {
+    this->velocityY = GRAVITY;
 }
 
 void Bird::draw(float deltaTime) {
@@ -25,6 +21,14 @@ void Bird::update(float deltaTime) {
 
     // Delta Time é o tempo entre atualizações, usado para suavizar o movimento
     y += velocityY * deltaTime;
+    if(y < 0) {
+        y = 0; // Impede que o pássaro saia da tela para cima
+        velocityY = 0; // Reseta a velocidade quando atinge o topo
+    }
+    if(y > BUFFER_H - height) {
+        y = BUFFER_H - height; // Impede que o pássaro saia da tela para baixo
+        velocityY = 0; // Reseta a velocidade quando atinge o fundo
+    }
 }
 
 void Bird::jump() {
