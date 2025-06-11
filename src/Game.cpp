@@ -25,12 +25,7 @@ Game::~Game() {
     al_destroy_timer(timer);
     al_destroy_event_queue(queue);
     al_destroy_font(font);
-
-    for(GameObject* gameObject : gameObjects) {
-        delete gameObject;
-    }
-
-    gameObjects.clear();
+    delete bird;
 }
 
 bool Game::init() {
@@ -53,12 +48,9 @@ bool Game::init() {
     // Adiciona o pássaro no centro da tela
     int center_x = al_get_display_width(display) / 2;
     int center_y = al_get_display_height(display) / 2;
-    gameObjects.push_back(new Bird(center_x-(BIRD_WIDTH/2), center_y-(BIRD_HEIGHT/2), BIRD_WIDTH, BIRD_HEIGHT));
+    bird = new Bird(center_x - (BIRD_WIDTH / 2), center_y - (BIRD_HEIGHT / 2), BIRD_WIDTH, BIRD_HEIGHT);    
 
-
-    // Adiciona os canos
-    
-
+    pipePairs.push_back(new PipePair(BUFFER_W, 50, PIPE_GAP, PIPE_SPEED));
     return 1;
 
 }
@@ -104,10 +96,8 @@ void Game::processEvent(ALLEGRO_EVENT& event) {
             break;
         case ALLEGRO_EVENT_KEY_DOWN:
             if(event.keyboard.keycode == ALLEGRO_KEY_SPACE) {
-                for(GameObject* gameObject : gameObjects) {
-                    if(Bird* bird = dynamic_cast<Bird*>(gameObject)) {
-                        bird->jump();
-                    }
+                if (bird) {
+                    bird->jump();
                 }
             }
     }
@@ -116,16 +106,21 @@ void Game::processEvent(ALLEGRO_EVENT& event) {
 }
 
 void Game::update() {
-    for(GameObject* gameObject : gameObjects) {
-        gameObject->update(this->deltaTime);
+    bird->update(deltaTime);
+    for (PipePair* pipePair : pipePairs) {
+        pipePair->update(deltaTime);
     }
 }
 
 void Game::draw() {
     al_clear_to_color(al_map_rgb(0, 0, 0));
     
-    for(GameObject* gameObject : gameObjects) {
-        gameObject->draw(this->deltaTime);
+    if (bird) {
+        bird->draw(deltaTime);
+    }
+
+    for (PipePair* pipePair : pipePairs) {
+        pipePair->draw(deltaTime);
     }
 
     al_flip_display();
