@@ -50,7 +50,6 @@ bool Game::init() {
     al_register_event_source(queue, al_get_display_event_source(display));
     al_register_event_source(queue, al_get_timer_event_source(timer));
     
-    Input::init();
 
     gameObjects.push_back(new Bird(50, 50, 20, 20, 100));
     return 1;
