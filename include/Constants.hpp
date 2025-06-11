@@ -15,7 +15,7 @@ constexpr int BIRD_HEIGHT = 20;
 
 // --- Configurações dos Canos ---
 const float PIPE_WIDTH = 60.0f;
-const float PIPE_SPEED = 40.0f;
+const float PIPE_SPEED = 150.0f;
 const float PIPE_GAP = 100.0f;
-const float PIPE_INTERVAL = 2.0f;
+const float PIPE_INTERVAL = 1.0f;
 const float PIPE_MIN_HEIGHT = 50.0f;

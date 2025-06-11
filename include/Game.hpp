@@ -5,6 +5,7 @@
 #include "actors/GameObject.hpp"
 #include "actors/PipePair.hpp"
 #include "actors/Bird.hpp"
+#include "util/PipePool.hpp"
 #include <vector>
 #include <chrono>
 
@@ -19,8 +20,9 @@ private:
     ALLEGRO_TIMER *timer = nullptr;
     ALLEGRO_EVENT_QUEUE *queue = nullptr;
     ALLEGRO_FONT *font = nullptr;
-    std::vector<PipePair*> pipePairs;
     Bird *bird = nullptr;
+    PipePool *pipePool = nullptr;
+    float timeSinceLastPipe = 0.0f;
     
     std::chrono::steady_clock::time_point lastUpdate;
     float deltaTime;

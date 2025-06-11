@@ -12,10 +12,6 @@ void Pipe::draw(float deltaTime) {
 
 void Pipe::update(float deltaTime) {
     x -= speed * deltaTime;
-
-    if (x + width < 0) {
-        x = BUFFER_W;
-    }
 }
 
 float Pipe::getSpeed() const {

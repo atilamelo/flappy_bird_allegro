@@ -48,11 +48,10 @@ bool Game::init() {
     // Adiciona o pássaro no centro da tela
     int center_x = al_get_display_width(display) / 2;
     int center_y = al_get_display_height(display) / 2;
-    bird = new Bird(center_x - (BIRD_WIDTH / 2), center_y - (BIRD_HEIGHT / 2), BIRD_WIDTH, BIRD_HEIGHT);    
+    bird = new Bird(center_x - (BIRD_WIDTH / 2), center_y - (BIRD_HEIGHT / 2), BIRD_WIDTH, BIRD_HEIGHT);
+    pipePool = new PipePool(0);
 
-    pipePairs.push_back(new PipePair(BUFFER_W, 50, PIPE_GAP, PIPE_SPEED));
     return 1;
-
 }
 
 void Game::loadAssets() {
@@ -61,7 +60,10 @@ void Game::loadAssets() {
 
 
 void Game::run() {
-    init();
+    if (!init()) {
+        std::cerr << "ERRO INESPERADO: não foi possível iniciar o jogo." << std::endl;
+        return;
+    }
     
     lastUpdate = std::chrono::steady_clock::now();
     
@@ -75,7 +77,8 @@ void Game::run() {
         if (redraw && al_is_event_queue_empty(queue)) {
             auto now = std::chrono::steady_clock::now();
             deltaTime = std::chrono::duration_cast<std::chrono::microseconds>(now - lastUpdate).count() / 1000000.0f;
-            
+            timeSinceLastPipe += deltaTime;
+
             update();
             draw();
 
@@ -106,22 +109,24 @@ void Game::processEvent(ALLEGRO_EVENT& event) {
 }
 
 void Game::update() {
-    bird->update(deltaTime);
-    for (PipePair* pipePair : pipePairs) {
-        pipePair->update(deltaTime);
+    if(timeSinceLastPipe >= PIPE_INTERVAL) {
+        int maxGapStart = static_cast<int>(BUFFER_H - PIPE_MIN_HEIGHT - PIPE_GAP);
+        float startYGap = static_cast<float>(rand() % maxGapStart);
+        PipePair* newPipePair = pipePool->getPipe();
+        newPipePair->init(BUFFER_W, startYGap, PIPE_GAP, PIPE_SPEED);
+        timeSinceLastPipe = 0.0f;
     }
+
+    bird->update(deltaTime);
+    pipePool->update(deltaTime);
+    
 }
 
 void Game::draw() {
     al_clear_to_color(al_map_rgb(0, 0, 0));
     
-    if (bird) {
-        bird->draw(deltaTime);
-    }
-
-    for (PipePair* pipePair : pipePairs) {
-        pipePair->draw(deltaTime);
-    }
+    bird->draw(deltaTime);
+    pipePool->draw(deltaTime);
 
     al_flip_display();
 
