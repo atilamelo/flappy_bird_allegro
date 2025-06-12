@@ -1,4 +1,4 @@
-#include "Game.hpp"
+#include "GameStage.hpp"
 #include "Constants.hpp"
 #include "actors/Bird.hpp"
 #include <stdio.h>
@@ -13,14 +13,14 @@ void must_init(bool test, const char* description) {
     exit(1);
 }
 
-Game::Game() {
+GameStage::GameStage() {
     must_init(al_init(), "Allegro");
     must_init(al_init_primitives_addon(), "primitives");
     must_init(al_init_font_addon(), "font addon");
     must_init(al_install_keyboard(), "keyboard");
 }
 
-Game::~Game() {
+GameStage::~GameStage() {
     al_destroy_display(display);
     al_destroy_timer(timer);
     al_destroy_event_queue(queue);
@@ -28,7 +28,7 @@ Game::~Game() {
     delete bird;
 }
 
-bool Game::init() {
+bool GameStage::init() {
     timer = al_create_timer(1.0 / FPS);
     must_init(timer, "timer");
     
@@ -52,12 +52,12 @@ bool Game::init() {
     return 1;
 }
 
-void Game::loadAssets() {
+void GameStage::loadAssets() {
 
 }
 
 
-void Game::run() {
+void GameStage::run() {
     if (!init()) {
         std::cerr << "ERRO INESPERADO: não foi possível iniciar o jogo." << std::endl;
         return;
@@ -86,7 +86,7 @@ void Game::run() {
     }
 }
 
-void Game::processEvent(ALLEGRO_EVENT& event) {
+void GameStage::processEvent(ALLEGRO_EVENT& event) {
     switch (event.type) {
         case ALLEGRO_EVENT_DISPLAY_CLOSE:
             done = true;
@@ -106,7 +106,7 @@ void Game::processEvent(ALLEGRO_EVENT& event) {
     
 }
 
-void Game::update() {
+void GameStage::update() {
     if(timeSinceLastPipe >= PIPE_INTERVAL) {
         int maxGapStart = static_cast<int>(BUFFER_H - PIPE_MIN_HEIGHT - PIPE_GAP);
         float startYGap = static_cast<float>(rand() % maxGapStart);
@@ -117,14 +117,23 @@ void Game::update() {
 
     bird->update(deltaTime);
     pipePool->update(deltaTime);
+
+    for (auto& pipePair : pipePool->getPipes()) {
+        if (pipePair->isActive() && bird->getX() + bird->getWidth() > pipePair->getX() &&
+            bird->getX() < pipePair->getX() + PIPE_WIDTH &&
+            (bird->getY() < pipePair->getTopPipe().getY() + pipePair->getTopPipe().getHeight() ||
+             bird->getY() + bird->getHeight() > pipePair->getBottomPipe().getY())) {
+            std::cout << "Colisão detectada!" << std::endl;
+        }
+    }
     
 }
 
-void Game::draw() {
+void GameStage::draw() {
     al_clear_to_color(al_map_rgb(0, 0, 0));
     
-    bird->draw(deltaTime);
     pipePool->draw(deltaTime);
+    bird->draw(deltaTime);
 
     al_flip_display();
 

@@ -18,6 +18,9 @@ public:
     float getSpeed() const { return speed; }
     bool isActive() const { return active; }
 
+    Pipe getTopPipe() const { return topPipe; }
+    Pipe getBottomPipe() const { return bottomPipe; }
+
     void init(float x, float startYGap, float gap, float speed);
 
 

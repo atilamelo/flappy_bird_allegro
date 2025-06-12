@@ -13,6 +13,9 @@ public:
     PipePool(size_t initialSize = 10);
 
     PipePair* getPipe();
+    std::vector<PipePair*>& getPipes() {
+        return reinterpret_cast<std::vector<PipePair*>&>(pool);
+     }
 
     void update(float deltaTime);
     void draw(float deltaTime);

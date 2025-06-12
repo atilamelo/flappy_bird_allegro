@@ -9,10 +9,10 @@
 #include <vector>
 #include <chrono>
 
-class Game {
+class GameStage {
 public:
-    Game();
-    ~Game();
+    GameStage();
+    ~GameStage();
     void run();
 
 private:
