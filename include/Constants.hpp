@@ -18,10 +18,10 @@ constexpr int BIRD_START_X = BUFFER_W / 4;
 constexpr int BIRD_START_Y = BUFFER_H / 2;
 
 // --- Configurações dos canos ---
-const float PIPE_WIDTH = 52.0f;       // Largura dos canos
-const float PIPE_SPEED = 120.0f;      // Velocidade horizontal dos canos (pixels/s)
-const float PIPE_GAP = 100.0f;        // Espaço vertical entre o cano superior e inferior (pixels)
-const float PIPE_INTERVAL = 1.8f;     // Tempo entre o surgimento de novos pares de canos (segundos)
+const float PIPE_WIDTH = 80.0f;       // Largura dos canos
+const float PIPE_SPEED = 170.0f;      // Velocidade horizontal dos canos (pixels/s)
+const float PIPE_GAP = 200.0f;        // Espaço vertical entre o cano superior e inferior (pixels)
+const float PIPE_INTERVAL = 1.5f;     // Tempo entre o surgimento de novos pares de canos (segundos)
 
 const float PIPE_MIN_HEIGHT = 100.0f; // Margem do topo da tela para a base do cano superior
 const float PIPE_MAX_HEIGHT = BUFFER_H - 100.0f; // Margem do chão da tela para o topo do cano inferior
