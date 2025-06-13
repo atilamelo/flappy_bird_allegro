@@ -10,7 +10,7 @@ public:
     GameObject(float x, float y, float w, float h);
     virtual ~GameObject();
 
-    virtual void draw(float deltaTime) = 0;
+    virtual void draw() = 0;
     virtual void update(float deltaTime) = 0;
 
     float getX() const;

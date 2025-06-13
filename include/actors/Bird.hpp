@@ -10,6 +10,6 @@ public:
     Bird(float x, float y, float w, float h);
 
     void update(float deltaTime) override;
-    void draw(float deltaTime) override;
+    void draw() override;
     void jump();
 };

@@ -7,7 +7,7 @@ private:
 public:
     Pipe(float x, float y, float width, float height, float speed);
 
-    void draw(float deltaTime) override;
+    void draw() override;
     void update(float deltaTime) override;
     
     float getSpeed() const;

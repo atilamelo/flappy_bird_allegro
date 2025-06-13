@@ -24,6 +24,6 @@ public:
     void init(float x, float startYGap, float gap, float speed);
 
 
-    void draw(float deltaTime);
+    void draw();
     void update(float deltaTime);
 };

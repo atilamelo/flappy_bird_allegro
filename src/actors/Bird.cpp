@@ -7,7 +7,7 @@ Bird::Bird(float x, float y, float w, float h) : GameObject(x, y, w, h) {
     this->velocityY = GRAVITY;
 }
 
-void Bird::draw(float deltaTime) {
+void Bird::draw() {
     al_draw_circle(x, y, width, al_map_rgb_f(255, 255, 0), 2);
 }
 

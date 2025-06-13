@@ -6,7 +6,7 @@ Pipe::Pipe(float x, float y, float width, float height, float speed)
     : GameObject(x, y, width, height), speed(speed) {}
 
 
-void Pipe::draw(float deltaTime) {
+void Pipe::draw() {
     al_draw_filled_rectangle(x, y, x + width, y + height, al_map_rgb_f(0, 255, 0));
 }
 

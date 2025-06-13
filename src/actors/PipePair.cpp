@@ -16,11 +16,11 @@ void PipePair::init(float x, float startYGap, float gap, float speed) {
     active = true;
 }
 
-void PipePair::draw(float deltaTime) {
+void PipePair::draw() {
     if (!active) return;
 
-    topPipe.draw(deltaTime);
-    bottomPipe.draw(deltaTime);
+    topPipe.draw();
+    bottomPipe.draw();
 }
 
 void PipePair::update(float deltaTime) {

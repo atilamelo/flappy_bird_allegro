@@ -33,10 +33,10 @@ void PipePool::update(float deltaTime)
     }
 }
 
-void PipePool::draw(float deltaTime)
+void PipePool::draw()
 {
     for (auto& pipePair : pool)
     {
-        pipePair->draw(deltaTime);
+        pipePair->draw();
     }
 }

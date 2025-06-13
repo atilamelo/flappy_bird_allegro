@@ -2,7 +2,7 @@
 
 #include <memory>
 #include <vector>
-#include <actors/PipePair.hpp>
+#include "actors/PipePair.hpp"
 
 class PipePool
 {
@@ -18,5 +18,5 @@ public:
      }
 
     void update(float deltaTime);
-    void draw(float deltaTime);
+    void draw();
 };

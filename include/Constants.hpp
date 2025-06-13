@@ -7,7 +7,7 @@ constexpr int BUFFER_H = 16 * 50; // 800 pixels
 
 // --- Configurações do pássaro ---
 constexpr float GRAVITY = 1000.0f;           // (pixels/s^2)
-constexpr float JUMP_FORCE = 350.0f;        // (pixels/s)
+constexpr float JUMP_FORCE = 430.0f;        // (pixels/s)
 
 constexpr float TERMINAL_VELOCITY = 600.0f; // Velocidade máxima de queda (pixels/s)
 
@@ -21,7 +21,7 @@ constexpr int BIRD_START_Y = BUFFER_H / 2;
 const float PIPE_WIDTH = 80.0f;       // Largura dos canos
 const float PIPE_SPEED = 170.0f;      // Velocidade horizontal dos canos (pixels/s)
 const float PIPE_GAP = 200.0f;        // Espaço vertical entre o cano superior e inferior (pixels)
-const float PIPE_INTERVAL = 1.5f;     // Tempo entre o surgimento de novos pares de canos (segundos)
+const float PIPE_INTERVAL = 1.75f;     // Tempo entre o surgimento de novos pares de canos (segundos)
 
 const float PIPE_MIN_HEIGHT = 100.0f; // Margem do topo da tela para a base do cano superior
 const float PIPE_MAX_HEIGHT = BUFFER_H - 100.0f; // Margem do chão da tela para o topo do cano inferior
