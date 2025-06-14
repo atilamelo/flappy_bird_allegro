@@ -1,8 +1,7 @@
 #pragma once
 
 #include <memory>
-
-class Scene;
+#include <Scene.hpp>
 
 class SceneManager {
 public:
@@ -10,7 +9,7 @@ public:
     ~SceneManager();
 
     void set_current_scene(std::unique_ptr<Scene> newScene);
-    void process_event(const ALLEGRO_EVENT& event);
+    void processEvent(const ALLEGRO_EVENT& event);
     void update(float deltaTime);
     void draw();
 

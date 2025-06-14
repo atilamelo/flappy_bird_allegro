@@ -49,7 +49,7 @@ int main() {
             scene_manager.shutdown();
         }
 
-        scene_manager.process_event(event);
+        scene_manager.processEvent(event);
 
         if (redraw && al_is_event_queue_empty(queue)) {
             redraw = false;

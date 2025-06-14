@@ -1,7 +1,8 @@
 #pragma once
 
 #include <allegro5/allegro.h>
-#include "SceneManager.hpp"
+
+class SceneManager;
 
 // Interface for a game scene (screen)
 class Scene {

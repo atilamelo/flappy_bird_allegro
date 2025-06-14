@@ -4,6 +4,7 @@
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_font.h>
 #include <iostream>
+#include "SceneManager.hpp"
 
 GameScene::GameScene(SceneManager *sceneManager) 
     : Scene(sceneManager),

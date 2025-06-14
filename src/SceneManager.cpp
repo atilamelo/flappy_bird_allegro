@@ -1,4 +1,5 @@
 #include "SceneManager.hpp"
+#include "Scene.hpp"
 
 SceneManager::SceneManager() : current_scene(nullptr), next_scene(nullptr), running(true) {}
 
@@ -16,9 +17,9 @@ void SceneManager::transition_scene() {
     current_scene->loadAssets();
 }
 
-void SceneManager::process_event(const ALLEGRO_EVENT& event) {
+void SceneManager::processEvent(const ALLEGRO_EVENT& event) {
     if (current_scene) {
-        current_scene->process_event(event);
+        current_scene->processEvent(event);
     }
 }
 

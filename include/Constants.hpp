@@ -11,8 +11,8 @@ constexpr float JUMP_FORCE = 430.0f;        // (pixels/s)
 
 constexpr float TERMINAL_VELOCITY = 600.0f; // Velocidade máxima de queda (pixels/s)
 
-constexpr int BIRD_WIDTH = 34;
-constexpr int BIRD_HEIGHT = 24;
+constexpr int BIRD_WIDTH = 64;
+constexpr int BIRD_HEIGHT = 64;
 
 constexpr int BIRD_START_X = BUFFER_W / 4;
 constexpr int BIRD_START_Y = BUFFER_H / 2;

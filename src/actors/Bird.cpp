@@ -8,7 +8,7 @@ Bird::Bird(float x, float y, float w, float h) : GameObject(x, y, w, h) {
 }
 
 void Bird::draw() {
-    al_draw_circle(x, y, width, al_map_rgb_f(255, 255, 0), 2);
+    al_draw_rectangle(x, y, x + width, y + height, al_map_rgb_f(0, 255, 0), 2);
 }
 
 void Bird::update(float deltaTime) {
