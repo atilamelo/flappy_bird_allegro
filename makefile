@@ -1,7 +1,7 @@
 # --- Compilador e Flags ---
 CXX = g++
 CXXFLAGS = -std=c++17 -g -Wall
-LDFLAGS = $(shell pkg-config --libs allegro-5 allegro_font-5 allegro_image-5 allegro_primitives-5 allegro_audio-5 allegro_acodec-5)
+LDFLAGS = $(shell pkg-config --libs allegro-5 allegro_font-5 allegro_image-5 allegro_primitives-5 allegro_audio-5 allegro_acodec-5 allegro_ttf-5)
 
 # --- Diretórios ---
 SRCDIR = src
@@ -10,6 +10,10 @@ BINDIR = bin
 INCDIR = include
 
 CXXFLAGS += -I$(INCDIR)
+
+# INCLUDES WIDGETZ
+CXXFLAGS += -I/usr/local/include
+LDLIBS = -L/usr/local/lib -lwidgetz
 
 # --- Arquivos ---
 TARGET = $(BINDIR)/flappy_bird
@@ -27,7 +31,7 @@ all: $(TARGET) assets
 $(TARGET): $(OBJECTS)
 	@echo "Ligando os arquivos para criar o executável..."
 	@mkdir -p $(BINDIR)
-	$(CXX) $(OBJECTS) -o $(TARGET) $(LDFLAGS)
+	$(CXX) $(OBJECTS) -o $(TARGET) $(LDLIBS) $(LDFLAGS)
 	@echo "Executável '$(TARGET)' criado com sucesso!"
 
 # Compilação individual com criação do diretório correspondente
