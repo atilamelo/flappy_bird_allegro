@@ -6,6 +6,8 @@
 #include <chrono>
 #include "SceneManager.hpp"
 #include "GameScene.hpp"
+#include "StartMenu.hpp"
+#include "widgetz/widgetz.h"
 
 void must_init(bool test, const char* description) {
     if (test) return;
@@ -20,6 +22,7 @@ int main() {
     must_init(al_init_primitives_addon(), "primitives");
     must_init(al_init_font_addon(), "font addon");
     must_init(al_install_keyboard(), "keyboard");
+    must_init(al_install_mouse(), "mouse");
 
     ALLEGRO_TIMER* timer = al_create_timer(1.0 / FPS);
     ALLEGRO_EVENT_QUEUE* queue = al_create_event_queue();
@@ -36,7 +39,7 @@ int main() {
 
     lastUpdate = std::chrono::steady_clock::now();
 
-    scene_manager.set_current_scene(std::make_unique<GameScene>(&scene_manager));
+    scene_manager.set_current_scene(std::make_unique<StartMenu>(&scene_manager));
 
     while (scene_manager.is_running()) {
         ALLEGRO_EVENT event;
