@@ -7,8 +7,10 @@ constexpr int BUFFER_H = 512;
 
 // --- Configurações do pássaro ---
 constexpr float GRAVITY = 1000.0f;          // (pixels/s^2)
-constexpr float JUMP_FORCE = 430.0f;        // (pixels/s)
+constexpr float JUMP_IMPULSE_VELOCITY = -430.0f;        // (pixels/s)
+constexpr float MAX_UP_ANGLE = 60.0f; // Ângulo máximo para cima (graus)
 constexpr float TERMINAL_VELOCITY = 600.0f; // Velocidade máxima de queda (pixels/s)
+constexpr float MAX_DOWN_ANGLE = -60.0f; // Ângulo máximo para baixo (graus)
 
 constexpr int BIRD_WIDTH = 34;
 constexpr int BIRD_HEIGHT = 24;
