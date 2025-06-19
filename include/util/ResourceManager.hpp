@@ -20,6 +20,8 @@ using SamplePtr = std::unique_ptr<ALLEGRO_SAMPLE, AllegroSampleDeleter>;
 
 class ResourceManager {
 public:
+    static ResourceManager& getInstance();
+
     void loadBitmap(const std::string& id, const std::string& filename);
     void loadSubBitmap(const std::string& id, const std::string& source_id, int x, int y, int w, int h);
     void loadSample(const std::string& id, const std::string& filename);
@@ -29,6 +31,12 @@ public:
     ALLEGRO_SAMPLE* getSample(const std::string& id) const;
 
 private:
+    ResourceManager() = default;
+    
+    ResourceManager(const ResourceManager&) = delete;            // Impede cópia
+    ResourceManager& operator=(const ResourceManager&) = delete; // Impede atribuição
+
+
     std::map<std::string, BitmapPtr> m_bitmaps;
     std::map<std::string, SamplePtr> m_samples;
 };

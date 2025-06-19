@@ -33,9 +33,7 @@ int main() {
     al_register_event_source(queue, al_get_keyboard_event_source());
 
     SceneManager scene_manager = SceneManager();
-    ResourceManager resource_manager = ResourceManager();
-
-    resource_manager.loadAtlasJson("assets/sprites/sprite_sheet.json", "atlas", "assets/sprites/sprite_sheet.png");
+    ResourceManager::getInstance().loadAtlasJson("assets/sprites/sprite_sheet.json", "atlas", "assets/sprites/sprite_sheet.png");
 
     al_start_timer(timer);
     bool redraw = true;

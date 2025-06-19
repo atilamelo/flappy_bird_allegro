@@ -6,6 +6,11 @@
 // Move neste caso é necessário para garantir que o ponteiro único é transferido corretamente
 // e não duplicado, o que causaria um erro de gerenciamento de memória (já que estamos usando unique_ptr).
 
+ResourceManager& ResourceManager::getInstance() {
+    static ResourceManager instance;
+    return instance;
+}   
+
 void ResourceManager::loadBitmap(const std::string &id, const std::string &filename)
 {
     BitmapPtr bitmap(al_load_bitmap(filename.c_str()));
