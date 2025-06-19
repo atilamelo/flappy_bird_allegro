@@ -1,19 +1,18 @@
 #include <allegro5/allegro_primitives.h>
+#include <iostream>
 #include "util/ResourceManager.hpp"
 #include "actors/Pipe.hpp"
 #include "Constants.hpp"
 
-Pipe::Pipe(float x, float y, float width, float height, float speed, PipeType type)
-    : GameObject(x, y, width, height), speed(speed), pipeType(type) {
-        texture = ResourceManager::getInstance().getBitmap("pipe-green");
-        if (!texture) {
-            throw std::runtime_error("Falha ao carregar textura do tubo");
-        }
+Pipe::Pipe(float x, float y, float width, float height, float speed, PipeType type, ALLEGRO_BITMAP* texture)
+    : GameObject(x, y, width, height), speed(speed), pipeType(type), texture(texture) {
     }
 
 void Pipe::draw() {
-    if(!texture) {
-        throw std::runtime_error("Tubo não tem textura carregada");
+    if (!texture) {
+        al_draw_filled_rectangle(x, y, x + width, y + height, al_map_rgb_f(0, 255, 0));
+        std::cerr << "Erro: textura do pipe não carregada!" << std::endl;
+        return;
     }
     
     if(pipeType == PipeType::TOP) {

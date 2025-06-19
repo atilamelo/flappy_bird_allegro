@@ -1,8 +1,9 @@
 #include <actors/PipePair.hpp>
 #include "Constants.hpp"
+#include "util/ResourceManager.hpp"
 
-PipePair::PipePair() : topPipe(0, 0, 0, 0, 0, PipeType::TOP), 
-                             bottomPipe(0, 0, 0, 0, 0, PipeType::BOTTOM) {}
+PipePair::PipePair() : topPipe(0, 0, 0, 0, 0, PipeType::TOP, nullptr), 
+                             bottomPipe(0, 0, 0, 0, 0, PipeType::BOTTOM, nullptr) {}
 
 
 void PipePair::init(float x, float startYGap, float gap, float speed) {
@@ -10,8 +11,10 @@ void PipePair::init(float x, float startYGap, float gap, float speed) {
     this->gap = gap;
     this->speed = speed;
 
-    topPipe = Pipe(x, 0, PIPE_WIDTH, startYGap, speed, PipeType::TOP);
-    bottomPipe = Pipe(x, startYGap + gap, PIPE_WIDTH, BUFFER_H - (startYGap + gap), speed, PipeType::BOTTOM);
+
+    ALLEGRO_BITMAP* pipeTexture = ResourceManager::getInstance().getBitmap("pipe-green");
+    topPipe = Pipe(x, 0, PIPE_WIDTH, startYGap, speed, PipeType::TOP, pipeTexture);
+    bottomPipe = Pipe(x, startYGap + gap, PIPE_WIDTH, BUFFER_H - (startYGap + gap), speed, PipeType::BOTTOM, pipeTexture);
     
     active = true;
     passed = false;

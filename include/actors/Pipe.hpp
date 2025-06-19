@@ -10,11 +10,11 @@ enum class PipeType {
 class Pipe : public GameObject {
 private:
     float speed;
-    ALLEGRO_BITMAP* texture = nullptr;
+    ALLEGRO_BITMAP* texture;
     PipeType pipeType;
     
 public:
-    Pipe(float x, float y, float width, float height, float speed, PipeType pipeType);
+    Pipe(float x, float y, float width, float height, float speed, PipeType pipeType, ALLEGRO_BITMAP* texture);
 
     void draw() override;
     void update(float deltaTime) override;
