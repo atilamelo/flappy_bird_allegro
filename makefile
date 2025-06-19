@@ -10,6 +10,7 @@ BINDIR = bin
 INCDIR = include
 
 CXXFLAGS += -I$(INCDIR)
+CXXFLAGS += -MMD -MP
 
 # --- Arquivos ---
 TARGET = $(BINDIR)/flappy_bird
@@ -19,6 +20,9 @@ SOURCES := $(shell find $(SRCDIR) -name '*.cpp')
 
 # Gera os objetos espelhando a estrutura de pastas de src → obj
 OBJECTS := $(patsubst $(SRCDIR)/%.cpp,$(OBJDIR)/%.o,$(SOURCES))
+
+# Gera lista de arquivos .d a partir dos .o
+DEPS := $(OBJECTS:.o=.d)
 
 # --- Regras ---
 
@@ -50,3 +54,7 @@ run: all
 	./bin/flappy_bird
 
 .PHONY: all clean assets run
+
+
+# Inclui os arquivos de dependência, se existirem
+-include $(DEPS)
