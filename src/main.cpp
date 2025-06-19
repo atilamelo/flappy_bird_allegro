@@ -1,11 +1,13 @@
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_font.h>
+#include <allegro5/allegro_image.h>
 #include <stdio.h>
 #include <Constants.hpp>
 #include <chrono>
 #include "SceneManager.hpp"
 #include "GameScene.hpp"
+#include "util/ResourceManager.hpp"
 
 void must_init(bool test, const char* description) {
     if (test) return;
@@ -20,6 +22,7 @@ int main() {
     must_init(al_init_primitives_addon(), "primitives");
     must_init(al_init_font_addon(), "font addon");
     must_init(al_install_keyboard(), "keyboard");
+    must_init(al_init_image_addon(), "image addon");
 
     ALLEGRO_TIMER* timer = al_create_timer(1.0 / FPS);
     ALLEGRO_EVENT_QUEUE* queue = al_create_event_queue();
@@ -30,6 +33,9 @@ int main() {
     al_register_event_source(queue, al_get_keyboard_event_source());
 
     SceneManager scene_manager = SceneManager();
+    ResourceManager resource_manager = ResourceManager();
+
+    resource_manager.loadAtlasJson("assets/sprites/sprite_sheet.json", "atlas", "assets/sprites/sprite_sheet.png");
 
     al_start_timer(timer);
     bool redraw = true;
