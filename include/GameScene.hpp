@@ -3,12 +3,14 @@
 #include "Scene.hpp"
 #include "Constants.hpp"
 #include "actors/Bird.hpp"
+#include "actors/ParallaxBackground.hpp"
 #include "util/PipePool.hpp" 
 
 class GameScene : public Scene {
 private:
     Bird bird;
     PipePool pipePool;
+    ParallaxBackground background;
     
     float timeSinceLastPipe;
 

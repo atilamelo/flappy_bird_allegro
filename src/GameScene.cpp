@@ -6,12 +6,14 @@
 #include <iostream>
 #include "SceneManager.hpp"
 #include "actors/PipePair.hpp"
+#include "util/ResourceManager.hpp"
 
 GameScene::GameScene(SceneManager *sceneManager) 
     : Scene(sceneManager),
       bird(BIRD_START_X, BIRD_START_Y, BIRD_WIDTH, BIRD_HEIGHT),
       pipePool(2),
-      timeSinceLastPipe(0.0f)
+      timeSinceLastPipe(0.0f),
+      background(0, 0, BUFFER_W, BUFFER_H, ResourceManager::getInstance().getBitmap("background-day"), BACKGROUND_SCROLL_SPEED)
 {
     loadAssets();
 }
@@ -42,6 +44,7 @@ void GameScene::update(float deltaTime) {
 
     bird.update(deltaTime);
     pipePool.update(deltaTime);
+    background.update(deltaTime);
 
     for (auto& pipePair : pipePool.getPipes()) {
         if (pipePair->isActive() &&
@@ -65,7 +68,8 @@ void GameScene::gameOver() {
     sceneManager->set_current_scene(std::make_unique<GameScene>(sceneManager));
 }
 
-void GameScene::draw() {    
+void GameScene::draw() {
+    background.draw();
     pipePool.draw();
     bird.draw();
 }
