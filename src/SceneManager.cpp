@@ -1,7 +1,7 @@
 #include "SceneManager.hpp"
 #include "Scene.hpp"
 
-SceneManager::SceneManager() : current_scene(nullptr), next_scene(nullptr), running(true) {}
+SceneManager::SceneManager(ALLEGRO_EVENT_QUEUE* queue) : current_scene(nullptr), next_scene(nullptr), running(true), event_queue(queue){}
 
 SceneManager::~SceneManager() {
 }
