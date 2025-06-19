@@ -4,19 +4,26 @@
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_font.h>
 #include <iostream>
+#include <vector>
 #include "SceneManager.hpp"
 #include "actors/PipePair.hpp"
 #include "util/ResourceManager.hpp"
 
 GameScene::GameScene(SceneManager *sceneManager) 
     : Scene(sceneManager),
-      bird(BIRD_START_X, BIRD_START_Y, BIRD_WIDTH, BIRD_HEIGHT),
       pipePool(2),
-      timeSinceLastPipe(0.0f),
-      background(0, 0, BUFFER_W, BUFFER_H, ResourceManager::getInstance().getBitmap("background-day"), BACKGROUND_SCROLL_SPEED)
+      timeSinceLastPipe(0.0f)
 {
-    loadAssets();
+    std::vector<ALLEGRO_BITMAP*> bird_frames = {
+        ResourceManager::getInstance().getBitmap("yellowbird-downflap"),
+        ResourceManager::getInstance().getBitmap("yellowbird-midflap"),
+        ResourceManager::getInstance().getBitmap("yellowbird-upflap")
+    };
+
+    bird = std::make_unique<Bird>(BIRD_START_X, BIRD_START_Y, BIRD_WIDTH, BIRD_HEIGHT, bird_frames);
+    background = std::make_unique<ParallaxBackground>(0, 0, BUFFER_W, BUFFER_H, ResourceManager::getInstance().getBitmap("background-day"), BACKGROUND_SCROLL_SPEED);
 }
+
 void GameScene::loadAssets() {
 }
 
@@ -24,7 +31,7 @@ void GameScene::processEvent(const ALLEGRO_EVENT& event) {
     switch (event.type) {
         case ALLEGRO_EVENT_KEY_DOWN:
             if(event.keyboard.keycode == ALLEGRO_KEY_SPACE) {
-                bird.jump();
+                bird->jump();
             }
             break;
     }
@@ -42,22 +49,22 @@ void GameScene::update(float deltaTime) {
     }
 
 
-    bird.update(deltaTime);
+    bird->update(deltaTime);
     pipePool.update(deltaTime);
-    background.update(deltaTime);
+    background->update(deltaTime);
 
     for (auto& pipePair : pipePool.getPipes()) {
         if (pipePair->isActive() &&
-            bird.getX() + bird.getWidth() > pipePair->getX() &&
-            bird.getX() < pipePair->getX() + PIPE_WIDTH &&
-            (bird.getY() < pipePair->getTopPipe().getY() + pipePair->getTopPipe().getHeight() ||
-             bird.getY() + bird.getHeight() > pipePair->getBottomPipe().getY())) {
+            bird->getX() + bird->getWidth() > pipePair->getX() &&
+            bird->getX() < pipePair->getX() + PIPE_WIDTH &&
+            (bird->getY() < pipePair->getTopPipe().getY() + pipePair->getTopPipe().getHeight() ||
+             bird->getY() + bird->getHeight() > pipePair->getBottomPipe().getY())) {
             std::cout << "Colisão detectada!" << std::endl;
             gameOver();
             return;
         }
 
-        if(pipePair->hasPassed(bird)) {
+        if(pipePair->hasPassed(*bird)) {
             std::cout << "Pássaro passou pelo tubo!" << std::endl;
         }
     }
@@ -69,7 +76,7 @@ void GameScene::gameOver() {
 }
 
 void GameScene::draw() {
-    background.draw();
+    background->draw();
     pipePool.draw();
-    bird.draw();
+    bird->draw();
 }

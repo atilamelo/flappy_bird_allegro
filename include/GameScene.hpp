@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include "Scene.hpp"
 #include "Constants.hpp"
 #include "actors/Bird.hpp"
@@ -8,9 +9,9 @@
 
 class GameScene : public Scene {
 private:
-    Bird bird;
+    std::unique_ptr<Bird> bird;
     PipePool pipePool;
-    ParallaxBackground background;
+    std::unique_ptr<ParallaxBackground> background;
     
     float timeSinceLastPipe;
 

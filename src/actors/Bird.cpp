@@ -3,16 +3,30 @@
 #include <iostream>
 #include "Constants.hpp"
 
-Bird::Bird(float x, float y, float w, float h) : GameObject(x, y, w, h) {
+Bird::Bird(float x, float y, float w, float h, std::vector<ALLEGRO_BITMAP*> frames) :
+    GameObject(x, y, w, h),
+    frames(frames)
+{
     this->velocityY = GRAVITY;
 }
 
 void Bird::draw() {
-    al_draw_filled_rectangle(x, y, x + width, y + height, al_map_rgb_f(255, 0, 0));
+    if (!frames.empty()) {
+        al_draw_bitmap(frames[currentFrameIndex], x, y, 0);
+    } else {
+        std::cerr << "Erro: vetor com frames vazios" << std::endl;
+        al_draw_filled_rectangle(x, y, x + width, y + height, al_map_rgb_f(255, 0, 0));
+    }
 }
 
 void Bird::update(float deltaTime) {
+    timeSinceLastFrame += deltaTime;
     velocityY += GRAVITY * deltaTime;
+
+    if(timeSinceLastFrame >= frameTime) {
+        currentFrameIndex = (currentFrameIndex + 1) % frames.size();
+        timeSinceLastFrame = 0.0f;
+    }
 
     // Velocidade Terminal
     if (velocityY > TERMINAL_VELOCITY) {
