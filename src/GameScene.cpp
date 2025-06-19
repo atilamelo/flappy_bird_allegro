@@ -5,6 +5,7 @@
 #include <allegro5/allegro_font.h>
 #include <iostream>
 #include "SceneManager.hpp"
+#include "actors/PipePair.hpp"
 
 GameScene::GameScene(SceneManager *sceneManager) 
     : Scene(sceneManager),
@@ -51,6 +52,10 @@ void GameScene::update(float deltaTime) {
             std::cout << "Colisão detectada!" << std::endl;
             gameOver();
             return;
+        }
+
+        if(pipePair->hasPassed(bird)) {
+            std::cout << "Pássaro passou pelo tubo!" << std::endl;
         }
     }
     timeSinceLastPipe += deltaTime;

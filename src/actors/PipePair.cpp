@@ -14,6 +14,7 @@ void PipePair::init(float x, float startYGap, float gap, float speed) {
     bottomPipe = Pipe(x, startYGap + gap, PIPE_WIDTH, BUFFER_H - (startYGap + gap), speed);
     
     active = true;
+    passed = false;
 }
 
 void PipePair::draw() {
@@ -21,6 +22,17 @@ void PipePair::draw() {
 
     topPipe.draw();
     bottomPipe.draw();
+}
+
+bool PipePair::hasPassed(const Bird& bird) {
+    if (!active) return false;
+
+    if (bird.getX() > x + PIPE_WIDTH && !passed) {
+        passed = true;
+        return true;
+    }
+
+    return false;
 }
 
 void PipePair::update(float deltaTime) {

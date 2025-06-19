@@ -1,5 +1,6 @@
 #pragma once
-#include "Pipe.hpp"
+#include "actors/Pipe.hpp"
+#include "actors/Bird.hpp"
 
 class PipePair
 {
@@ -10,6 +11,7 @@ private:
     float gap;       // The vertical gap between the top and bottom pool
     float speed;     // Speed at which the pool move
     float x;         // X position of the pipe pair
+    bool passed = false; // Indicates if the bird has passed the pipe pair
 public:
     PipePair();
 
@@ -17,6 +19,7 @@ public:
     float getGap() const { return gap; }
     float getSpeed() const { return speed; }
     bool isActive() const { return active; }
+    bool hasPassed(const Bird& bird);
 
     Pipe getTopPipe() const { return topPipe; }
     Pipe getBottomPipe() const { return bottomPipe; }
