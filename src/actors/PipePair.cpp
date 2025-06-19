@@ -1,8 +1,8 @@
 #include <actors/PipePair.hpp>
 #include "Constants.hpp"
 
-PipePair::PipePair() : topPipe(0, 0, 0, 0, 0), 
-                             bottomPipe(0, 0, 0, 0, 0) {}
+PipePair::PipePair() : topPipe(0, 0, 0, 0, 0, PipeType::TOP), 
+                             bottomPipe(0, 0, 0, 0, 0, PipeType::BOTTOM) {}
 
 
 void PipePair::init(float x, float startYGap, float gap, float speed) {
@@ -10,8 +10,8 @@ void PipePair::init(float x, float startYGap, float gap, float speed) {
     this->gap = gap;
     this->speed = speed;
 
-    topPipe = Pipe(x, 0, PIPE_WIDTH, startYGap, speed);
-    bottomPipe = Pipe(x, startYGap + gap, PIPE_WIDTH, BUFFER_H - (startYGap + gap), speed);
+    topPipe = Pipe(x, 0, PIPE_WIDTH, startYGap, speed, PipeType::TOP);
+    bottomPipe = Pipe(x, startYGap + gap, PIPE_WIDTH, BUFFER_H - (startYGap + gap), speed, PipeType::BOTTOM);
     
     active = true;
     passed = false;
