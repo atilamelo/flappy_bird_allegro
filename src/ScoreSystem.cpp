@@ -1,4 +1,4 @@
-#include "../include/score.hpp"
+#include "ScoreSystem.hpp"
 #include <fstream>
 #include <sstream>
 #include <algorithm>

@@ -1,6 +1,6 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "../doctest/doctest.h"
-#include "../include/score.hpp"
+#include "../include/ScoreSystem.hpp"
 #include <fstream>
 #include <vector>
 #include <algorithm>

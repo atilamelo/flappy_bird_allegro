@@ -1,5 +1,4 @@
-#ifndef SCORE_HPP
-#define SCORE_HPP
+#pragma once
 
 #include <vector>
 #include <string>
@@ -60,4 +59,3 @@ public:
     std::vector<std::pair<std::string, int>> getTopScores(int count = 5) const;
 };
 
-#endif
