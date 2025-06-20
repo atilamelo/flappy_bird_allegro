@@ -166,7 +166,6 @@ TEST_CASE("Teste de top scores com menos de 10 registros") {
 TEST_CASE("Teste de trim nos nomes") {
     const string testFile = "test_trim.csv";
     ScoreSystem system(testFile);
-    
     SUBCASE("Nome com espaços no início e fim") {
         system.registerOrUpdateScore("  KAKA  ", 800);
         system.registerOrUpdateScore("KAKA", 900); // Deve atualizar ao invés de criar novo

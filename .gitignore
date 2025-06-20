@@ -2,3 +2,5 @@ run_tests
 score_system
 *.csv
 *.o
+bin/
+obj/
