@@ -12,6 +12,7 @@ class StartMenu : public Scene {
         WZ_WIDGET* wgt;
         ALLEGRO_FONT *font;
         float size = 1.0;
+        WZ_EDITBOX* editbox;
         ALLEGRO_EVENT_QUEUE *guiQueue;
 
     public:

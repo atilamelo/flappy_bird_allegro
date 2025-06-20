@@ -32,7 +32,7 @@ int main() {
     al_register_event_source(queue, al_get_timer_event_source(timer));
     al_register_event_source(queue, al_get_keyboard_event_source());
 
-    SceneManager scene_manager = SceneManager();
+    SceneManager scene_manager = SceneManager(queue);
 
     al_start_timer(timer);
     bool redraw = true;
