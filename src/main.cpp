@@ -7,6 +7,7 @@
 #include "SceneManager.hpp"
 #include "GameScene.hpp"
 #include "StartMenu.hpp"
+#include "EndMenu.hpp"
 #include "widgetz/widgetz.h"
 
 void must_init(bool test, const char* description) {
