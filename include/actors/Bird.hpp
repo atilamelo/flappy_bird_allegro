@@ -17,7 +17,11 @@ private:
 
     // -- FLAGS --
     bool physicsEnabled = false;
-    bool hoverEnabled = false;
+    bool hoverEnabled = true;
+
+    float hoverTime = 0.0f;
+
+    void hover(float deltaTime);
 
 public:
     Bird(float x, float y, float w, float h, std::vector<ALLEGRO_BITMAP *> frames);
@@ -27,4 +31,5 @@ public:
     void jump();
 
     void setPhysicEnabled(bool enable) { this->physicsEnabled = enable; };
+    void setHoverEnabled(bool enable) { this->hoverEnabled = enable; };
 };

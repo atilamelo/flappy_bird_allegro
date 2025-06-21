@@ -45,6 +45,7 @@ void GameScene::processEvent(const ALLEGRO_EVENT &event)
             {
                 state = GameState::PLAYING;
                 bird->setPhysicEnabled(true);
+                bird->setHoverEnabled(false);
             }
             bird->jump();
         }

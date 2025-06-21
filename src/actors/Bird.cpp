@@ -3,6 +3,7 @@
 #include <allegro5/allegro.h>
 #include <iostream>
 #include "Constants.hpp"
+#include <cmath>
 
 Bird::Bird(float x, float y, float w, float h, std::vector<ALLEGRO_BITMAP *> frames) : GameObject(x, y, w, h),
                                                                                        frames(frames)
@@ -63,6 +64,10 @@ void Bird::update(float deltaTime)
         }
     }
 
+    if(hoverEnabled) {
+        hover(deltaTime);
+    }
+
     // --- Atualização de animação do pássaro ---
     if (timeSinceLastFrame >= frameTime)
     {
@@ -74,4 +79,20 @@ void Bird::update(float deltaTime)
 void Bird::jump()
 {
     velY = JUMP_IMPULSE_VELOCITY;
+}
+
+void Bird::hover(float deltaTime) {
+    this->hoverTime += deltaTime;
+
+    const float hoverAmplitude = 10.0f; // Quão "alto" e "baixo" o pássaro vai
+    const float hoverSpeed = 4.0f;     // Quão rápido o pássaro flutua
+
+    // 3. A fórmula mágica:
+    float y_offset = hoverAmplitude * sin(this->hoverTime * hoverSpeed);
+
+    // 4. Aplicamos o deslocamento à posição Y inicial do pássaro.
+    this->y = BIRD_START_Y + y_offset;
+
+    // 5. Garantimos que o pássaro não rotacione durante o hover.
+    this->angle = 0;
 }
