@@ -3,12 +3,14 @@
 #include <sstream>
 #include <algorithm>
 #include <cctype>
-#include <cstring>
+#include <filesystem>
+#include <iostream>
 
 using namespace std;
+namespace fs = std::filesystem;
 
 // Função para remover espaços do início e fim da string
-string trim(const string& str) {
+string ScoreSystem::trim(const string& str) {
     const char* whitespace = " \t\n\r\f\v";
     size_t start = str.find_first_not_of(whitespace);
     size_t end = str.find_last_not_of(whitespace);
@@ -27,6 +29,7 @@ bool ScoreSystem::validateNameChars(const string& name) const {
     }
     return true;
 }
+
 // Valida o nome completo
 void ScoreSystem::validatePlayerName(const string& name) const {
     if (name.empty()) {
@@ -42,10 +45,22 @@ void ScoreSystem::validatePlayerName(const string& name) const {
 
 // Carrega dados do arquivo
 void ScoreSystem::loadData() {
+    // Verifica se o arquivo existe usando C++17 filesystem
+    if (!fs::exists(dataFile)) {
+        // Cria um arquivo vazio se não existir
+        ofstream createFile(dataFile);
+        if (createFile.is_open()) {
+            createFile.close();
+            cout << "Arquivo de banco de dados criado: " << dataFile << endl;
+        } else {
+            throw runtime_error("Falha ao criar arquivo de banco de dados: " + dataFile);
+        }
+        return; // Retorna pois não há dados para carregar
+    }
+
     ifstream file(dataFile);
     if (!file.is_open()) {
-        // Se o arquivo não existe, inicia vazio
-        return;
+        throw runtime_error("Falha ao abrir arquivo: " + dataFile);
     }
 
     string line;
@@ -67,6 +82,10 @@ void ScoreSystem::loadData() {
 // Salva dados no arquivo
 void ScoreSystem::saveData() const {
     ofstream file(dataFile);
+    if (!file.is_open()) {
+        throw runtime_error("Falha ao salvar dados no arquivo: " + dataFile);
+    }
+
     for (const auto& entry : scoreMap) {
         file << entry.first << ";" << entry.second << "\n";
     }
@@ -77,9 +96,8 @@ void ScoreSystem::registerOrUpdateScore(const string& name, int score) {
     string trimmedName = trim(name);
     validatePlayerName(trimmedName);
     
-    // Usar a constante MAX_SCORE
     if (score < 0 || score > MAX_SCORE) {
-        throw ScoreException("Pontuação inválida (0 a " + std::to_string(MAX_SCORE) + ")");
+        throw ScoreException("Pontuação inválida (0 a " + to_string(MAX_SCORE) + ")");
     }
 
     // Atualiza se existir, insere se não existir
@@ -110,7 +128,7 @@ vector<pair<string, int>> ScoreSystem::getTopScores(int count) const {
         });
 
     // Limita ao número de resultados
-    if (count < static_cast<int>(scores.size())) {
+    if (count > 0 && static_cast<size_t>(count) < scores.size()) {
         scores.resize(count);
     }
     return scores;

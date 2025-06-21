@@ -1,5 +1,6 @@
 run_tests
 score_system
+programa
 *.csv
 *.o
 bin/

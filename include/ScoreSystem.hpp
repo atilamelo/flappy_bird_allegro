@@ -8,6 +8,7 @@
 #include <fstream>
 #include <sstream>
 #include <cctype>
+#include <filesystem>  // C++17 filesystem
 
 // Exceção para erros de nome
 class NameException : public std::invalid_argument {
@@ -26,23 +27,9 @@ public:
 class ScoreSystem {
 public:    
     // Declaração da constante MAX_SCORE
-    static const int MAX_SCORE = 1000000000;
-private:
-    // Mapa para armazenar nome->pontuação
-    std::map<std::string, int> scoreMap;
-    std::string dataFile;
-
-    // Verifica caracteres válidos no nome
-    bool validateNameChars(const std::string& name) const;
+    static const int MAX_SCORE = 1000000000; // 1 bilhão
     
-    // Carrega dados do arquivo
-    void loadData();
-    
-    // Salva dados no arquivo
-    void saveData() const;
-
-public:
-    ScoreSystem() : dataFile("scores.csv") {
+    ScoreSystem() : dataFile("Scores.csv") {
         loadData();
     }
     explicit ScoreSystem(const std::string& file) : dataFile(file) {
@@ -57,5 +44,21 @@ public:
     
     // Obtém as melhores pontuações
     std::vector<std::pair<std::string, int>> getTopScores(int count = 5) const;
-};
 
+private:
+    // Mapa para armazenar nome->pontuação
+    std::map<std::string, int> scoreMap;
+    std::string dataFile;
+
+    // Função para remover espaços do início e fim da string
+    static std::string trim(const std::string& str);
+    
+    // Verifica caracteres válidos no nome
+    bool validateNameChars(const std::string& name) const;
+    
+    // Carrega dados do arquivo
+    void loadData();
+    
+    // Salva dados no arquivo
+    void saveData() const;
+};
