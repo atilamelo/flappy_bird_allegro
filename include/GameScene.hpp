@@ -9,10 +9,17 @@
 #include "util/PipePool.hpp" 
 #include "ScoreManager.hpp"
 
+enum GameState {
+    GAME_INIT,
+    PLAYING,
+    GAME_OVER
+};
+
 class GameScene : public Scene {
 private:
     PipePool pipePool;
     ScoreManager scoreManager;
+    GameState state;
     
     std::unique_ptr<Bird> bird;
     std::unique_ptr<ParallaxBackground> background;

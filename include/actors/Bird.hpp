@@ -15,10 +15,16 @@ private:
     float angle = 0.0f;
     float deltaAngle = 0.0f;
 
+    // -- FLAGS --
+    bool physicsEnabled = false;
+    bool hoverEnabled = false;
+
 public:
     Bird(float x, float y, float w, float h, std::vector<ALLEGRO_BITMAP *> frames);
 
     void update(float deltaTime) override;
     void draw() override;
     void jump();
+
+    void setPhysicEnabled(bool enable) { this->physicsEnabled = enable; };
 };

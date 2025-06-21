@@ -39,10 +39,3 @@ constexpr float SCORE_PASS_THRESHOLD_X = BIRD_START_X - (BIRD_WIDTH / 2);
 
 // --- Background e Parallax ---
 constexpr float BACKGROUND_SCROLL_SPEED = 30.0f; // Velocidade de rolagem do plano de fundo (pixels/s)
-
-// --- Game States ---
-enum GameState {
-    SPLASH_SCREEN,
-    PLAYING,
-    GAME_OVER
-};
