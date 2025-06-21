@@ -37,7 +37,7 @@ void Bird::update(float deltaTime) {
         y = 0; // Impede que o pássaro saia da tela para cima
         velY = 0; // Reseta a velocidade quando atinge o topo
     }
-    if(y > BUFFER_H - height) {
+    if(y > PLAYABLE_AREA_HEIGHT - height) {
         y = BUFFER_H - height; // Impede que o pássaro saia da tela para baixo
         velY = 0; // Reseta a velocidade quando atinge o fundo
     }

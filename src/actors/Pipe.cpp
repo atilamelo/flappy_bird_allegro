@@ -22,9 +22,7 @@ void Pipe::draw() {
     }
 }
 
-void Pipe::update(float deltaTime) {
-    x -= speed * deltaTime;
-}
+void Pipe::update(float deltaTime) {}
 
 float Pipe::getSpeed() const {
     return speed;

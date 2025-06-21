@@ -20,12 +20,12 @@ public:
     float getSpeed() const { return speed; }
     bool isActive() const { return active; }
     bool hasPassed(const Bird& bird);
+    bool isColliding(const Bird& bird);
 
     Pipe getTopPipe() const { return topPipe; }
     Pipe getBottomPipe() const { return bottomPipe; }
 
     void init(float x, float startYGap, float gap, float speed);
-
 
     void draw();
     void update(float deltaTime);

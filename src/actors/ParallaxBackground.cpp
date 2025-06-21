@@ -17,5 +17,4 @@ void ParallaxBackground::update(float deltaTime)
     {
         x = 0;
     }
-    al_draw_bitmap(backgroundImage, x, y, 0);
 }

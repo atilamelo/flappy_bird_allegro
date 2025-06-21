@@ -5,15 +5,20 @@
 #include "Constants.hpp"
 #include "actors/Bird.hpp"
 #include "actors/ParallaxBackground.hpp"
+#include "actors/Floor.hpp"
 #include "util/PipePool.hpp" 
+#include "ScoreManager.hpp"
 
 class GameScene : public Scene {
 private:
-    std::unique_ptr<Bird> bird;
     PipePool pipePool;
-    std::unique_ptr<ParallaxBackground> background;
+    ScoreManager scoreManager;
     
-    float timeSinceLastPipe;
+    std::unique_ptr<Bird> bird;
+    std::unique_ptr<ParallaxBackground> background;
+    std::unique_ptr<Floor> floor;
+
+    float timeSinceLastPipe = 0.0f;
 
 public:
     GameScene(SceneManager *sceneManager);

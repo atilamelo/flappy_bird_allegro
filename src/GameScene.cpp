@@ -12,7 +12,7 @@
 GameScene::GameScene(SceneManager *sceneManager) 
     : Scene(sceneManager),
       pipePool(2),
-      timeSinceLastPipe(0.0f)
+      scoreManager()
 {
     std::vector<ALLEGRO_BITMAP*> bird_frames = {
         ResourceManager::getInstance().getBitmap("yellowbird-downflap"),
@@ -21,7 +21,12 @@ GameScene::GameScene(SceneManager *sceneManager)
     };
 
     bird = std::make_unique<Bird>(BIRD_START_X, BIRD_START_Y, BIRD_WIDTH, BIRD_HEIGHT, bird_frames);
-    background = std::make_unique<ParallaxBackground>(0, 0, BUFFER_W, BUFFER_H, ResourceManager::getInstance().getBitmap("background-day"), BACKGROUND_SCROLL_SPEED);
+
+    ALLEGRO_BITMAP* background_texture = ResourceManager::getInstance().getBitmap("background-day");
+    background = std::make_unique<ParallaxBackground>(0, 0, BUFFER_W, BUFFER_H, background_texture, BACKGROUND_SCROLL_SPEED);
+
+    ALLEGRO_BITMAP* floor_texture = ResourceManager::getInstance().getBitmap("base");
+    floor = std::make_unique<Floor>(floor_texture);
 }
 
 void GameScene::loadAssets() {
@@ -39,7 +44,7 @@ void GameScene::processEvent(const ALLEGRO_EVENT& event) {
 
 void GameScene::update(float deltaTime) {
     if(timeSinceLastPipe >= PIPE_INTERVAL) {
-        int maxGapStart = static_cast<int>(BUFFER_H - PIPE_MIN_HEIGHT - PIPE_GAP);
+        int maxGapStart = static_cast<int>(PLAYABLE_AREA_HEIGHT - PIPE_MIN_HEIGHT - PIPE_GAP);
         float startYGap = static_cast<float>(rand() % maxGapStart);
         
         PipePair* newPipePair = pipePool.getPipe(); 
@@ -48,17 +53,18 @@ void GameScene::update(float deltaTime) {
         timeSinceLastPipe = 0.0f;
     }
 
+    if(bird->getY() > PLAYABLE_AREA_HEIGHT - bird->getHeight()) {
+        gameOver();
+        std::cout << "Colidiu com o chão" << std::endl;
+    }
 
     bird->update(deltaTime);
     pipePool.update(deltaTime);
     background->update(deltaTime);
+    floor->update(deltaTime);
 
     for (auto& pipePair : pipePool.getPipes()) {
-        if (pipePair->isActive() &&
-            bird->getX() + bird->getWidth() > pipePair->getX() &&
-            bird->getX() < pipePair->getX() + PIPE_WIDTH &&
-            (bird->getY() < pipePair->getTopPipe().getY() + pipePair->getTopPipe().getHeight() ||
-             bird->getY() + bird->getHeight() > pipePair->getBottomPipe().getY())) {
+        if(pipePair->isColliding(*bird)) {
             std::cout << "Colisão detectada!" << std::endl;
             gameOver();
             return;
@@ -66,6 +72,7 @@ void GameScene::update(float deltaTime) {
 
         if(pipePair->hasPassed(*bird)) {
             std::cout << "Pássaro passou pelo tubo!" << std::endl;
+            scoreManager.increaseScore();
         }
     }
     timeSinceLastPipe += deltaTime;
@@ -79,4 +86,6 @@ void GameScene::draw() {
     background->draw();
     pipePool.draw();
     bird->draw();
+    scoreManager.draw();
+    floor->draw();
 }
