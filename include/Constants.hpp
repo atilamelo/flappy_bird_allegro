@@ -2,8 +2,8 @@
 
 // --- Configurações da tela ---
 constexpr float FPS = 60.0;
-constexpr int BUFFER_W = 9 * 50;  // 450 pixels (Vertical, como celular)
-constexpr int BUFFER_H = 16 * 50; // 800 pixels
+constexpr int BUFFER_W = 288;
+constexpr int BUFFER_H = 512;
 
 // --- Configurações do pássaro ---
 constexpr float GRAVITY = 1000.0f;           // (pixels/s^2)
