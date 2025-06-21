@@ -30,63 +30,64 @@ TEST_SUITE("SceneManager Tests") {
     // Testa o estado inicial do gerenciador e o método shutdown()
     TEST_CASE("Estado inicial é running e shutdown interrompe") {
         SceneManager mgr;
-        CHECK(mgr.is_running() == true); // Deve iniciar em execução
+        CHECK(mgr.is_running() == true); // O gerenciador deve iniciar ativo
         mgr.shutdown();
-        CHECK(mgr.is_running() == false); // Deve parar após shutdown
+        CHECK(mgr.is_running() == false); // Após shutdown, deve encerrar corretamente
     }
 
-    // Verifica se a troca de cena só ocorre após update()
+    // Verifica se a troca de cena é adiada até a chamada de update()
     TEST_CASE("set_current_scene adia o load até update()") {
         SceneManager mgr;
         auto scene = std::make_unique<DummyScene>();
-        DummyScene* ptr = scene.get();
+        DummyScene* ptr = scene.get(); // Ponteiro para verificar flags
         mgr.set_current_scene(std::move(scene));
 
-        // Antes do update, loadAssets NÃO deve ter sido chamado
+        // loadAssets ainda não deve ter sido chamado antes de update()
         CHECK(ptr->loadCalled == false);
 
-        // processEvent antes do update não deve fazer nada
+        // Eventos antes do update devem ser ignorados
         ALLEGRO_EVENT ev;
         std::memset(&ev, 0, sizeof(ev));
         ev.type = ALLEGRO_EVENT_KEY_DOWN;
         mgr.processEvent(ev);
         CHECK(ptr->eventProcessed == false);
 
-        // update deve realizar a transição e chamar loadAssets e update
+        // update deve aplicar a nova cena e chamar loadAssets e update
         mgr.update(0.1f);
-        CHECK(ptr->loadCalled == true);
-        CHECK(ptr->updated == true);
+        CHECK(ptr->loadCalled == true);  // Cena carregada
+        CHECK(ptr->updated == true);     // Atualizada após transição
 
-        // draw() deve chamar o método draw da cena atual
+        // draw() deve delegar para o método da cena
         mgr.draw();
-        CHECK(ptr->drawn == true);
+        CHECK(ptr->drawn == true); // Verifica se foi desenhada
     }
 
-    // Garante que chamadas a métodos sem cena atual não causam falhas
+    // Garante robustez: sem cena ativa, as chamadas não devem causar erro
     TEST_CASE("Chamadas em vazio não causam crash") {
         SceneManager mgr;
         ALLEGRO_EVENT ev;
         std::memset(&ev, 0, sizeof(ev));
         ev.type = ALLEGRO_EVENT_KEY_DOWN;
 
-        // As chamadas abaixo não devem lançar exceções mesmo sem cena
+        // Nenhuma das chamadas deve lançar exceção mesmo sem cena definida
         CHECK_NOTHROW(mgr.processEvent(ev));
         CHECK_NOTHROW(mgr.draw());
     }
 
-    // Testa se set_current_scene sobrescreve a cena anterior antes de carregar
+    // Testa se múltiplas chamadas a set_current_scene sobrescrevem a anterior
     TEST_CASE("Novas set_current_scene sobrescrevem anteriores") {
         SceneManager mgr;
         auto first  = std::make_unique<DummyScene>();
         auto second = std::make_unique<DummyScene>();
-        DummyScene* ptr2 = second.get();
+        DummyScene* ptr2 = second.get(); // Cena que será efetivamente usada
 
-        mgr.set_current_scene(std::move(first));  // Ignorado
-        mgr.set_current_scene(std::move(second)); // Este será o carregado
+        mgr.set_current_scene(std::move(first));  // Substituída antes do uso
+        mgr.set_current_scene(std::move(second)); // Esta deve ser carregada
 
-        // Somente a segunda cena deve ser carregada após o update
+        // Apenas a última cena definida deve ser carregada e atualizada
         mgr.update(0.0f);
-        CHECK(ptr2->loadCalled == true);
+        CHECK(ptr2->loadCalled == true); // Verifica se a cena correta foi usada
     }
 
 }
+
