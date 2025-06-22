@@ -35,4 +35,7 @@ public:
     void setPhysicEnabled(bool enable) { this->physicsEnabled = enable; };
     void setHoverEnabled(bool enable) { this->hoverEnabled = enable; };
     void setVelY(float velY) { this->velY = velY; };
+
+    bool isPhysicEnabled() { return physicsEnabled; };
+    bool isHoverEnabled() { return hoverEnabled; };
 };

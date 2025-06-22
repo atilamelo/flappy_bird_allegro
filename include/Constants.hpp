@@ -22,6 +22,7 @@ constexpr int BIRD_START_X = BUFFER_W / 4;
 constexpr int BIRD_START_Y = BUFFER_H / 2;
 
 // --- Configurações dos canos ---
+const int PIPE_POOL_SIZE = 4;
 const float PIPE_WIDTH = 52.0f;             // Largura dos canos
 const float PIPE_SPEED = 170.0f;            // Velocidade horizontal dos canos (pixels/s)
 const float PIPE_GAP = 150.0f;              // Espaço vertical entre o cano superior e inferior (pixels)
@@ -39,3 +40,5 @@ constexpr float SCORE_PASS_THRESHOLD_X = BIRD_START_X - (BIRD_WIDTH / 2);
 
 // --- Background e Parallax ---
 constexpr float BACKGROUND_SCROLL_SPEED = 30.0f; // Velocidade de rolagem do plano de fundo (pixels/s)
+
+constexpr float GAME_OVER_DELAY = 3.0f;
