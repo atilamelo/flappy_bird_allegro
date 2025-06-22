@@ -9,6 +9,7 @@ class EndMenu : public Scene {
         WZ_WIDGET* gui;
         WZ_DEF_THEME theme;
         WZ_SKIN_THEME skin_theme;
+        WZ_WIDGET* wgt;
         ALLEGRO_FONT *font;
         float size = 1.0;
         ALLEGRO_EVENT_QUEUE *guiQueue;

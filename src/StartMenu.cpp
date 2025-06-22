@@ -1,14 +1,14 @@
-#include "StartMenu.hpp"
-#include "Scene.hpp"
-#include "Constants.hpp"
-#include "SceneManager.hpp"
-#include "GameScene.hpp"
 #include <stdio.h>
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_image.h>
 #include <iostream>
 #include "widgetz/widgetz.h"
+#include "StartMenu.hpp"
+#include "Scene.hpp"
+#include "Constants.hpp"
+#include "SceneManager.hpp"
+#include "GameScene.hpp"
 
 StartMenu::StartMenu(SceneManager *sceneManager) 
     : Scene(sceneManager) {
@@ -32,7 +32,6 @@ void StartMenu::loadAssets() {
     skin_theme.theme.color2 = al_map_rgba_f(0.99, 0.63, 0.27, 1);
 	skin_theme.editbox_bitmap = al_load_bitmap("data/editbox.png");
 	ALLEGRO_BITMAP* back= al_load_bitmap("data/background-day.png");
-	// skin_theme.box_bitmap = back;
 
     wz_init_skin_theme(&skin_theme);
     gui = wz_create_widget(0, 0, 0, -1);
@@ -50,7 +49,8 @@ void StartMenu::loadAssets() {
             al_load_bitmap("data/home_start_button.png"),11);
         wz_create_image_button(gui,0,0,52,29,al_load_bitmap("data/rank_button.png"),al_load_bitmap("data/rank_button_pressed.png"),al_load_bitmap("data/rank_button_focused.png"),
             al_load_bitmap("data/rank_button.png"),12);
-        wz_create_toggle_button(gui, 0, 0, 200 * size, 50 * size, al_ustr_new("QUIT"), 1, 1, 13);
+        wz_create_image_button(gui,0,0,40,14,al_load_bitmap("data/quit_button.png"),al_load_bitmap("data/quit_button_pressed.png"),al_load_bitmap("data/quit_button_focused.png"),
+            al_load_bitmap("data/quit_button.png"),13);
 
     // Register the event sources for WidgetZ
     ALLEGRO_EVENT_QUEUE* queue = sceneManager->get_event_queue();
