@@ -88,3 +88,7 @@ bool PipePair::isColliding(const Bird& bird) {
 
     return collidesTop || collidesBottom;
 }
+
+void PipePair::reset() {
+    active = false;
+}

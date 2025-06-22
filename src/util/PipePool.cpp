@@ -40,3 +40,9 @@ void PipePool::draw()
         pipePair->draw();
     }
 }
+
+void PipePool::reset() {
+    for (auto& pipePair : pool) {
+        pipePair->reset();
+    }
+}

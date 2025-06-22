@@ -51,3 +51,7 @@ void ScoreManager::drawNumberSprites(int number, int drawX, int drawY) {
         }
     }
 }
+
+void ScoreManager::reset() {
+    currentScore = 0;
+}

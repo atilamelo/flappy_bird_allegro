@@ -9,6 +9,7 @@ public:
 
     void increaseScore();
     void draw();
+    void reset();
 
 private:
     int currentScore = 0;

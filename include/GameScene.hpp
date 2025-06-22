@@ -1,3 +1,9 @@
+/**
+ * @file GameScene.hpp
+ * @brief Definição da cena principal do jogo, que gerencia todo o gameplay.
+ * @version 2.0
+ * @date 2025-06-22
+ */
 #pragma once
 
 #include "Scene.hpp"
@@ -9,45 +15,60 @@
 #include <memory>
 #include <random>
 
-class GameScene : public Scene {
-public:
-    explicit GameScene(SceneManager* sceneManager);
+enum class GameState {
+    GAME_INIT,      // Jogo na tela inicial, esperando o jogador.
+    PLAYING,        // Jogo em andamento.
+    DYING,          // Animação de morte do pássaro em andamento.
+    GAME_OVER       // Tela de "Fim de Jogo", aguardando reinício.
+};
 
-    void processEvent(const ALLEGRO_EVENT& event) override;
-    void update(float deltaTime) override;
-    void draw() override;
-
+class GameScene : public Scene
+{
 private:
-    // Game State
-    enum class GameState {
-        GAME_INIT,
-        PLAYING,
-        GAME_OVER
-    };
-    GameState state = GameState::GAME_INIT;
-
-    // Game Objects
+    // --- Membros de Jogo ---
     std::unique_ptr<Bird> bird;
     std::unique_ptr<ParallaxBackground> background;
     std::unique_ptr<Floor> floor;
     PipePool pipePool;
     ScoreManager scoreManager;
     
-    // Modificações de estados
-    void updatePlaying(float deltaTime);
-    void updateGameOver(float deltaTime);
-
-    // Helper methods
-    void spawnPipe();
-    void checkCollisions();
-    void enterGameOverState();
-    void gameOver();
-
-    // Timers
+    // --- Estado e Controle ---
+    GameState state;
     float timeSinceLastPipe = 0.0f;
-    float timeSinceDying = 0.0f;
 
-    // RNG
+    // --- Gerador de Números Aleatórios ---
     std::mt19937 rng;
     std::uniform_real_distribution<float> dist;
+
+    // --- Métodos de Lógica Interna ---
+    void updatePlaying(float deltaTime);
+    void updateDying(float deltaTime);
+    void checkCollisions();
+    void spawnPipe();
+    void initiateDeathSequence();
+    void restart();
+
+public:
+    /**
+     * @brief Construtor da GameScene.
+     * @param sceneManager Ponteiro para o gerenciador de cenas.
+     */
+    GameScene(SceneManager* sceneManager);
+
+    /**
+     * @brief Processa eventos de input do usuário.
+     * @param event O evento do Allegro a ser processado.
+     */
+    void processEvent(const ALLEGRO_EVENT& event) override;
+
+    /**
+     * @brief Atualiza a lógica da cena a cada frame.
+     * @param deltaTime O tempo decorrido desde o último frame.
+     */
+    void update(float deltaTime) override;
+
+    /**
+     * @brief Desenha todos os elementos da cena na tela.
+     */
+    void draw() override;
 };

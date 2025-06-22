@@ -29,4 +29,5 @@ public:
 
     void draw();
     void update(float deltaTime);
+    void reset();
 };
