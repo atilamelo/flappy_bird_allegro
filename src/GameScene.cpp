@@ -23,7 +23,7 @@ GameScene::GameScene(SceneManager* sceneManager)
     bird = std::make_unique<Bird>(BIRD_START_X, BIRD_START_Y, BIRD_WIDTH, BIRD_HEIGHT, bird_frames);
 
     ALLEGRO_BITMAP* background_texture = ResourceManager::getInstance().getBitmap("background-day");
-    background = std::make_unique<ParallaxBackground>(background_texture);
+    background = std::make_unique<ParallaxBackground>(background_texture, BACKGROUND_SCROLL_SPEED);
 
     ALLEGRO_BITMAP* floor_texture = ResourceManager::getInstance().getBitmap("base");
     floor = std::make_unique<Floor>(floor_texture);
