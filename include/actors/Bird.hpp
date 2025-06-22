@@ -5,7 +5,9 @@
  */
 #pragma once
 
-#include "actors/GameObject.hpp"
+#include "core/GameObject.hpp"
+#include "interfaces/IDrawable.hpp"
+#include "interfaces/IUpdatable.hpp"
 #include <vector>
 #include <allegro5/allegro.h>
 
@@ -17,7 +19,7 @@
  * seu movimento de queda (física), pulo, animação de bater de asas, flutuação
  * na tela inicial e a sequência de morte.
  */
-class Bird : public GameObject
+class Bird : public GameObject, public IDrawable, public IUpdatable
 {
 private:
     // --- Constantes de Comportamento ---

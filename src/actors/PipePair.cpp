@@ -1,94 +1,89 @@
+/**
+ * @file PipePair.cpp
+ * @brief Implementação da classe PipePair.
+ */
 #include "actors/PipePair.hpp"
+#include "actors/Bird.hpp"
 #include "Constants.hpp"
 #include "util/ResourceManager.hpp"
-#include "actors/Bird.hpp"
 
-PipePair::PipePair() : topPipe(0, 0, 0, 0, 0, PipeType::TOP, nullptr), 
-                             bottomPipe(0, 0, 0, 0, 0, PipeType::BOTTOM, nullptr) {}
+PipePair::PipePair() 
+    : GameObject(0, 0, PIPE_WIDTH, 0), // A altura do par não é relevante
+      topPipe(0, 0, 0, PipeType::TOP, nullptr),
+      bottomPipe(0, 0, 0, PipeType::BOTTOM, nullptr)
+{
+    reset();
+}
 
-
-void PipePair::init(float x, float startYGap, float gap, float speed) {
-    this->x = x;
-    this->gap = gap;
-    this->speed = speed;
-
+void PipePair::init(float startX, float startYGap, float gapSize, float scrollSpeed)
+{
+    this->x = startX;
+    this->speed = scrollSpeed;
+    this->gap = gapSize;
 
     ALLEGRO_BITMAP* pipeTexture = ResourceManager::getInstance().getBitmap("pipe-green");
-    topPipe = Pipe(x, 0, PIPE_WIDTH, startYGap, speed, PipeType::TOP, pipeTexture);
-    bottomPipe = Pipe(x, startYGap + gap, PIPE_WIDTH, PLAYABLE_AREA_HEIGHT - (startYGap + gap), speed, PipeType::BOTTOM, pipeTexture);
-    
-    active = true;
+
+    topPipe = Pipe(0, PIPE_WIDTH, startYGap, PipeType::TOP, pipeTexture);
+    bottomPipe = Pipe(startYGap + gap, PIPE_WIDTH, PLAYABLE_AREA_HEIGHT - (startYGap + gap), PipeType::BOTTOM, pipeTexture);
+
+    this->active = true;
+    this->passed = false;
+}
+
+void PipePair::reset()
+{
+    active = false;
     passed = false;
+    x = -PIPE_WIDTH; // Move para fora da tela para evitar colisões acidentais
 }
 
-void PipePair::draw() {
+void PipePair::update(float deltaTime)
+{
     if (!active) return;
-
-    topPipe.draw();
-    bottomPipe.draw();
+    x -= speed * deltaTime;
+    if (x + width < 0) {
+        active = false;
+    }
 }
 
-bool PipePair::hasPassed(const Bird& bird) {
+void PipePair::draw()
+{
+    if (!active) return;
+    topPipe.draw(this->x);
+    bottomPipe.draw(this->x);
+}
+
+bool PipePair::isColliding(const Bird& bird) const
+{
     if (!active) return false;
 
-    if (bird.getX() > x + PIPE_WIDTH && !passed) {
-        passed = true;
+    const float birdLeft = bird.getX();
+    const float birdRight = bird.getX() + bird.getWidth();
+    const float birdTop = bird.getY();
+    const float birdBottom = bird.getY() + bird.getHeight();
+
+    const float pipeLeft = this->x;
+    const float pipeRight = this->x + this->width;
+
+    // Colisão com cano superior
+    if (birdRight > pipeLeft && birdLeft < pipeRight && birdTop < topPipe.getY() + topPipe.getHeight()) {
+        return true;
+    }
+    // Colisão com cano inferior
+    if (birdRight > pipeLeft && birdLeft < pipeRight && birdBottom > bottomPipe.getY()) {
         return true;
     }
 
     return false;
 }
 
-void PipePair::update(float deltaTime) {
-    if (!active) return;
-    
-    x -= speed * deltaTime;
+bool PipePair::hasPassed(const Bird& bird)
+{
+    if (!active || passed) return false;
 
-    if(x + PIPE_WIDTH < 0) {
-        active = false;
-        return;
+    if (bird.getX() > this->x + this->width) {
+        passed = true;
+        return true;
     }
-
-    topPipe.setX(this->x);
-    bottomPipe.setX(this->x);
-}
-
-bool PipePair::isColliding(const Bird& bird) {
-    if (!active) return false;
-
-    // Bird's bounding box
-    float birdLeft = bird.getX();
-    float birdRight = bird.getX() + bird.getWidth();
-    float birdTop = bird.getY();
-    float birdBottom = bird.getY() + bird.getHeight();
-
-    // Top pipe's bounding box
-    float topPipeLeft = topPipe.getX();
-    float topPipeRight = topPipe.getX() + topPipe.getWidth();
-    float topPipeTop = topPipe.getY();
-    float topPipeBottom = topPipe.getY() + topPipe.getHeight();
-
-    // Bottom pipe's bounding box
-    float bottomPipeLeft = bottomPipe.getX();
-    float bottomPipeRight = bottomPipe.getX() + bottomPipe.getWidth();
-    float bottomPipeTop = bottomPipe.getY();
-    float bottomPipeBottom = bottomPipe.getY() + bottomPipe.getHeight();
-
-    // Check collision with top pipe
-    bool collidesTop = birdRight > topPipeLeft &&
-                       birdLeft < topPipeRight &&
-                       birdTop < topPipeBottom &&
-                       birdBottom > topPipeTop;
-
-    // Check collision with bottom pipe
-    bool collidesBottom = birdRight > bottomPipeLeft &&
-                          birdLeft < bottomPipeRight &&
-                          birdTop < bottomPipeBottom &&
-                          birdBottom > bottomPipeTop;
-
-    return collidesTop || collidesBottom;
-}
-
-void PipePair::reset() {
-    active = false;
+    return false;
 }

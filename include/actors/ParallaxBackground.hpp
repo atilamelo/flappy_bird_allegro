@@ -4,7 +4,9 @@
  */
 #pragma once
 
-#include "GameObject.hpp"
+#include "core/GameObject.hpp"
+#include "interfaces/IDrawable.hpp"
+#include "interfaces/IUpdatable.hpp"
 #include <allegro5/allegro.h>
 #include "Constants.hpp"
 
@@ -16,7 +18,8 @@
  * para a esquerda. Quando a primeira imagem sai completamente da tela, ela é
  * reposicionada à direita da segunda, criando uma ilusão de rolagem infinita.
  */
-class ParallaxBackground : public GameObject {
+class ParallaxBackground : public GameObject, public IDrawable, public IUpdatable
+{
 private:
     ALLEGRO_BITMAP* texture; ///< Ponteiro para a textura do fundo.
     float speed;             ///< Velocidade de rolagem horizontal em pixels por segundo.

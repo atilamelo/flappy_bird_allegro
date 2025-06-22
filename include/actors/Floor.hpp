@@ -1,9 +1,13 @@
 #pragma once
 
-#include <actors/GameObject.hpp>
 #include <allegro5/allegro.h>
+#include "core/GameObject.hpp"
+#include "interfaces/IDrawable.hpp"
+#include "interfaces/IUpdatable.hpp"
 
-class Floor : public GameObject {
+
+class Floor : public GameObject, public IDrawable, public IUpdatable
+{
 private:
     ALLEGRO_BITMAP* texture;
     
