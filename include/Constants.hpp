@@ -1,7 +1,7 @@
 #pragma once
 
 // --- Configurações da tela ---
-constexpr float FPS = 60.0;
+constexpr float FPS = 30.0;
 constexpr int BUFFER_W = 288;
 constexpr int BUFFER_H = 512;
 

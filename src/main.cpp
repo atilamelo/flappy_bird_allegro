@@ -1,83 +1,23 @@
-#include <allegro5/allegro.h>
-#include <allegro5/allegro_primitives.h>
-#include <allegro5/allegro_font.h>
-#include <allegro5/allegro_image.h>
-#include <stdio.h>
-#include <Constants.hpp>
-#include <chrono>   // Para medir o tempo
-#include <algorithm> // Para std::min
-
-#include "managers/SceneManager.hpp"
-#include "core/GameScene.hpp"
-#include "managers/ResourceManager.hpp"
-
-void must_init(bool test, const char* description) {
-    if (test) return;
-    printf("Não pode inicializar %s\n", description);
-    exit(1);
-}
+/**
+ * @file main.cpp
+ * @brief Ponto de entrada principal da aplicação.
+ */
+#include "core/Game.hpp"
+#include <iostream>
 
 int main() {
-    must_init(al_init(), "Allegro");
-    must_init(al_init_primitives_addon(), "primitives");
-    must_init(al_init_font_addon(), "font addon");
-    must_init(al_install_keyboard(), "keyboard");
-    must_init(al_init_image_addon(), "image addon");
-
-    ALLEGRO_TIMER* timer = al_create_timer(1.0 / FPS);
-    ALLEGRO_EVENT_QUEUE* queue = al_create_event_queue();
-    ALLEGRO_DISPLAY* display = al_create_display(BUFFER_W, BUFFER_H);
-
-    al_register_event_source(queue, al_get_display_event_source(display));
-    al_register_event_source(queue, al_get_timer_event_source(timer));
-    al_register_event_source(queue, al_get_keyboard_event_source());
-
-    SceneManager scene_manager = SceneManager();
-    ResourceManager::getInstance().loadAtlasJson("assets/sprites/sprite_sheet.json", "atlas", "assets/sprites/sprite_sheet.png");
-
-    al_start_timer(timer);
-    bool redraw = true;
-
-    auto lastUpdateTime = std::chrono::steady_clock::now();
-
-    scene_manager.set_current_scene(std::make_unique<GameScene>(&scene_manager));
-
-    while (scene_manager.is_running()) {
-        ALLEGRO_EVENT event;
-        al_wait_for_event(queue, &event);
-
-        if (event.type == ALLEGRO_EVENT_TIMER) {
-            auto currentTime = std::chrono::steady_clock::now();
-            std::chrono::duration<float> elapsed = currentTime - lastUpdateTime;
-            float deltaTime = elapsed.count();
-            lastUpdateTime = currentTime; // Atualiza o relógio para a próxima iteração
-
-            const float max_deltaTime = 1.0f / 30.0f;
-            if (deltaTime > max_deltaTime) {
-                deltaTime = max_deltaTime;
-            }
-
-            scene_manager.update(deltaTime);
-            
-            redraw = true;
-
-        } else if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
-            scene_manager.shutdown();
-        }
-
-        scene_manager.processEvent(event);
-
-        if (redraw && al_is_event_queue_empty(queue)) {
-            redraw = false;
-            al_clear_to_color(al_map_rgb(0, 0, 0));
-            scene_manager.draw();
-            al_flip_display();
-        }
+    try {
+        Game game;
+        game.run();
     }
-
-    al_destroy_display(display);
-    al_destroy_timer(timer);
-    al_destroy_event_queue(queue);
+    catch (const std::exception& e) {
+        std::cerr << "Uma exceção ocorreu: " << e.what() << std::endl;
+        return 1;
+    }
+    catch (...) {
+        std::cerr << "Uma exceção desconhecida ocorreu." << std::endl;
+        return 1;
+    }
 
     return 0;
 }
