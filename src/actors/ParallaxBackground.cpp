@@ -28,7 +28,7 @@ void ParallaxBackground::update(float deltaTime)
     }
 }
 
-void ParallaxBackground::draw()
+void ParallaxBackground::draw() const
 {
     if (!texture) return;
 

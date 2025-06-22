@@ -33,7 +33,7 @@ void PipePool::update(float deltaTime)
     }
 }
 
-void PipePool::draw()
+void PipePool::draw() const
 {
     for (auto& pipePair : pool)
     {

@@ -41,7 +41,7 @@ public:
     /**
      * @brief Desenha o fundo na tela.
      */
-    void draw() override;
+    void draw() const override;
 
     /**
      * @brief Define uma nova velocidade de rolagem para o fundo.

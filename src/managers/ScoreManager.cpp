@@ -18,7 +18,7 @@ void ScoreManager::increaseScore() {
     currentScore++;
 }
 
-void ScoreManager::draw() {
+void ScoreManager::draw() const {
     // Centralizando o score
     float currentScoreX = BUFFER_W / 2.0f;
     float currentScoreY = 50.0f;
@@ -27,7 +27,7 @@ void ScoreManager::draw() {
 }
 
 
-void ScoreManager::drawNumberSprites(int number, int drawX, int drawY) {
+void ScoreManager::drawNumberSprites(int number, int drawX, int drawY) const {
     if (number < 0) number = 0;
 
     std::string s = std::to_string(number);

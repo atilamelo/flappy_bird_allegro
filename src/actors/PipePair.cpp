@@ -46,7 +46,7 @@ void PipePair::update(float deltaTime)
     }
 }
 
-void PipePair::draw()
+void PipePair::draw() const
 {
     if (!active) return;
     topPipe.draw(this->x);

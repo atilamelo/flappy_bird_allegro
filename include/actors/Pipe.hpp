@@ -45,5 +45,5 @@ public:
      * @note Este método NÃO é uma implementação da interface IDrawable, pois sua assinatura é diferente.
      * @param x A coordenada X onde o cano deve ser desenhado.
      */
-    void draw(float x);
+    void draw(float x) const;
 };

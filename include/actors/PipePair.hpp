@@ -59,7 +59,7 @@ public:
     /**
      * @brief Desenha o par de canos na tela. (Contrato de IDrawable)
      */
-    void draw() override;
+    void draw() const override;
     
     // --- Lógica de Jogo ---
 

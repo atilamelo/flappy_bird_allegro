@@ -12,7 +12,7 @@ Pipe::Pipe(float y, float width, float height, PipeType type, ALLEGRO_BITMAP* te
       texture(texture) 
 {}
 
-void Pipe::draw(float x) {
+void Pipe::draw(float x) const {
     if (!texture) {
         al_draw_filled_rectangle(x, this->y, x + this->width, this->y + this->height, al_map_rgb(0, 255, 0));
         return;

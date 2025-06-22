@@ -22,5 +22,5 @@ public:
     /**
      * @brief Função virtual pura que deve ser implementada pela classe derivada para desenhar o objeto.
      */
-    virtual void draw() = 0;
+    virtual void draw() const = 0;
 };

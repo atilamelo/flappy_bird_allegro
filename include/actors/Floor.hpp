@@ -14,6 +14,6 @@ private:
 public:
     Floor(ALLEGRO_BITMAP* texture);
 
-    void draw() override;
+    void draw() const override;
     void update(float deltaTime) override;
 };

@@ -16,7 +16,7 @@ Bird::Bird(float x, float y, float w, float h, std::vector<ALLEGRO_BITMAP *> fra
     reset();
 }
 
-void Bird::draw()
+void Bird::draw() const
 {
     if (frames.empty()) {
         std::cerr << "Erro: Vetor de frames do pássaro está vazio!" << std::endl;

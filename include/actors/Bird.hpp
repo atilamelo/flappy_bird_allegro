@@ -72,7 +72,7 @@ public:
     /**
      * @brief Desenha o pássaro na tela.
      */
-    void draw() override;
+    void draw() const override;
 
     /**
      * @brief Aplica um impulso vertical para fazer o pássaro pular.

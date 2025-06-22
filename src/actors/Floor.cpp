@@ -11,7 +11,7 @@ Floor::Floor(ALLEGRO_BITMAP *texture) : GameObject(0, PLAYABLE_AREA_HEIGHT, BUFF
     this->texture = texture;
 }
 
-void Floor::draw() {
+void Floor::draw() const {
     al_draw_bitmap(texture, x, y, 0);
     if(x < 0){
         al_draw_bitmap(texture, x + width, y, 0);
