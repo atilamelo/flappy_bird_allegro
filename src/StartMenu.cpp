@@ -46,8 +46,8 @@ void StartMenu::loadAssets() {
             al_load_bitmap("data/flappy_bird.png"),-2);
         wgt->flags = WZ_STATE_NOTWANT_FOCUS;
         editbox = wz_create_editbox(gui, 0, 0, 100 * size, 30 * size, al_ustr_new(""), 1, 10);
-        wz_create_image_button(gui,0,0,52,29,al_load_bitmap("data/start_button.png"),al_load_bitmap("data/start_button_pressed.png"),al_load_bitmap("data/start_button_focused.png"),
-            al_load_bitmap("data/start_button.png"),11);
+        wz_create_image_button(gui,0,0,52,29,al_load_bitmap("data/home_start_button.png"),al_load_bitmap("data/home_start_button_pressed.png"),al_load_bitmap("data/home_start_button_focused.png"),
+            al_load_bitmap("data/home_start_button.png"),11);
         wz_create_image_button(gui,0,0,52,29,al_load_bitmap("data/rank_button.png"),al_load_bitmap("data/rank_button_pressed.png"),al_load_bitmap("data/rank_button_focused.png"),
             al_load_bitmap("data/rank_button.png"),12);
         wz_create_toggle_button(gui, 0, 0, 200 * size, 50 * size, al_ustr_new("QUIT"), 1, 1, 13);
@@ -93,7 +93,4 @@ void StartMenu::gameOver() {
 
 void StartMenu::draw() {    
     wz_draw(gui);
-    ALLEGRO_BITMAP* foto = al_load_bitmap("data/flappy-bird.png");
-
-    al_draw_bitmap(foto, 0, 0, 0);
 }
