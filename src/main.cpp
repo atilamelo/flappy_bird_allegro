@@ -4,7 +4,9 @@
 #include <allegro5/allegro_image.h>
 #include <stdio.h>
 #include <Constants.hpp>
-#include <chrono>
+#include <chrono>   // Para medir o tempo
+#include <algorithm> // Para std::min
+
 #include "managers/SceneManager.hpp"
 #include "core/GameScene.hpp"
 #include "managers/ResourceManager.hpp"
@@ -16,8 +18,6 @@ void must_init(bool test, const char* description) {
 }
 
 int main() {
-    std::chrono::steady_clock::time_point lastUpdate;
-
     must_init(al_init(), "Allegro");
     must_init(al_init_primitives_addon(), "primitives");
     must_init(al_init_font_addon(), "font addon");
@@ -38,7 +38,7 @@ int main() {
     al_start_timer(timer);
     bool redraw = true;
 
-    lastUpdate = std::chrono::steady_clock::now();
+    auto lastUpdateTime = std::chrono::steady_clock::now();
 
     scene_manager.set_current_scene(std::make_unique<GameScene>(&scene_manager));
 
@@ -47,8 +47,20 @@ int main() {
         al_wait_for_event(queue, &event);
 
         if (event.type == ALLEGRO_EVENT_TIMER) {
-            scene_manager.update(1.0 / FPS);
+            auto currentTime = std::chrono::steady_clock::now();
+            std::chrono::duration<float> elapsed = currentTime - lastUpdateTime;
+            float deltaTime = elapsed.count();
+            lastUpdateTime = currentTime; // Atualiza o relógio para a próxima iteração
+
+            const float max_deltaTime = 1.0f / 30.0f;
+            if (deltaTime > max_deltaTime) {
+                deltaTime = max_deltaTime;
+            }
+
+            scene_manager.update(deltaTime);
+            
             redraw = true;
+
         } else if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
             scene_manager.shutdown();
         }
