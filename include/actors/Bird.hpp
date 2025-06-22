@@ -18,6 +18,7 @@ private:
     // -- FLAGS --
     bool physicsEnabled = false;
     bool hoverEnabled = true;
+    bool isDying = false;
 
     float hoverTime = 0.0f;
 
@@ -29,7 +30,9 @@ public:
     void update(float deltaTime) override;
     void draw() override;
     void jump();
+    void die();
 
     void setPhysicEnabled(bool enable) { this->physicsEnabled = enable; };
     void setHoverEnabled(bool enable) { this->hoverEnabled = enable; };
+    void setVelY(float velY) { this->velY = velY; };
 };

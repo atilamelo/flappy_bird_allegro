@@ -30,10 +30,6 @@ GameScene::GameScene(SceneManager *sceneManager)
     state = GameState::GAME_INIT;
 }
 
-void GameScene::loadAssets()
-{
-}
-
 void GameScene::processEvent(const ALLEGRO_EVENT &event)
 {
     switch (event.type)
@@ -55,10 +51,27 @@ void GameScene::processEvent(const ALLEGRO_EVENT &event)
 
 void GameScene::update(float deltaTime)
 {
+    if (state == GameState::GAME_OVER)
+    {
+        timeSinceDying += deltaTime;
+        if (timeSinceDying > 3.0f)
+        {
+            gameOver();
+        }
+
+        if (bird->getY() > (PLAYABLE_AREA_HEIGHT - bird->getHeight()))
+        {
+            bird->setPhysicEnabled(false);
+            std::cout << "Física desativada" << std::endl;
+        }
+    }
 
     bird->update(deltaTime);
-    background->update(deltaTime);
-    floor->update(deltaTime);
+    if (state != GameState::GAME_OVER)
+    {
+        background->update(deltaTime);
+        floor->update(deltaTime);
+    }
 
     if (state == GameState::PLAYING)
     {
@@ -75,7 +88,8 @@ void GameScene::update(float deltaTime)
 
         if (bird->getY() > PLAYABLE_AREA_HEIGHT - bird->getHeight())
         {
-            gameOver();
+            state = GameState::GAME_OVER;
+            bird->die();
             std::cout << "Colidiu com o chão" << std::endl;
         }
 
@@ -85,7 +99,9 @@ void GameScene::update(float deltaTime)
             if (pipePair->isColliding(*bird))
             {
                 std::cout << "Colisão detectada!" << std::endl;
-                gameOver();
+                state = GameState::GAME_OVER;
+                bird->die();
+                bird->setVelY(0);
                 return;
             }
 

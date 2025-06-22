@@ -17,7 +17,11 @@ void Bird::draw()
     {
         float radian_angles = angle * (ALLEGRO_PI / 180.0f);
         // O ângulo é negativo porque o Allegro considera o ângulo positivo no sentido horário
-        al_draw_rotated_bitmap(frames[currentFrameIndex], width / 2, height / 2, x + width / 2, y + height / 2, -radian_angles, 0);
+        if(!isDying) {
+            al_draw_rotated_bitmap(frames[currentFrameIndex], width / 2, height / 2, x + width / 2, y + height / 2, -radian_angles, 0);
+        } else {
+            al_draw_rotated_bitmap(frames[1], width / 2, height / 2, x + width / 2, y + height / 2, -radian_angles, 0);
+        }
     }
     else
     {
@@ -32,6 +36,8 @@ void Bird::update(float deltaTime)
 
     if (physicsEnabled)
     {
+        std::cout << "Time: " << al_get_time() << "s, Bird Y: " << y << ", velY: " << velY << std::endl;
+
         velY += GRAVITY * deltaTime;
         // --- Limite de velocidade terminal para a queda do pássaro ---
         if (velY > TERMINAL_VELOCITY)
@@ -42,26 +48,20 @@ void Bird::update(float deltaTime)
         // --- Suavização do movimento vertical ---
         y += velY * deltaTime;
 
+
         if (y < 0)
         {
             y = 0;    // Impede que o pássaro saia da tela para cima
             velY = 0; // Reseta a velocidade quando atinge o topo
         }
-        if (y > PLAYABLE_AREA_HEIGHT - height)
-        {
-            y = BUFFER_H - height; // Impede que o pássaro saia da tela para baixo
-            velY = 0;              // Reseta a velocidade quando atinge o fundo
-        }
+        
 
-        // --- Cálculo do ângulo baseado na velocidade Y ---
-        if (velY < 0)
-        {
-            angle = (velY / (JUMP_IMPULSE_VELOCITY)*MAX_UP_ANGLE);
-        }
-        else
-        {
-            angle = (velY / TERMINAL_VELOCITY) * MAX_DOWN_ANGLE;
-        }
+    }
+
+    if (velY < 0) {
+        angle = (velY / JUMP_IMPULSE_VELOCITY) * MAX_UP_ANGLE;
+    } else {
+        angle = (velY / TERMINAL_VELOCITY) * MAX_DOWN_ANGLE;
     }
 
     if(hoverEnabled) {
@@ -78,7 +78,10 @@ void Bird::update(float deltaTime)
 
 void Bird::jump()
 {
-    velY = JUMP_IMPULSE_VELOCITY;
+    if(!isDying)
+    {
+        velY = JUMP_IMPULSE_VELOCITY;
+    }
 }
 
 void Bird::hover(float deltaTime) {
@@ -95,4 +98,8 @@ void Bird::hover(float deltaTime) {
 
     // 5. Garantimos que o pássaro não rotacione durante o hover.
     this->angle = 0;
+}
+
+void Bird::die() {
+    this->isDying = true;
 }

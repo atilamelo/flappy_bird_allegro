@@ -15,8 +15,6 @@ public:
 
     virtual ~Scene() {}
 
-    virtual void loadAssets() = 0;
-
     virtual void update(float deltaTime) = 0;
 
     virtual void draw() = 0;

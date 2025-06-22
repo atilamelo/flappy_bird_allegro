@@ -26,11 +26,11 @@ private:
     std::unique_ptr<Floor> floor;
 
     float timeSinceLastPipe = 0.0f;
+    float timeSinceDying = 0.0f;
 
 public:
     GameScene(SceneManager *sceneManager);
 
-    void loadAssets() override;
     void processEvent(const ALLEGRO_EVENT& event) override;
     void update(float deltaTime) override;
     void gameOver();

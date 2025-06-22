@@ -14,7 +14,6 @@ void SceneManager::transition_scene() {
     if (!next_scene) return;
 
     current_scene = std::move(next_scene);
-    current_scene->loadAssets();
 }
 
 void SceneManager::processEvent(const ALLEGRO_EVENT& event) {
