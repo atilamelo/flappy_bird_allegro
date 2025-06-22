@@ -40,7 +40,7 @@ int main() {
 
     lastUpdate = std::chrono::steady_clock::now();
 
-    scene_manager.set_current_scene(std::make_unique<StartMenu>(&scene_manager));
+    scene_manager.set_current_scene(std::make_unique<GameScene>(&scene_manager));
 
     while (scene_manager.is_running()) {
         ALLEGRO_EVENT event;
