@@ -5,7 +5,7 @@
 #include "actors/PipePair.hpp"
 #include "actors/Bird.hpp"
 #include "Constants.hpp"
-#include "util/ResourceManager.hpp"
+#include "managers/ResourceManager.hpp"
 
 PipePair::PipePair() 
     : GameObject(0, 0, PIPE_WIDTH, 0), // A altura do par não é relevante

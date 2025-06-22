@@ -2,12 +2,12 @@
  * @file GameScene.cpp
  * @brief Implementação dos métodos da cena principal do jogo.
  */
-#include "GameScene.hpp"
+#include "core/GameScene.hpp"
 #include "Constants.hpp"
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_font.h>
-#include "util/ResourceManager.hpp"
-#include "SceneManager.hpp"
+#include "managers/ResourceManager.hpp"
+#include "managers/SceneManager.hpp"
 
 GameScene::GameScene(SceneManager* sceneManager)
     : Scene(sceneManager),

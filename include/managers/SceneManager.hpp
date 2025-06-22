@@ -1,7 +1,7 @@
 #pragma once
 
+#include "core/Scene.hpp"
 #include <memory>
-#include <Scene.hpp>
 
 class SceneManager {
 public:

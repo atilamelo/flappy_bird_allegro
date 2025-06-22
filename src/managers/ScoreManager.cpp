@@ -1,6 +1,6 @@
-#include <ScoreManager.hpp>
+#include "managers/ScoreManager.hpp"
 #include <iostream>
-#include "util/ResourceManager.hpp"
+#include "managers/ResourceManager.hpp"
 #include "Constants.hpp"
 
 ScoreManager::ScoreManager() {

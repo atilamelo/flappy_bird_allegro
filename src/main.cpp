@@ -5,9 +5,9 @@
 #include <stdio.h>
 #include <Constants.hpp>
 #include <chrono>
-#include "SceneManager.hpp"
-#include "GameScene.hpp"
-#include "util/ResourceManager.hpp"
+#include "managers/SceneManager.hpp"
+#include "core/GameScene.hpp"
+#include "managers/ResourceManager.hpp"
 
 void must_init(bool test, const char* description) {
     if (test) return;

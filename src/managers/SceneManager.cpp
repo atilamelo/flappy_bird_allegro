@@ -1,5 +1,5 @@
-#include "SceneManager.hpp"
-#include "Scene.hpp"
+#include "managers/SceneManager.hpp"
+#include "core/Scene.hpp"
 
 SceneManager::SceneManager() : current_scene(nullptr), next_scene(nullptr), running(true) {}
 

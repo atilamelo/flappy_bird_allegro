@@ -1,4 +1,4 @@
-#include "util/ResourceManager.hpp"
+#include "managers/ResourceManager.hpp"
 #include "util/json.hpp"
 #include <iostream>
 #include <fstream>

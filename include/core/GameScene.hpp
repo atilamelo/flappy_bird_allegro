@@ -10,8 +10,8 @@
 #include "actors/Bird.hpp"
 #include "actors/ParallaxBackground.hpp"
 #include "actors/Floor.hpp"
-#include "util/PipePool.hpp"
-#include "ScoreManager.hpp"
+#include "actors/PipePool.hpp"
+#include "managers/ScoreManager.hpp"
 #include <memory>
 #include <random>
 
