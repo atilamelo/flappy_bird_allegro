@@ -16,7 +16,6 @@ CXXFLAGS += -MMD -MP
 
 # --- Arquivos ---
 TARGET = $(BINDIR)/flappy_bird
-TEST_TARGET = $(BINDIR)/test_runner
 
 # Busca recursiva pelos arquivos .cpp
 SOURCES := $(shell find $(SRCDIR) -name '*.cpp')
@@ -24,18 +23,13 @@ TEST_SOURCES := $(shell find $(TESTDIR) -name '*.cpp')
 
 # Gera os objetos espelhando a estrutura de pastas
 OBJECTS := $(patsubst $(SRCDIR)/%.cpp,$(OBJDIR)/%.o,$(SOURCES))
-TEST_OBJECTS := $(patsubst $(TESTDIR)/%.cpp,$(OBJDIR)/$(TESTDIR)/%.o,$(TEST_SOURCES))
 
 # Gera lista de arquivos .d a partir dos .o
-DEPS := $(OBJECTS:.o=.d) $(TEST_OBJECTS:.o=.d)
+DEPS := $(OBJECTS:.o=.d)
 
 # --- Regras ---
 
 all: $(TARGET) assets
-
-test: $(TEST_TARGET)
-	@echo "Executando testes..."
-	./$(TEST_TARGET)
 
 $(TARGET): $(filter-out $(OBJDIR)/main.o, $(OBJECTS)) $(OBJDIR)/main.o
 	@echo "Ligando os arquivos para criar o executável do jogo..."
@@ -43,23 +37,11 @@ $(TARGET): $(filter-out $(OBJDIR)/main.o, $(OBJECTS)) $(OBJDIR)/main.o
 	$(CXX) $(filter-out $(OBJDIR)/main.o, $(OBJECTS)) $(OBJDIR)/main.o -o $(TARGET) $(LDFLAGS)
 	@echo "Executável '$(TARGET)' criado com sucesso!"
 
-$(TEST_TARGET): $(filter-out $(OBJDIR)/main.o, $(OBJECTS)) $(TEST_OBJECTS)
-	@echo "Construindo executável de testes..."
-	@mkdir -p $(BINDIR)
-	$(CXX) $(filter-out $(OBJDIR)/main.o, $(OBJECTS)) $(TEST_OBJECTS) -o $(TEST_TARGET) $(LDFLAGS) $(TESTFLAGS)
-	@echo "Executável de testes '$(TEST_TARGET)' pronto!"
-
 # Compilação de objetos do jogo
 $(OBJDIR)/%.o: $(SRCDIR)/%.cpp
 	@mkdir -p $(dir $@)
 	@echo "Compilando $< -> $@"
 	$(CXX) $(CXXFLAGS) -c $< -o $@
-
-# Compilação de objetos de teste
-$(OBJDIR)/$(TESTDIR)/%.o: $(TESTDIR)/%.cpp
-	@mkdir -p $(dir $@)
-	@echo "Compilando teste: $< -> $@"
-	$(CXX) $(CXXFLAGS) $(TESTFLAGS) -c $< -o $@
 
 assets:
 	@echo "Copiando a pasta de assets..."
@@ -74,7 +56,36 @@ run: all
 	@echo "Executando o jogo..."
 	./bin/flappy_bird
 
-.PHONY: all clean assets run test
+# --- Regras para Testes Individuais ---
+# Lista de nomes de testes (sem extensão)
+TEST_NAMES := $(basename $(notdir $(TEST_SOURCES)))
+
+# Alvos phony para execução de testes
+.PHONY: $(addprefix run_,$(TEST_NAMES))
+
+# Regra para cada teste individual
+define TEST_RULE
+run_$(1): $(BINDIR)/$(1)
+	@echo "Executando teste: $(1)"
+	@./$$<
+endef
+
+# Cria regras dinâmicas para cada teste
+$(foreach test,$(TEST_NAMES),$(eval $(call TEST_RULE,$(test))))
+
+# Regra para compilar cada teste
+$(BINDIR)/%: $(OBJDIR)/$(TESTDIR)/%.o $(filter-out $(OBJDIR)/main.o, $(OBJECTS))
+	@mkdir -p $(BINDIR)
+	@echo "Construindo teste: $@"
+	@$(CXX) $(filter-out $(OBJDIR)/main.o, $(OBJECTS)) $< -o $@ $(LDFLAGS) $(TESTFLAGS)
+
+# Compilação de objetos de teste
+$(OBJDIR)/$(TESTDIR)/%.o: $(TESTDIR)/%.cpp
+	@mkdir -p $(dir $@)
+	@echo "Compilando teste: $< -> $@"
+	@$(CXX) $(CXXFLAGS) $(TESTFLAGS) -c $< -o $@
+
+.PHONY: all clean assets run
 
 # Inclui os arquivos de dependência, se existirem
 -include $(DEPS)
