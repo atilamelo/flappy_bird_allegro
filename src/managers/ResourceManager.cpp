@@ -36,12 +36,17 @@ ALLEGRO_BITMAP *ResourceManager::getBitmap(const std::string &id) const
     throw std::runtime_error("Bitmap não encontrado: " + id);
 }
 
-void ResourceManager::loadSample(const std::string &id, const std::string &filename)
+ALLEGRO_SAMPLE* ResourceManager::loadSample(const std::string &id, const std::string &filename)
 {
     SamplePtr sample(al_load_sample(filename.c_str()));
     if (!sample)
         throw std::runtime_error("Falha em carregador a sample: " + filename);
+    
+    ALLEGRO_SAMPLE* samplePtr = sample.get();
+
     m_samples.emplace(id, std::move(sample));
+    
+    return samplePtr;
 }
 
 ALLEGRO_SAMPLE *ResourceManager::getSample(const std::string &id) const

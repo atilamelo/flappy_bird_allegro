@@ -1,17 +1,17 @@
 #include "core/GameSound.hpp"
 #include <allegro5/allegro_acodec.h>
 #include <iostream>
+#include "managers/ResourceManager.hpp"
 
 GameSound::GameSound() {}
 GameSound::~GameSound() {
     if (back_instance) al_destroy_sample_instance(back_instance);
-    if (back_sound) al_destroy_sample(back_sound);
-    if (point_sound) al_destroy_sample(point_sound);
-    if (died_sound) al_destroy_sample(died_sound);
 }
 
 void GameSound::init() {
-    back_sound = al_load_sample("assets/audio/8bit.ogg");
+    ResourceManager& rm = ResourceManager::getInstance();
+
+    back_sound = rm.loadSample("8bit", "assets/audio/8bit.ogg");
     if (!back_sound) std::cerr << "Erro ao carregar som de fundo\n";
     else {
         back_instance = al_create_sample_instance(back_sound);
@@ -23,9 +23,10 @@ void GameSound::init() {
         }
         if (active_sound && back_instance) al_set_sample_instance_playing(back_instance, true);
     }
-    point_sound = al_load_sample("assets/audio/point.wav");
+    point_sound = rm.loadSample("point", "assets/audio/point.wav");
+    
     if (!point_sound) std::cerr << "Erro ao carregar som de ponto\n";
-    died_sound = al_load_sample("assets/audio/die.wav");
+    died_sound = rm.loadSample("die", "assets/audio/die.wav");
     if (!died_sound) std::cerr << "Erro ao carregar som de morte\n";
 }
 

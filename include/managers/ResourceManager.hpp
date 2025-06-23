@@ -24,7 +24,7 @@ public:
 
     void loadBitmap(const std::string& id, const std::string& filename);
     void loadSubBitmap(const std::string& id, const std::string& source_id, int x, int y, int w, int h);
-    void loadSample(const std::string& id, const std::string& filename);
+    ALLEGRO_SAMPLE* loadSample(const std::string& id, const std::string& filename);
     void loadAtlasJson(const std::string& json_filepath, const std::string& atlas_id, const std::string& main_sprite_sheet_filepath);
 
     ALLEGRO_BITMAP* getBitmap(const std::string& id) const;

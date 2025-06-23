@@ -81,7 +81,7 @@ bool PipePair::hasPassed(const Bird& bird)
 {
     if (!active || passed) return false;
 
-    if (bird.getX() > this->x + this->width) {
+    if (bird.getX() > this->x + (this->width / 2)) {
         passed = true;
         return true;
     }
