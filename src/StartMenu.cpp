@@ -24,17 +24,13 @@ StartMenu::~StartMenu()
     {
         wz_destroy(gui);
     }
-    // unique_ptr cuida do flappyLogo. ResourceManager cuida dos bitmaps.
 }
 
 void StartMenu::buildUI()
 {
-    al_init_image_addon(); // Garante que o addon de imagem está ativo.
-
     ResourceManager &rm = ResourceManager::getInstance();
 
-    // 1. CARREGAMENTO E POSICIONAMENTO DO LOGO E FUNDO
-    background_image = rm.getBitmap("background-day");
+    // 1. POSICIONAMENTO DA LOGO
 
     std::vector<ALLEGRO_BITMAP *> bird_frames = {
         rm.getBitmap("yellowbird-downflap"), rm.getBitmap("yellowbird-midflap"), rm.getBitmap("yellowbird-upflap")};
@@ -47,7 +43,7 @@ void StartMenu::buildUI()
 
     flappyLogo = std::make_unique<FlappyLogo>(logo_x, logo_y, logo_w, logo_h, rm.getBitmap("logo_text"), bird_frames);
 
-    // 2. CONFIGURAÇÃO DA GUI INTERATIVA (WIDGETZ)
+    // 2. CONFIGURAÇÃO DA GUI (WIDGETZ)
     memset(&skin_theme, 0, sizeof(skin_theme));
     memcpy(&skin_theme, &wz_skin_theme, sizeof(skin_theme));
     font = al_create_builtin_font();
@@ -59,7 +55,8 @@ void StartMenu::buildUI()
     wz_init_skin_theme(&skin_theme);
     gui = wz_create_widget(0, 0, 0, -1);
     wz_set_theme(gui, (WZ_THEME *)&skin_theme);
-    // --- ESTRUTURA DE LAYOUT ÚNICO E CENTRALIZADO ---
+    
+    // --- ESTRUTURA DO LAYOUT ---
 
     float h_spacing = 10.0f;
     float v_spacing = 15.0f;
@@ -70,24 +67,22 @@ void StartMenu::buildUI()
     float quit_button_w = 40;
 
     // Calcula a largura total necessária para a fileira de botões
-    float total_buttons_width = play_button_w + rank_button_w + quit_button_w + (2 * h_spacing);
+    float total_buttons_width = play_button_w + rank_button_w + (3 * h_spacing);
 
-    // <<< PASSO 1: CALCULA A POSIÇÃO X INICIAL PARA CENTRALIZAR O LAYOUT >>>
+    // <<< CALCULA A POSIÇÃO X INICIAL PARA CENTRALIZAR O LAYOUT >>>
     float layout_x = (BUFFER_W - total_buttons_width) / 2.0f;
 
-    // Cria um ÚNICO layout que irá organizar todos os widgets seguintes.
-    // Agora, usamos a posição X calculada para posicionar o layout em si.
     wz_create_fill_layout(gui, layout_x, 180, total_buttons_width, 0, h_spacing, v_spacing, WZ_ALIGN_CENTRE, WZ_ALIGN_TOP, 0);
 
-    // Caixa de texto, adicionada ao layout principal.
+    // Caixa de texto
     editbox = wz_create_editbox(gui, 0, 0, 150, 30, al_ustr_new(""), 1, 10);
 
-    // Botões adicionados ao layout da fileira.
+    // Botões adicionados ao layout.
     wz_create_image_button(gui, 0, 0, 52, 29, rm.getBitmap("btn_start_normal"), rm.getBitmap("btn_start_pressed"), rm.getBitmap("btn_start_focused"), rm.getBitmap("btn_start_focused"), 11);
     wz_create_image_button(gui, 0, 0, 52, 29, rm.getBitmap("btn_rank_normal"), rm.getBitmap("btn_rank_pressed"), rm.getBitmap("btn_rank_focused"), rm.getBitmap("btn_start_focused"), 12);
     wz_create_image_button(gui, 0, 0, 40, 14, rm.getBitmap("btn_quit_normal"), rm.getBitmap("btn_quit_pressed"), rm.getBitmap("btn_quit_focused"), rm.getBitmap("btn_start_focused"), 13);
 
-    // Registrar fontes de eventos
+    // Registrar fonte dos eventos
     ALLEGRO_EVENT_QUEUE *queue = sceneManager->get_event_queue();
     wz_register_sources(gui, queue);
 }

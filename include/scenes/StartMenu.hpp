@@ -24,7 +24,7 @@ class StartMenu : public Scene
 {
 private:
     // --- Entidades e Recursos ---
-    std::unique_ptr<FlappyLogo> flappyLogo; ///< Logo animado composto.
+    std::unique_ptr<FlappyLogo> flappyLogo; ///< Logo animado.
     ALLEGRO_BITMAP* background_image = nullptr; ///< Ponteiro para o bitmap de fundo.
 
     // --- Membros da Biblioteca WidgetZ ---
