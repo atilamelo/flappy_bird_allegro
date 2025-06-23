@@ -13,7 +13,7 @@
 #include <algorithm>
 #include "actors/ui/GameOverScreen.hpp"
 
-GameScene::GameScene(SceneManager* sceneManager)
+GameScene::GameScene(SceneManager* sceneManager, Theme theme)
     : Scene(sceneManager),
       pipePool(PIPE_POOL_SIZE),
       rng(std::random_device{}()),
@@ -21,16 +21,16 @@ GameScene::GameScene(SceneManager* sceneManager)
 {
     // --- 1. Criação dos Objetos ---
     // A propriedade dos objetos é mantida em unique_ptr ou como membros diretos.
-
     std::vector<ALLEGRO_BITMAP*> bird_frames = {
         ResourceManager::getInstance().getBitmap("yellowbird-downflap"),
         ResourceManager::getInstance().getBitmap("yellowbird-midflap"),
         ResourceManager::getInstance().getBitmap("yellowbird-upflap")
     };
-    bird = std::make_unique<Bird>(BIRD_START_X, BIRD_START_Y, BIRD_WIDTH, BIRD_HEIGHT, bird_frames);
+
+    bird = std::make_unique<Bird>(BIRD_START_X, BIRD_START_Y, BIRD_WIDTH, BIRD_HEIGHT, theme.bird_frames);
     
-    background = std::make_unique<ParallaxBackground>(ResourceManager::getInstance().getBitmap("background-day"), BACKGROUND_SCROLL_SPEED);
-    floor = std::make_unique<Floor>(ResourceManager::getInstance().getBitmap("base"));
+    background = std::make_unique<ParallaxBackground>(theme.background, BACKGROUND_SCROLL_SPEED);
+    floor = std::make_unique<Floor>(theme.floor);
     flashEffect = std::make_unique<SplashScreen>(0.5f, al_map_rgb(255, 255, 255)); // Flash branco de meio segundo
     gameOverScreen = std::make_unique<GameOverScreen>(100.0f, 0.7f, ResourceManager::getInstance().getBitmap("gameover"));
     getReadyUI = std::make_unique<GetReadyUI>();

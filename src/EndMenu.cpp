@@ -71,11 +71,11 @@ void EndMenu::processEvent(const ALLEGRO_EVENT& event) {
         case WZ_BUTTON_PRESSED:
             if ((int)e.user.data1 == 11) {
                 std::cout << "Voltando ao jogo..." << std::endl;
-                sceneManager->setCurrentScene(std::make_unique<GameScene>(sceneManager));
+                // sceneManager->setCurrentScene(std::make_unique<GameScene>(sceneManager));
             }
             if ((int)e.user.data1 == 12) {
                 std::cout << "Reiniciando o jogo..." << std::endl;
-                sceneManager->setCurrentScene(std::make_unique<StartMenu>(sceneManager));
+                // sceneManager->setCurrentScene(std::make_unique<StartMenu>(sceneManager));
             }
             if ((int)e.user.data1 == 13) {
                 std::cout << "Carregando placar..." << std::endl;

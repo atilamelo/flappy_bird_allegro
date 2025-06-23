@@ -7,7 +7,7 @@
 #include "managers/SceneManager.hpp"
 #include "managers/ResourceManager.hpp"
 #include "Constants.hpp"
-
+#include "util/Theme.hpp"
 #include <iostream>
 #include <allegro5/allegro_image.h>
 
@@ -55,7 +55,7 @@ void StartMenu::buildUI()
     wz_init_skin_theme(&skin_theme);
     gui = wz_create_widget(0, 0, 0, -1);
     wz_set_theme(gui, (WZ_THEME *)&skin_theme);
-    
+
     // --- ESTRUTURA DO LAYOUT ---
 
     float h_spacing = 10.0f;
@@ -103,8 +103,8 @@ void StartMenu::processEvent(const ALLEGRO_EVENT &event)
                         (keycode == ALLEGRO_KEY_LEFT) ||
                         (keycode == ALLEGRO_KEY_RIGHT) ||
                         (keycode == ALLEGRO_KEY_HOME) ||
-                        (keycode == ALLEGRO_KEY_END) || 
-                        (keycode == ALLEGRO_KEY_UP) || 
+                        (keycode == ALLEGRO_KEY_END) ||
+                        (keycode == ALLEGRO_KEY_UP) ||
                         (keycode == ALLEGRO_KEY_DOWN);
         std::cout << "isvalid: " << is_valid << std::endl;
         if (!is_valid)
@@ -123,7 +123,19 @@ void StartMenu::processEvent(const ALLEGRO_EVENT &event)
         { // Iniciar
             if (editbox->text->slen >= 3 && editbox->text->slen <= 20)
             {
-                sceneManager->setCurrentScene(std::make_unique<GameScene>(sceneManager));
+                ResourceManager &rm = ResourceManager::getInstance();
+                Theme defaultTheme;
+                std::vector<ALLEGRO_BITMAP*> bird_frames = {
+                    ResourceManager::getInstance().getBitmap("yellowbird-downflap"),
+                    ResourceManager::getInstance().getBitmap("yellowbird-midflap"),
+                    ResourceManager::getInstance().getBitmap("yellowbird-upflap")
+                };
+
+                defaultTheme.bird_frames = bird_frames;
+                defaultTheme.background = rm.getBitmap("background-day");
+                defaultTheme.floor = rm.getBitmap("base");
+
+                sceneManager->setCurrentScene(std::make_unique<GameScene>(sceneManager, defaultTheme));
             }
             else
             {

@@ -19,6 +19,7 @@
 #include "managers/ScoreManager.hpp"
 #include "core/GameSound.hpp"
 #include "actors/SoundButton.hpp"
+#include "util/Theme.hpp"
 #include <memory>
 #include <vector>
 #include <random>
@@ -81,7 +82,7 @@ public:
      * @brief Construtor da GameScene.
      * @param sceneManager Ponteiro para o gerenciador de cenas.
      */
-    GameScene(SceneManager* sceneManager);
+    GameScene(SceneManager* sceneManager, Theme gameTheme);
 
     /**
      * @brief Processa eventos de input do usuário, controlando as transições de estado.
