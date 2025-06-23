@@ -23,5 +23,5 @@ struct Theme {
     ALLEGRO_BITMAP* background;                ///< Bitmap do fundo do cenário.
     ALLEGRO_BITMAP* floor;                     ///< Bitmap da base/chão.
     ALLEGRO_BITMAP* pipe;                      ///< Bitmap do cano.
-    ALLEGRO_SAMPLE* music;                     ///< Amostra de áudio para a música de fundo do tema.
+    ALLEGRO_AUDIO_STREAM* music;               ///< Amostra de áudio para a música de fundo do tema.
 };

@@ -15,7 +15,7 @@
  * @class CharacterSelectionScene
  * @brief Permite ao jogador escolher um tema visual antes de iniciar o jogo.
  */
-class CharacterSelectionScene : public Scene, public IDrawable {
+class CharacterSelectionScene : public Scene {
 private:
     std::vector<Theme> themes;                 ///< Vetor de todos os temas disponíveis.
     std::vector<ALLEGRO_BITMAP*> preview_sprites; ///< Sprites para exibição na seleção.

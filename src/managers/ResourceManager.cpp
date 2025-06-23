@@ -57,6 +57,26 @@ ALLEGRO_SAMPLE *ResourceManager::getSample(const std::string &id) const
     throw std::runtime_error("Sample não encontrada: " + id);
 }
 
+ALLEGRO_AUDIO_STREAM* ResourceManager::loadAudioStream(const std::string& id, const std::string& filename, size_t buffer_count, size_t samples) {
+    auto stream = AudioStreamPtr(al_load_audio_stream(filename.c_str(), buffer_count, samples));
+    if (!stream) {
+        throw std::runtime_error("Falha ao carregar o stream de áudio: " + filename);
+    }
+
+    ALLEGRO_AUDIO_STREAM* streamPtr = stream.get();
+    m_audio_streams[id] = std::move(stream);
+    
+    return streamPtr;
+}
+
+ALLEGRO_AUDIO_STREAM* ResourceManager::getAudioStream(const std::string& id) const {
+    auto it = m_audio_streams.find(id);
+    if (it == m_audio_streams.end()) {
+        throw std::runtime_error("Stream de áudio não encontrado: " + id);
+    }
+    return it->second.get();
+}
+
 void ResourceManager::loadAtlasJson(const std::string &json_filepath, const std::string &atlas_id, const std::string &main_atlas_sprite_sheet)
 {
     try

@@ -16,8 +16,7 @@ public:
     bool isActive() const;
 
 private:
-    ALLEGRO_SAMPLE* back_sound = nullptr;
-    ALLEGRO_SAMPLE_INSTANCE* back_instance = nullptr;
+    ALLEGRO_AUDIO_STREAM* back_music = nullptr;
     ALLEGRO_SAMPLE* point_sound = nullptr;
     ALLEGRO_SAMPLE* died_sound = nullptr;
     bool active_sound = true;

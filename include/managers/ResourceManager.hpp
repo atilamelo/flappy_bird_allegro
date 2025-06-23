@@ -8,15 +8,17 @@
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_audio.h>
 
-// -- Deleters para Smarts Pointers ---
+// -- Deleters para Smart Pointers ---
 struct AllegroBitmapDeleter { void operator()(ALLEGRO_BITMAP* bmp) const { if (bmp) al_destroy_bitmap(bmp); } };
 struct AllegroFontDeleter { void operator()(ALLEGRO_FONT* font) const { if (font) al_destroy_font(font); } };
 struct AllegroSampleDeleter { void operator()(ALLEGRO_SAMPLE* sample) const { if (sample) al_destroy_sample(sample); } };
-    
-// --- Apelidos para Smarts Pointers  ---
+struct AllegroAudioStreamDeleter { void operator()(ALLEGRO_AUDIO_STREAM* stream) const { if (stream) al_destroy_audio_stream(stream); } };
+
+// --- Apelidos para Smart Pointers ---
 using BitmapPtr = std::unique_ptr<ALLEGRO_BITMAP, AllegroBitmapDeleter>;
 using FontPtr = std::unique_ptr<ALLEGRO_FONT, AllegroFontDeleter>;
 using SamplePtr = std::unique_ptr<ALLEGRO_SAMPLE, AllegroSampleDeleter>;
+using AudioStreamPtr = std::unique_ptr<ALLEGRO_AUDIO_STREAM, AllegroAudioStreamDeleter>;
 
 class ResourceManager {
 public:
@@ -25,18 +27,21 @@ public:
     void loadBitmap(const std::string& id, const std::string& filename);
     void loadSubBitmap(const std::string& id, const std::string& source_id, int x, int y, int w, int h);
     ALLEGRO_SAMPLE* loadSample(const std::string& id, const std::string& filename);
+    ALLEGRO_AUDIO_STREAM* loadAudioStream(const std::string& id, const std::string& filename, size_t buffer_count, size_t samples);
     void loadAtlasJson(const std::string& json_filepath, const std::string& atlas_id, const std::string& main_sprite_sheet_filepath);
 
     ALLEGRO_BITMAP* getBitmap(const std::string& id) const;
     ALLEGRO_SAMPLE* getSample(const std::string& id) const;
+    ALLEGRO_AUDIO_STREAM* getAudioStream(const std::string& id) const;
 
 private:
     ResourceManager() = default;
-    
-    ResourceManager(const ResourceManager&) = delete;            // Impede cópia
-    ResourceManager& operator=(const ResourceManager&) = delete; // Impede atribuição
 
+    ResourceManager(const ResourceManager&) = delete;           // Impede cópia
+    ResourceManager& operator=(const ResourceManager&) = delete; // Impede atribuição
 
     std::map<std::string, BitmapPtr> m_bitmaps;
     std::map<std::string, SamplePtr> m_samples;
+    // Novo mapa para armazenar os streams de áudio
+    std::map<std::string, AudioStreamPtr> m_audio_streams;
 };
