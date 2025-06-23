@@ -17,6 +17,8 @@
 #include "actors/ui/GameOverScreen.hpp"
 #include "actors/ui/GetReadyUI.hpp"
 #include "managers/ScoreManager.hpp"
+#include "core/GameSound.hpp"
+#include "actors/SoundButton.hpp"
 #include <memory>
 #include <vector>
 #include <random>
@@ -44,6 +46,8 @@ private:
     std::unique_ptr<Bird> bird;
     std::unique_ptr<ParallaxBackground> background;
     std::unique_ptr<Floor> floor;
+    std::unique_ptr<GameSound> gSound;
+    std::unique_ptr<SoundButton> soundButton;
     std::unique_ptr<SplashScreen> flashEffect;
     std::unique_ptr<GameOverScreen> gameOverScreen;
     std::unique_ptr<GetReadyUI> getReadyUI;
