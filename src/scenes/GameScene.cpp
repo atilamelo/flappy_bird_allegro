@@ -2,7 +2,7 @@
  * @file GameScene.cpp
  * @brief Implementação da classe GameScene utilizando uma arquitetura baseada em interfaces.
  */
-#include "core/GameScene.hpp"
+#include "scenes/GameScene.hpp"
 #include "Constants.hpp"
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_font.h>

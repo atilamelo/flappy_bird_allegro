@@ -2,8 +2,8 @@
  * @file StartMenu.cpp
  * @brief Implementação dos métodos da cena do menu principal.
  */
-#include "StartMenu.hpp"
-#include "core/GameScene.hpp"
+#include "scenes/StartMenu.hpp"
+#include "scenes/GameScene.hpp"
 #include "managers/SceneManager.hpp"
 #include "Constants.hpp"
 

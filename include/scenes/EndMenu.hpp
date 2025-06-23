@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Scene.hpp"
+#include "core/Scene.hpp"
 #include "Constants.hpp"
 #include "widgetz/widgetz.h"
 
@@ -17,7 +17,7 @@ class EndMenu : public Scene {
     public:
         EndMenu(SceneManager *sceneManager);
         ~EndMenu();
-        void loadAssets() override;
+        void loadAssets();
         void processEvent(const ALLEGRO_EVENT& event) override;
         void update(float deltaTime) override;
         void gameOver();

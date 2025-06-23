@@ -3,7 +3,7 @@
  * @brief Implementação da classe principal Game.
  */
 #include "core/Game.hpp"
-#include "core/GameScene.hpp"
+#include "scenes/GameScene.hpp"
 #include "managers/ResourceManager.hpp"
 #include "Constants.hpp"
 #include <allegro5/allegro_primitives.h>
