@@ -80,7 +80,7 @@ void Game::initialize() {
 
     // Prepara a cena inicial
     sceneManager.setEventQueue(queue);
-    sceneManager.set_current_scene(std::make_unique<StartMenu>(&sceneManager));
+    sceneManager.setCurrentScene(std::make_unique<StartMenu>(&sceneManager));
 
     isRunning = true;
 }
@@ -128,7 +128,7 @@ void Game::processEvent(const ALLEGRO_EVENT& event) {
 
 void Game::update(float deltaTime) {
     sceneManager.update(deltaTime);
-    if (!sceneManager.is_running()) {
+    if (!sceneManager.isRunning()) {
         isRunning = false;
     }
 }

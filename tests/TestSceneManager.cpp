@@ -32,12 +32,12 @@ TEST_SUITE("Testes do SceneManager") {
     }
 
     // Verifica se a troca de cena é adiada até a chamada de update()
-    TEST_CASE("set_current_scene adia a ativação até update()") {
+    TEST_CASE("setCurrentScene adia a ativação até update()") {
         SceneManager mgr;
         auto scene = std::make_unique<DummyScene>();
         DummyScene* ptr = scene.get(); // Ponteiro para verificar flags
         
-        mgr.set_current_scene(std::move(scene));
+        mgr.setCurrentScene(std::move(scene));
 
         // Cena não deve estar ativa antes do update
         ALLEGRO_EVENT ev;
@@ -70,16 +70,16 @@ TEST_SUITE("Testes do SceneManager") {
         SUBCASE("Atualizar")        { CHECK_NOTHROW(mgr.update(0.1f)); }
     }
 
-    // Testa se múltiplas chamadas a set_current_scene sobrescrevem a anterior
-    TEST_CASE("Novas set_current_scene sobrescrevem anteriores") {
+    // Testa se múltiplas chamadas a setCurrentScene sobrescrevem a anterior
+    TEST_CASE("Novas setCurrentScene sobrescrevem anteriores") {
         SceneManager mgr;
         auto first  = std::make_unique<DummyScene>();
         auto second = std::make_unique<DummyScene>();
         DummyScene* ptr1 = first.get();
         DummyScene* ptr2 = second.get();
 
-        mgr.set_current_scene(std::move(first));  // Substituída antes do uso
-        mgr.set_current_scene(std::move(second)); // Esta deve ser ativada
+        mgr.setCurrentScene(std::move(first));  // Substituída antes do uso
+        mgr.setCurrentScene(std::move(second)); // Esta deve ser ativada
         
         // Apenas a última cena definida deve ser ativada
         mgr.update(0.0f);

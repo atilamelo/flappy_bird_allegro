@@ -14,7 +14,7 @@ public:
     bool updated        = false;
     bool drawn          = false;
 
-    void loadAssets() override            { loadCalled = true; }
+    void loadAssets()            { loadCalled = true; }
     void processEvent(const ALLEGRO_EVENT&) override { eventProcessed = true; }
     void update(float) override           { updated = true; }
     void draw() override                  { drawn = true; }
@@ -23,17 +23,17 @@ public:
 TEST_SUITE("SceneManager Tests") {
     TEST_CASE("Initial state and shutdown") {
         SceneManager mgr;
-        CHECK(mgr.is_running());
+        CHECK(mgr.isRunning());
         mgr.shutdown();
-        CHECK_FALSE(mgr.is_running());
+        CHECK_FALSE(mgr.isRunning());
     }
 
-    TEST_CASE("set_current_scene delays activation until update") {
+    TEST_CASE("setCurrentScene delays activation until update") {
         SceneManager mgr;
         auto scene = std::make_unique<DummyScene>();
         DummyScene* ptr = scene.get();
         
-        mgr.set_current_scene(std::move(scene));
+        mgr.setCurrentScene(std::move(scene));
         
         // Cena não deve estar ativa antes do update
         ALLEGRO_EVENT ev{};
@@ -64,15 +64,15 @@ TEST_SUITE("SceneManager Tests") {
         SUBCASE("Update")        { CHECK_NOTHROW(mgr.update(0.1f)); }
     }
 
-    TEST_CASE("Multiple set_current_scene overwrites previous") {
+    TEST_CASE("Multiple setCurrentScene overwrites previous") {
         SceneManager mgr;
         auto first  = std::make_unique<DummyScene>();
         auto second = std::make_unique<DummyScene>();
         DummyScene* ptr1 = first.get();
         DummyScene* ptr2 = second.get();
 
-        mgr.set_current_scene(std::move(first));
-        mgr.set_current_scene(std::move(second));
+        mgr.setCurrentScene(std::move(first));
+        mgr.setCurrentScene(std::move(second));
         
         mgr.update(0.0f);
         
@@ -85,7 +85,7 @@ TEST_SUITE("SceneManager Tests") {
         auto scene = std::make_unique<DummyScene>();
         DummyScene* ptr = scene.get();
         
-        mgr.set_current_scene(std::move(scene));
+        mgr.setCurrentScene(std::move(scene));
         mgr.update(0.0f);
         
         // Verifica que loadAssets() NÃO foi chamado

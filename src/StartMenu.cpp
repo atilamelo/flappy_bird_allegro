@@ -123,7 +123,7 @@ void StartMenu::processEvent(const ALLEGRO_EVENT &event)
         { // Iniciar
             if (editbox->text->slen >= 3 && editbox->text->slen <= 20)
             {
-                sceneManager->set_current_scene(std::make_unique<GameScene>(sceneManager));
+                sceneManager->setCurrentScene(std::make_unique<GameScene>(sceneManager));
             }
             else
             {

@@ -4,12 +4,12 @@
 #include <iostream>
 #include <allegro5/allegro_image.h>
 #include "widgetz/widgetz.h"
-#include "EndMenu.hpp"
-#include "Scene.hpp"
+#include "scenes/EndMenu.hpp"
+#include "core/Scene.hpp"
 #include "Constants.hpp"
-#include "SceneManager.hpp"
-#include "GameScene.hpp"
-#include "StartMenu.hpp"
+#include "managers/SceneManager.hpp"
+#include "scenes/GameScene.hpp"
+#include "scenes/StartMenu.hpp"
 
 EndMenu::EndMenu(SceneManager *sceneManager) 
     : Scene(sceneManager) {
@@ -71,11 +71,11 @@ void EndMenu::processEvent(const ALLEGRO_EVENT& event) {
         case WZ_BUTTON_PRESSED:
             if ((int)e.user.data1 == 11) {
                 std::cout << "Voltando ao jogo..." << std::endl;
-                sceneManager->set_current_scene(std::make_unique<GameScene>(sceneManager));
+                sceneManager->setCurrentScene(std::make_unique<GameScene>(sceneManager));
             }
             if ((int)e.user.data1 == 12) {
                 std::cout << "Reiniciando o jogo..." << std::endl;
-                sceneManager->set_current_scene(std::make_unique<StartMenu>(sceneManager));
+                sceneManager->setCurrentScene(std::make_unique<StartMenu>(sceneManager));
             }
             if ((int)e.user.data1 == 13) {
                 std::cout << "Carregando placar..." << std::endl;
