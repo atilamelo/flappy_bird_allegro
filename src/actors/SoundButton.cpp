@@ -13,7 +13,6 @@ void SoundButton::draw() const {
 }
 
 void SoundButton::processEvent(const ALLEGRO_EVENT& event) {
-      std::cout << "Recebi evento tipo: " << event.type << std::endl;
     if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
         float mx = event.mouse.x;
         float my = event.mouse.y;

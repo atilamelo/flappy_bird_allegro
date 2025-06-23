@@ -5,9 +5,9 @@
 #include <allegro5/allegro_image.h>
 #include "widgetz/widgetz.h"
 #include "scenes/EndMenu.hpp"
-#include "Scene.hpp"
+#include "core/Scene.hpp"
 #include "Constants.hpp"
-#include "SceneManager.hpp"
+#include "managers/SceneManager.hpp"
 #include "scenes/GameScene.hpp"
 #include "scenes/StartMenu.hpp"
 

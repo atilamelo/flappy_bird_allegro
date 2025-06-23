@@ -129,7 +129,6 @@ void GameScene::updatePlaying(float deltaTime) {
     timeSinceLastPipe += deltaTime;
     if (timeSinceLastPipe >= PIPE_INTERVAL) {
         spawnPipe();
-        gSound->play_point();
         timeSinceLastPipe = 0.0f;
     }
 
@@ -137,6 +136,7 @@ void GameScene::updatePlaying(float deltaTime) {
     
     for (auto& pipePair : pipePool.getPipes()) {
         if (pipePair->isActive() && pipePair->hasPassed(*bird)) {
+            gSound->play_point();
             scoreManager.increaseScore();
         }
     }
