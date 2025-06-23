@@ -52,5 +52,5 @@ public:
 
     void processEvent(const ALLEGRO_EVENT& event) override;
     void update(float deltaTime) override;
-    void draw() override;
+    void draw() const override;
 };

@@ -122,7 +122,7 @@ void GameScene::update(float deltaTime) {
 }
 
 // O loop de draw agora é simples e genérico, e respeita a ordem das camadas.
-void GameScene::draw() {
+void GameScene::draw() const {
     // 1. Desenha todos os objetos que implementam IDrawable.
     for (const auto* drawable : drawables) {
         drawable->draw();

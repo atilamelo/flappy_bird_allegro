@@ -5,6 +5,8 @@
 #pragma once
 
 #include <allegro5/allegro.h>
+#include "interfaces/IDrawable.hpp"
+#include "interfaces/IUpdatable.hpp"
 
 // Forward declaration para evitar dependência circular
 class SceneManager;
@@ -16,7 +18,7 @@ class SceneManager;
  * Define o contrato que todas as cenas devem seguir, incluindo métodos para
  * processar eventos, atualizar a lógica e desenhar na tela.
  */
-class Scene
+class Scene : public IDrawable, public IUpdatable
 {
 protected:
     SceneManager* sceneManager;
@@ -36,6 +38,6 @@ public:
 
     // --- Métodos Virtuais Puros (Contrato) ---
     virtual void processEvent(const ALLEGRO_EVENT& event) = 0;
-    virtual void update(float deltaTime) = 0;
-    virtual void draw() = 0;
+    virtual void update(float deltaTime) override {};
+    virtual void draw() const override {};
 };

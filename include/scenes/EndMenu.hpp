@@ -21,6 +21,6 @@ class EndMenu : public Scene {
         void processEvent(const ALLEGRO_EVENT& event) override;
         void update(float deltaTime) override;
         void gameOver();
-        void draw() override;
+        void draw() const override;
         void getQueueFrom(ALLEGRO_EVENT_QUEUE& queue);
 };

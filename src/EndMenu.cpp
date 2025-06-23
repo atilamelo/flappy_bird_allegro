@@ -97,6 +97,6 @@ void EndMenu::gameOver() {
 
 }
 
-void EndMenu::draw() {    
+void EndMenu::draw() const {    
     wz_draw(gui);
 }

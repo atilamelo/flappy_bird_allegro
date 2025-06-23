@@ -162,7 +162,7 @@ void StartMenu::update(float deltaTime)
     }
 }
 
-void StartMenu::draw()
+void StartMenu::draw() const
 {
     // 1. Desenha o fundo primeiro
     if (background_image)

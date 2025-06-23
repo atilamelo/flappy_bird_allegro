@@ -99,5 +99,5 @@ public:
     /**
      * @brief Desenha todos os objetos de jogo desenháveis na tela, respeitando a ordem das camadas.
      */
-    void draw() override;
+    void draw() const override;
 };
