@@ -4,7 +4,7 @@
 #include <vector>
 #include "actors/PipePair.hpp"
 
-class PipePool
+class PipePool : public IDrawable, public IUpdatable
 {
 private:
     std::vector<std::unique_ptr<PipePair>> pool;
@@ -17,6 +17,7 @@ public:
         return reinterpret_cast<std::vector<PipePair*>&>(pool);
      }
 
-    void update(float deltaTime);
-    void draw();
+    void update(float deltaTime) override;
+    void draw() const override;
+    void reset();
 };
