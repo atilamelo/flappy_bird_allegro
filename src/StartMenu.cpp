@@ -9,6 +9,8 @@
 
 #include <iostream>
 #include <allegro5/allegro_image.h>
+#include <managers/ResourceManager.hpp>
+#include <memory>
 
 StartMenu::StartMenu(SceneManager* sceneManager) 
     : Scene(sceneManager) {
@@ -39,12 +41,40 @@ void StartMenu::loadAssets() {
     // 1. CARREGAMENTO DOS ASSETS MANUAIS (Fundo e Logo)
     background_image = al_load_bitmap("data/background-day.png");
     logo_image = al_load_bitmap("data/flappy_bird.png");
- 
+
+    
+    std::vector<ALLEGRO_BITMAP*> bird_frames = {
+        ResourceManager::getInstance().getBitmap("yellowbird-downflap"),
+        ResourceManager::getInstance().getBitmap("yellowbird-midflap"),
+        ResourceManager::getInstance().getBitmap("yellowbird-upflap")
+    };
+    
+    // 2. CÁLCULO DE POSIÇÃO E TAMANHO PARA CENTRALIZAÇÃO
     if (logo_image) {
-        logo_w = al_get_bitmap_width(logo_image) * 2.0f;
-        logo_h = al_get_bitmap_height(logo_image) * 2.0f;
-        logo_x = (BUFFER_W - logo_w) / 2;
-        logo_y = 50.0f;
+        // --- LÓGICA DE CENTRALIZAÇÃO CORRIGIDA ---
+
+        // 2.1. Calcula a largura dos componentes individuais
+        float logo_w = al_get_bitmap_width(logo_image) * 2.0f;
+        float logo_h = al_get_bitmap_height(logo_image) * 2.0f;
+        // A largura do pássaro animado vem das suas constantes
+        float bird_w = BIRD_WIDTH; 
+
+        // 2.2. Define o espaçamento desejado entre o logo e o pássaro
+        const float spacing = 10.0f;
+
+        // 2.3. Calcula a largura TOTAL do bloco (logo + espaço + pássaro)
+        float total_visual_width = logo_w + spacing + bird_w;
+
+        // 2.4. CALCULA A POSIÇÃO X CORRETA para centralizar o bloco inteiro
+        float logo_x = (BUFFER_W - total_visual_width) / 2;
+        
+        // A posição Y continua a mesma
+        float logo_y = 50.0f;
+        
+        // 2.5. Cria o objeto FlappyLogo com a posição X corrigida.
+        // A largura e altura passadas ainda são as do logo de texto, pois a
+        // classe FlappyLogo usa isso como base para seus cálculos internos.
+        flappyLogo = std::make_unique<FlappyLogo>(logo_x, logo_y, logo_w, logo_h, logo_image, bird_frames);
     }
 
     // 2. CONFIGURAÇÃO DA GUI E LAYOUT ÚNICO
@@ -101,17 +131,11 @@ void StartMenu::draw() {
     if (background_image) {
         al_draw_bitmap(background_image, 0, 0, 0);
     }
+
+    flappyLogo->draw();
     
     // 2. Desenha todos os widgets da GUI (botões, editbox) por cima do fundo.
     wz_draw(gui);
-    
-    // 3. Desenha o logo por último, para que ele fique na frente de tudo.
-    if (logo_image) {
-        al_draw_scaled_bitmap(logo_image,
-            0, 0, al_get_bitmap_width(logo_image), al_get_bitmap_height(logo_image),
-            logo_x, logo_y, logo_w, logo_h, 0
-        );
-    }
 }
 void StartMenu::processEvent(const ALLEGRO_EVENT& event) {
     ALLEGRO_EVENT e = event;
@@ -133,4 +157,5 @@ void StartMenu::processEvent(const ALLEGRO_EVENT& event) {
 
 void StartMenu::update(float deltaTime) {
     wz_update(gui, deltaTime);
+    flappyLogo->update(deltaTime);
 }

@@ -10,6 +10,8 @@
 #include "widgetz/widgetz.h"
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro.h>
+#include "actors/menu/FlappyLogo.hpp"
+#include <memory>
 
 class SceneManager;
 
@@ -17,7 +19,7 @@ class SceneManager;
  * @class StartMenu
  * @brief Gerencia e exibe a tela de menu principal.
  *
- * Esta cena renderiza os elementos estáticos (fundo, logo) diretamente com
+ * Esta cena renderiza os elementos estáticos (fundo, logoTexture) diretamente com
  * Allegro e utiliza a biblioteca WidgetZ para os componentes interativos.
  */
 class StartMenu : public Scene
@@ -25,9 +27,10 @@ class StartMenu : public Scene
 private:
     // --- Recursos Gráficos Manuais ---
     ALLEGRO_BITMAP* background_image; ///< Bitmap da imagem de fundo.
-    ALLEGRO_BITMAP* logo_image;       ///< Bitmap da imagem do logo.
-    float logo_x, logo_y;             ///< Posição X e Y para desenhar o logo.
-    float logo_w, logo_h;             ///< Largura e altura para desenhar o logo (escalado).
+    ALLEGRO_BITMAP* logo_image;       ///< Bitmap da imagem do logoTexture.
+    std::unique_ptr<FlappyLogo> flappyLogo;
+    float logo_x, logo_y;             ///< Posição X e Y para desenhar o logoTexture.
+    float logo_w, logo_h;             ///< Largura e altura para desenhar o logoTexture (escalado).
 
     // --- Membros da Biblioteca WidgetZ (Apenas para UI Interativa) ---
     WZ_WIDGET* gui;         ///< O widget raiz que contém os botões e editbox.

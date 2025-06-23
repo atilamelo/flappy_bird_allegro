@@ -6,6 +6,7 @@
 #include "scenes/GameScene.hpp"
 #include "managers/ResourceManager.hpp"
 #include "Constants.hpp"
+#include "scenes/StartMenu.hpp"
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_image.h>
@@ -54,7 +55,7 @@ void Game::initialize() {
 
     // Prepara a cena inicial
     sceneManager.setEventQueue(queue);
-    sceneManager.set_current_scene(std::make_unique<GameScene>(&sceneManager));
+    sceneManager.set_current_scene(std::make_unique<StartMenu>(&sceneManager));
 
     isRunning = true;
 }
