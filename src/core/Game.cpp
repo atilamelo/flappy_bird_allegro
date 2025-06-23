@@ -3,9 +3,10 @@
  * @brief Implementação da classe principal Game.
  */
 #include "core/Game.hpp"
-#include "core/GameScene.hpp"
+#include "scenes/GameScene.hpp"
 #include "managers/ResourceManager.hpp"
 #include "Constants.hpp"
+#include "scenes/StartMenu.hpp"
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_image.h>
@@ -51,9 +52,35 @@ void Game::initialize() {
 
     // Carrega recursos globais
     ResourceManager::getInstance().loadAtlasJson("assets/sprites/sprite_sheet.json", "atlas", "assets/sprites/sprite_sheet.png");
+    ResourceManager& rm = ResourceManager::getInstance();
+    try {
+        // Imagens do Menu
+        rm.loadBitmap("logo_text", "data/flappy_bird.png");
+        
+        // Botões do Menu
+        rm.loadBitmap("btn_start_normal", "data/home_start_button.png");
+        rm.loadBitmap("btn_start_pressed", "data/home_start_button_pressed.png");
+        rm.loadBitmap("btn_start_focused", "data/home_start_button_focused.png");
+        
+        rm.loadBitmap("btn_rank_normal", "data/rank_button.png");
+        rm.loadBitmap("btn_rank_pressed", "data/rank_button_pressed.png");
+        rm.loadBitmap("btn_rank_focused", "data/rank_button_focused.png");
+
+        rm.loadBitmap("btn_quit_normal", "data/quit_button.png");
+        rm.loadBitmap("btn_quit_pressed", "data/quit_button_pressed.png");
+        rm.loadBitmap("btn_quit_focused", "data/quit_button_focused.png");
+
+        rm.loadBitmap("edit_box", "data/editbox.png");
+        
+        std::cout << "Recursos carregados com sucesso." << std::endl;
+    } catch (const std::runtime_error& e) {
+        std::cerr << "Erro fatal ao carregar recursos: " << e.what() << std::endl;
+        exit(-1);
+    }
 
     // Prepara a cena inicial
-    sceneManager.set_current_scene(std::make_unique<GameScene>(&sceneManager));
+    sceneManager.setEventQueue(queue);
+    sceneManager.set_current_scene(std::make_unique<StartMenu>(&sceneManager));
 
     isRunning = true;
 }

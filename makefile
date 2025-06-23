@@ -1,7 +1,7 @@
 # --- Compilador e Flags ---
 CXX = g++
 CXXFLAGS = -std=c++17 -g -Wall
-LDFLAGS = $(shell pkg-config --libs allegro-5 allegro_font-5 allegro_image-5 allegro_primitives-5 allegro_audio-5 allegro_acodec-5)
+LDFLAGS = $(shell pkg-config --libs allegro-5 allegro_font-5 allegro_image-5 allegro_primitives-5 allegro_audio-5 allegro_acodec-5 allegro_ttf-5)
 TESTFLAGS = -I./doctest -DTESTING 
 
 # --- Diretórios ---
@@ -13,6 +13,10 @@ TESTDIR = tests
 
 CXXFLAGS += -I$(INCDIR)
 CXXFLAGS += -MMD -MP
+
+# INCLUDES WIDGETZ
+CXXFLAGS += -I/usr/local/include
+LDLIBS = -L/usr/local/lib -lwidgetz
 
 # --- Arquivos ---
 TARGET = $(BINDIR)/flappy_bird
@@ -34,7 +38,7 @@ all: $(TARGET) assets
 $(TARGET): $(filter-out $(OBJDIR)/main.o, $(OBJECTS)) $(OBJDIR)/main.o
 	@echo "Ligando os arquivos para criar o executável do jogo..."
 	@mkdir -p $(BINDIR)
-	$(CXX) $(filter-out $(OBJDIR)/main.o, $(OBJECTS)) $(OBJDIR)/main.o -o $(TARGET) $(LDFLAGS)
+	$(CXX) $(filter-out $(OBJDIR)/main.o, $(OBJECTS)) $(OBJDIR)/main.o -o $(TARGET) $(LDLIBS) $(LDFLAGS)
 	@echo "Executável '$(TARGET)' criado com sucesso!"
 
 # Compilação de objetos do jogo
