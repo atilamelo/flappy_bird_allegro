@@ -26,9 +26,9 @@ TEST_SUITE("Testes do SceneManager") {
     // Testa o estado inicial do gerenciador e o método shutdown()
     TEST_CASE("Estado inicial é running e shutdown interrompe") {
         SceneManager mgr;
-        CHECK(mgr.is_running() == true); // O gerenciador deve iniciar ativo
+        CHECK(mgr.isRunning() == true); // O gerenciador deve iniciar ativo
         mgr.shutdown();
-        CHECK(mgr.is_running() == false); // Após shutdown, deve encerrar corretamente
+        CHECK(mgr.isRunning() == false); // Após shutdown, deve encerrar corretamente
     }
 
     // Verifica se a troca de cena é adiada até a chamada de update()
