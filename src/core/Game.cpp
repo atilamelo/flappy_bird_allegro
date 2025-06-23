@@ -79,7 +79,14 @@ void Game::initialize() {
 
         rm.loadBitmap("edit_box", "data/editbox.png");
         rm.loadBitmap("get_ready", "assets/sprites/getready.png");
-        
+
+        rm.loadBitmap("bronze_medal", "assets/sprites/bronze_medal.png");
+        rm.loadBitmap("silver_medal", "assets/sprites/silver_medal.png");
+        rm.loadBitmap("gold_medal", "assets/sprites/gold_medal.png");
+        rm.loadBitmap("empty_medal", "assets/sprites/empty_medal.png");
+        rm.loadBitmap("score_board", "assets/sprites/score_board.png");
+
+
         std::cout << "Recursos carregados com sucesso." << std::endl;
     } catch (const std::runtime_error& e) {
         std::cerr << "Erro fatal ao carregar recursos: " << e.what() << std::endl;

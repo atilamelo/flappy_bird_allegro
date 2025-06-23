@@ -34,6 +34,7 @@ GameScene::GameScene(SceneManager* sceneManager, Theme theme)
     flashEffect = std::make_unique<SplashScreen>(0.5f, al_map_rgb(255, 255, 255)); // Flash branco de meio segundo
     gameOverScreen = std::make_unique<GameOverScreen>(100.0f, 0.7f, ResourceManager::getInstance().getBitmap("gameover"));
     getReadyUI = std::make_unique<GetReadyUI>();
+    scoreBoard = std::make_unique<ScoreBoard>(180.0f, 0.6f, scoreManager, 2.0f);
 
     al_set_blender(ALLEGRO_ADD, ALLEGRO_ALPHA, ALLEGRO_INVERSE_ALPHA);
   
@@ -62,6 +63,7 @@ void GameScene::buildEntityLists() {
     updatables.push_back(flashEffect.get()); 
     updatables.push_back(gameOverScreen.get());
     updatables.push_back(getReadyUI.get());
+    updatables.push_back(scoreBoard.get());
 
     // Ordem é importante aqui, define em que ordem vai ser desenhado
     drawables.push_back(background.get());
@@ -70,10 +72,11 @@ void GameScene::buildEntityLists() {
     drawables.push_back(bird.get());
     drawables.push_back(&scoreManager);
     if(soundButton) 
-        drawables.push_back(soundButton.get()); 
+    drawables.push_back(soundButton.get()); 
     drawables.push_back(flashEffect.get());
     drawables.push_back(gameOverScreen.get());
     drawables.push_back(getReadyUI.get());
+    drawables.push_back(scoreBoard.get()); 
 }
 
 void GameScene::processEvent(const ALLEGRO_EVENT& event) {
@@ -118,7 +121,16 @@ void GameScene::update(float deltaTime) {
             gameOverScreen->startAnimation();
             bird->setPhysicsEnabled(false);
         }
+    }     else if (state == GameState::GAME_OVER) {
+        if (gameOverScreen->isAnimationFinished() && !scoreBoard->isActive()) {
+            // Aqui você precisaria ter uma forma de buscar a melhor pontuação
+            // (ex: de um arquivo ou de uma variável estática).
+            // Por enquanto, usaremos um valor fixo como exemplo.
+            int best = 50; // TODO: Implementar lógica de Best Score
+            scoreBoard->show(scoreManager.getScore(), best);
+        }
     }
+
 }
 
 // O loop de draw agora é simples e genérico, e respeita a ordem das camadas.
@@ -185,6 +197,7 @@ void GameScene::restart() {
     scoreManager.reset();
     gameOverScreen->reset();
     flashEffect->reset();
+    scoreBoard->reset(); 
     getReadyUI->show();
 
     timeSinceLastPipe = 0.0f;

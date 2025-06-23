@@ -37,6 +37,8 @@ public:
      */
     void startAnimation();
 
+    bool isAnimationFinished() { return isActive; };
+
     /**
      * @brief Reseta o estado do objeto para invisível/inativo.
      */

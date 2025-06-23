@@ -11,10 +11,11 @@ public:
     void increaseScore();
     void draw() const override;
     void reset();
+    void drawNumberSprites(int number, int drawX, int drawY) const;
+    int getScore() { return currentScore; };
 
 private:
     int currentScore = 0;
     ALLEGRO_BITMAP* digitSprites[10];
 
-    void drawNumberSprites(int number, int drawX, int drawY) const;
 };

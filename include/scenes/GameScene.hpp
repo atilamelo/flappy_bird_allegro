@@ -16,6 +16,7 @@
 #include "actors/effects/SplashScreen.hpp"
 #include "actors/ui/GameOverScreen.hpp"
 #include "actors/ui/GetReadyUI.hpp"
+#include "actors/ui/ScoreBoard.hpp"
 #include "managers/ScoreManager.hpp"
 #include "core/GameSound.hpp"
 #include "actors/SoundButton.hpp"
@@ -52,6 +53,7 @@ private:
     std::unique_ptr<SplashScreen> flashEffect;
     std::unique_ptr<GameOverScreen> gameOverScreen;
     std::unique_ptr<GetReadyUI> getReadyUI;
+    std::unique_ptr<ScoreBoard> scoreBoard;
  
     PipePool pipePool;
     ScoreManager scoreManager;
