@@ -28,6 +28,7 @@ GameScene::GameScene(SceneManager* sceneManager)
     
     background = std::make_unique<ParallaxBackground>(ResourceManager::getInstance().getBitmap("background-day"), BACKGROUND_SCROLL_SPEED);
     floor = std::make_unique<Floor>(ResourceManager::getInstance().getBitmap("base"));
+    flashEffect = std::make_unique<SplashScreen>(0.5f, al_map_rgb(255, 255, 255)); // Flash branco de meio segundo
 
     // --- 2. Construção das Listas de Interfaces ---
     // Populamos as listas de observadores para os loops polimórficos.
@@ -44,6 +45,7 @@ void GameScene::buildEntityLists() {
     updatables.push_back(background.get());
     updatables.push_back(floor.get());
     updatables.push_back(&pipePool);
+    updatables.push_back(flashEffect.get()); 
 
     // Ordem é importante aqui, define em que ordem vai ser desenhado
     drawables.push_back(background.get());
@@ -51,6 +53,7 @@ void GameScene::buildEntityLists() {
     drawables.push_back(floor.get());
     drawables.push_back(bird.get());
     drawables.push_back(&scoreManager);
+    drawables.push_back(flashEffect.get()); 
 }
 
 void GameScene::processEvent(const ALLEGRO_EVENT& event) {
@@ -137,14 +140,13 @@ void GameScene::initiateDeathSequence() {
     if (state == GameState::PLAYING) {
         state = GameState::DYING;
         bird->die();
+        flashEffect->trigger();
 
-        // Desativa a atualização da PipePool para congelar os canos.
-        // Isso requer uma pequena modificação na lógica de update principal.
-        // Uma forma é remover a pipePool da lista de updatables.
-        auto it = std::find(updatables.begin(), updatables.end(), &pipePool);
-        if (it != updatables.end()) {
-            updatables.erase(it);
-        }
+        // Remove os objetos que não devem mais ser atualizados durante a sequência de morte.
+        updatables.erase(std::remove(updatables.begin(), updatables.end(), &pipePool), updatables.end()); // Canos param de se mexer
+        updatables.erase(std::remove(updatables.begin(), updatables.end(), background.get()), updatables.end()); // Fundo para de rolar
+        updatables.erase(std::remove(updatables.begin(), updatables.end(), floor.get()), updatables.end());     // Chão para de rolar
+        
     }
 }
 

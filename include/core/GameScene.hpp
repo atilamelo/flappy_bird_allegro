@@ -13,6 +13,7 @@
 #include "actors/ParallaxBackground.hpp"
 #include "actors/Floor.hpp"
 #include "actors/PipePool.hpp"
+#include "actors/effects/SplashScreen.hpp"
 #include "managers/ScoreManager.hpp"
 #include <memory>
 #include <vector>
@@ -41,6 +42,8 @@ private:
     std::unique_ptr<Bird> bird;
     std::unique_ptr<ParallaxBackground> background;
     std::unique_ptr<Floor> floor;
+    std::unique_ptr<SplashScreen> flashEffect;
+     
     PipePool pipePool;
     ScoreManager scoreManager;
     

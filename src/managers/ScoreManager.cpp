@@ -21,7 +21,7 @@ void ScoreManager::increaseScore() {
 void ScoreManager::draw() const {
     // Centralizando o score
     float currentScoreX = BUFFER_W / 2.0f;
-    float currentScoreY = 50.0f;
+    float currentScoreY = 10.0f;
 
     drawNumberSprites(currentScore, currentScoreX, currentScoreY);
 }
@@ -30,24 +30,55 @@ void ScoreManager::draw() const {
 void ScoreManager::drawNumberSprites(int number, int drawX, int drawY) const {
     if (number < 0) number = 0;
 
+    // 1. FATOR DE ESCALA
+    // Defina o quão pequeno você quer o placar. 1.0f é o tamanho original,
+    const float scale = 0.75f;
+
     std::string s = std::to_string(number);
     
-    int currentDigitX = drawX;
-
-    int totalWidth = 0;
+    // 2. CALCULA A LARGURA TOTAL JÁ COM A ESCALA APLICADA
+    // Isso é crucial para a centralização correta.
+    float totalScaledWidth = 0;
     for (char c : s) {
         int digit = c - '0';
         if (digit >= 0 && digit <= 9 && digitSprites[digit]) {
-            totalWidth += al_get_bitmap_width(digitSprites[digit]);
+            // Soma a largura de cada dígito, já multiplicada pela escala.
+            totalScaledWidth += al_get_bitmap_width(digitSprites[digit]) * scale;
         }
     }
-    currentDigitX = drawX - (totalWidth / 2.0f);
 
+    // 3. CENTRALIZA COM BASE NA LARGURA TOTAL ESCALADA
+    // Calcula a posição inicial X para que o número como um todo fique centralizado em drawX.
+    float currentDigitX = drawX - (totalScaledWidth / 2.0f);
+
+    // 4. DESENHA CADA DÍGITO DE FORMA ESCALADA
     for (char c : s) {
         int digit = c - '0';
         if (digit >= 0 && digit <= 9 && digitSprites[digit]) {
-            al_draw_bitmap(digitSprites[digit], currentDigitX, drawY, 0);
-            currentDigitX += al_get_bitmap_width(digitSprites[digit]);
+            ALLEGRO_BITMAP* digitSprite = digitSprites[digit];
+
+            // Pega as dimensões originais do sprite do dígito
+            float original_w = al_get_bitmap_width(digitSprite);
+            float original_h = al_get_bitmap_height(digitSprite);
+
+            // Calcula as novas dimensões escaladas
+            float scaled_w = original_w * scale;
+            float scaled_h = original_h * scale;
+            
+            // Usa a função de desenho escalado
+            al_draw_scaled_bitmap(digitSprite,
+                0, 0,           // Posição de origem no sprite (canto superior esquerdo)
+                original_w,     // Largura original do sprite
+                original_h,     // Altura original do sprite
+                currentDigitX,  // Posição X de destino na tela
+                drawY,          // Posição Y de destino na tela
+                scaled_w,       // Largura final (escalada) na tela
+                scaled_h,       // Altura final (escalada) na tela
+                0               // Flags
+            );
+            
+            // Avança a posição X para o próximo dígito usando a LARGURA ESCALADA.
+            currentDigitX += scaled_w;
         }
     }
 }
