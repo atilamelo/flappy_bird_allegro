@@ -41,8 +41,6 @@ void SplashScreen::update(float deltaTime) {
 void SplashScreen::draw() const {
     if (!isActive) return;
 
-    al_set_blender(ALLEGRO_ADD, ALLEGRO_ALPHA, ALLEGRO_INVERSE_ALPHA);
-
     ALLEGRO_COLOR a_color = color;
     a_color.a = currentAlpha;
 

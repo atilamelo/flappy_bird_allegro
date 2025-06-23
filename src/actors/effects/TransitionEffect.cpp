@@ -47,8 +47,6 @@ void TransitionEffect::update(float deltaTime) {
 
 void TransitionEffect::draw() const {
     if (currentAlpha == 0.0f) return;
-
-    al_set_blender(ALLEGRO_ADD, ALLEGRO_ALPHA, ALLEGRO_INVERSE_ALPHA);
     
     ALLEGRO_COLOR a_color = color;
     a_color.a = currentAlpha;

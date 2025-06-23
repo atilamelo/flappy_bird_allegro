@@ -31,6 +31,9 @@ GameScene::GameScene(SceneManager* sceneManager)
     floor = std::make_unique<Floor>(ResourceManager::getInstance().getBitmap("base"));
     flashEffect = std::make_unique<SplashScreen>(0.5f, al_map_rgb(255, 255, 255)); // Flash branco de meio segundo
     gameOverScreen = std::make_unique<GameOverScreen>(100.0f, 0.7f, ResourceManager::getInstance().getBitmap("gameover"));
+    getReadyUI = std::make_unique<GetReadyUI>();
+
+    al_set_blender(ALLEGRO_ADD, ALLEGRO_ALPHA, ALLEGRO_INVERSE_ALPHA);
 
     // --- 2. Construção das Listas de Interfaces ---
     // Populamos as listas de observadores para os loops polimórficos.
@@ -49,6 +52,7 @@ void GameScene::buildEntityLists() {
     updatables.push_back(&pipePool);
     updatables.push_back(flashEffect.get()); 
     updatables.push_back(gameOverScreen.get());
+    updatables.push_back(getReadyUI.get());
 
     // Ordem é importante aqui, define em que ordem vai ser desenhado
     drawables.push_back(background.get());
@@ -58,6 +62,7 @@ void GameScene::buildEntityLists() {
     drawables.push_back(&scoreManager);
     drawables.push_back(flashEffect.get());
     drawables.push_back(gameOverScreen.get());
+    drawables.push_back(getReadyUI.get());
 }
 
 void GameScene::processEvent(const ALLEGRO_EVENT& event) {
@@ -68,6 +73,7 @@ void GameScene::processEvent(const ALLEGRO_EVENT& event) {
             state = GameState::PLAYING;
             bird->setPhysicsEnabled(true);
             bird->setHoverEnabled(false);
+            getReadyUI->hide(); 
             bird->jump();
             break;
         case GameState::PLAYING:
@@ -163,6 +169,7 @@ void GameScene::restart() {
     scoreManager.reset();
     gameOverScreen->reset();
     flashEffect->reset();
+    getReadyUI->show();
 
     timeSinceLastPipe = 0.0f;
     

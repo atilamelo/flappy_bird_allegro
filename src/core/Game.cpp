@@ -71,6 +71,7 @@ void Game::initialize() {
         rm.loadBitmap("btn_quit_focused", "data/quit_button_focused.png");
 
         rm.loadBitmap("edit_box", "data/editbox.png");
+        rm.loadBitmap("get_ready", "assets/sprites/getready.png");
         
         std::cout << "Recursos carregados com sucesso." << std::endl;
     } catch (const std::runtime_error& e) {
