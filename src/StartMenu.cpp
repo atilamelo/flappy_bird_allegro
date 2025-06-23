@@ -3,8 +3,8 @@
  * @brief Implementação dos métodos da cena do menu principal.
  */
 #include "StartMenu.hpp"
-#include "GameScene.hpp"
-#include "SceneManager.hpp"
+#include "core/GameScene.hpp"
+#include "managers/SceneManager.hpp"
 #include "Constants.hpp"
 
 #include <iostream>

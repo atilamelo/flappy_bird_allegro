@@ -6,7 +6,7 @@
  */
 #pragma once
 
-#include "Scene.hpp"
+#include "core/Scene.hpp"
 #include "widgetz/widgetz.h"
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro.h>

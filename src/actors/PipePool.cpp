@@ -1,4 +1,4 @@
-#include "util/PipePool.hpp"
+#include "actors/PipePool.hpp"
 #include <iostream>
 
 PipePool::PipePool(size_t initialSize)
@@ -33,10 +33,16 @@ void PipePool::update(float deltaTime)
     }
 }
 
-void PipePool::draw()
+void PipePool::draw() const
 {
     for (auto& pipePair : pool)
     {
         pipePair->draw();
+    }
+}
+
+void PipePool::reset() {
+    for (auto& pipePair : pool) {
+        pipePair->reset();
     }
 }

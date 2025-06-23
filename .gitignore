@@ -1,3 +1,8 @@
-obj/
+run_tests
+score_system
+programa
+*.csv
+*.o
 bin/
+obj/
 .vscode/
