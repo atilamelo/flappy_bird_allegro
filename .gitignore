@@ -6,3 +6,4 @@ programa
 bin/
 obj/
 .vscode/
+tmpfile* 
