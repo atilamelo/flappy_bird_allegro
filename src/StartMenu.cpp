@@ -31,7 +31,6 @@ void StartMenu::buildUI()
     ResourceManager &rm = ResourceManager::getInstance();
 
     // 1. POSICIONAMENTO DA LOGO
-
     std::vector<ALLEGRO_BITMAP *> bird_frames = {
         rm.getBitmap("yellowbird-downflap"), rm.getBitmap("yellowbird-midflap"), rm.getBitmap("yellowbird-upflap")};
 
@@ -42,6 +41,7 @@ void StartMenu::buildUI()
     float logo_y = 50.0f;
 
     flappyLogo = std::make_unique<FlappyLogo>(logo_x, logo_y, logo_w, logo_h, rm.getBitmap("logo_text"), bird_frames);
+    background_image = rm.getBitmap("background-day");
 
     // 2. CONFIGURAÇÃO DA GUI (WIDGETZ)
     memset(&skin_theme, 0, sizeof(skin_theme));
@@ -64,7 +64,6 @@ void StartMenu::buildUI()
     // Dimensões originais dos botões
     float play_button_w = 52;
     float rank_button_w = 52;
-    float quit_button_w = 40;
 
     // Calcula a largura total necessária para a fileira de botões
     float total_buttons_width = play_button_w + rank_button_w + (3 * h_spacing);
