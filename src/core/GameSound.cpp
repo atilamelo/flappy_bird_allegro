@@ -22,6 +22,7 @@ void GameSound::init() {
     } else {
         al_set_audio_stream_playmode(back_music, ALLEGRO_PLAYMODE_LOOP);
         al_attach_audio_stream_to_mixer(back_music, al_get_default_mixer());
+        al_set_audio_stream_gain(back_music, 0.05f);
     }
 
     // Carrega os sons de evento como ALLEGRO_SAMPLE
@@ -29,6 +30,8 @@ void GameSound::init() {
     if (!point_sound) {
         std::cerr << "Erro ao carregar som de ponto: point.wav\n";
     }
+
+    
     died_sound = rm.loadSample("die", "assets/audio/die.wav");
     if (!died_sound) {
         std::cerr << "Erro ao carregar som de morte: die.wav\n";
