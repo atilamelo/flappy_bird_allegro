@@ -2,7 +2,7 @@
  * @file TransitionEffect.cpp
  * @brief Implementação da classe TransitionEffect.
  */
-#include "effects/TransitionEffect.hpp"
+#include "actors/effects/TransitionEffect.hpp"
 #include "Constants.hpp"
 #include <allegro5/allegro_primitives.h>
 

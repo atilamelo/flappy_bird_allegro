@@ -4,12 +4,12 @@
 #include <iostream>
 #include <allegro5/allegro_image.h>
 #include "widgetz/widgetz.h"
-#include "EndMenu.hpp"
+#include "scenes/EndMenu.hpp"
 #include "Scene.hpp"
 #include "Constants.hpp"
 #include "SceneManager.hpp"
-#include "GameScene.hpp"
-#include "StartMenu.hpp"
+#include "scenes/GameScene.hpp"
+#include "scenes/StartMenu.hpp"
 
 EndMenu::EndMenu(SceneManager *sceneManager) 
     : Scene(sceneManager) {

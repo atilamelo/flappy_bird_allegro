@@ -4,12 +4,15 @@
  */
 #include "core/Game.hpp"
 #include "scenes/GameScene.hpp"
+#include "actors/SoundButton.hpp"
 #include "managers/ResourceManager.hpp"
 #include "Constants.hpp"
 #include "scenes/StartMenu.hpp"
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_image.h>
+#include <allegro5/allegro_audio.h>
+#include <allegro5/allegro_acodec.h>
 #include <iostream>
 #include <chrono>
 #include <algorithm>
@@ -36,7 +39,11 @@ void Game::initialize() {
     must_init(al_init_font_addon(), "font addon");
     must_init(al_install_keyboard(), "keyboard");
     must_init(al_init_image_addon(), "image addon");
-
+    must_init(al_install_audio(), "al_install_audio()");
+    must_init(al_init_acodec_addon(), "al_init_acodec_addon()");
+    must_init(al_reserve_samples(16), "al_reserve_samples()");
+    must_init(al_install_mouse(), "al_install_mouse()");
+    
     timer = al_create_timer(1.0 / FPS);
     must_init(timer, "timer");
 
@@ -49,7 +56,7 @@ void Game::initialize() {
     al_register_event_source(queue, al_get_display_event_source(display));
     al_register_event_source(queue, al_get_timer_event_source(timer));
     al_register_event_source(queue, al_get_keyboard_event_source());
-
+    al_register_event_source(queue, al_get_mouse_event_source());
     // Carrega recursos globais
     ResourceManager::getInstance().loadAtlasJson("assets/sprites/sprite_sheet.json", "atlas", "assets/sprites/sprite_sheet.png");
     ResourceManager& rm = ResourceManager::getInstance();

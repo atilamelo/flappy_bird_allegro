@@ -8,6 +8,8 @@
 #include <allegro5/allegro_font.h>
 #include "managers/ResourceManager.hpp"
 #include "managers/SceneManager.hpp"
+#include "core/GameSound.hpp"
+#include "actors/SoundButton.hpp"
 #include <algorithm>
 #include "actors/ui/GameOverScreen.hpp"
 
@@ -31,7 +33,14 @@ GameScene::GameScene(SceneManager* sceneManager)
     floor = std::make_unique<Floor>(ResourceManager::getInstance().getBitmap("base"));
     flashEffect = std::make_unique<SplashScreen>(0.5f, al_map_rgb(255, 255, 255)); // Flash branco de meio segundo
     gameOverScreen = std::make_unique<GameOverScreen>(100.0f, 0.7f, ResourceManager::getInstance().getBitmap("gameover"));
+  
+    // Carregando as imagens do botão de som
+    ALLEGRO_BITMAP *img_on = al_load_bitmap("assets/sprites/som_0.bmp");
+    ALLEGRO_BITMAP *img_off = al_load_bitmap("assets/sprites/som_1.bmp");
 
+    gSound = std::make_unique<GameSound>();
+    gSound->init();
+    soundButton = std::make_unique<SoundButton>(10, 10, 20, 20, img_on, img_off, gSound.get());
     // --- 2. Construção das Listas de Interfaces ---
     // Populamos as listas de observadores para os loops polimórficos.
     buildEntityLists();
@@ -56,11 +65,16 @@ void GameScene::buildEntityLists() {
     drawables.push_back(floor.get());
     drawables.push_back(bird.get());
     drawables.push_back(&scoreManager);
+    if(soundButton) 
+        drawables.push_back(soundButton.get()); 
     drawables.push_back(flashEffect.get());
     drawables.push_back(gameOverScreen.get());
 }
 
 void GameScene::processEvent(const ALLEGRO_EVENT& event) {
+     if (soundButton)
+        soundButton->processEvent(event);
+
     if (event.type != ALLEGRO_EVENT_KEY_DOWN || event.keyboard.keycode != ALLEGRO_KEY_SPACE) return;
 
     switch (state) {
@@ -115,6 +129,7 @@ void GameScene::updatePlaying(float deltaTime) {
     timeSinceLastPipe += deltaTime;
     if (timeSinceLastPipe >= PIPE_INTERVAL) {
         spawnPipe();
+        gSound->play_point();
         timeSinceLastPipe = 0.0f;
     }
 
@@ -145,6 +160,7 @@ void GameScene::initiateDeathSequence() {
     if (state == GameState::PLAYING) {
         state = GameState::DYING;
         bird->die();
+        gSound->play_death();
         flashEffect->trigger();
 
         // Remove os objetos que não devem mais ser atualizados durante a sequência de morte.
