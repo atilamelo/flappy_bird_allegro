@@ -1,191 +1,310 @@
 {
-  "sprites": [
-    {
-      "fileName": "0",
-      "width": 24,
-      "height": 36,
-      "x": 812,
-      "y": 320
-    },
-    {
-      "fileName": "1",
-      "width": 16,
-      "height": 36,
-      "x": 836,
-      "y": 464
-    },
-    {
-      "fileName": "2",
-      "width": 24,
-      "height": 36,
-      "x": 836,
-      "y": 320
-    },
-    {
-      "fileName": "3",
-      "width": 24,
-      "height": 36,
-      "x": 812,
-      "y": 356
-    },
-    {
-      "fileName": "4",
-      "width": 24,
-      "height": 36,
-      "x": 836,
-      "y": 356
-    },
-    {
-      "fileName": "5",
-      "width": 24,
-      "height": 36,
-      "x": 812,
-      "y": 392
-    },
-    {
-      "fileName": "6",
-      "width": 24,
-      "height": 36,
-      "x": 836,
-      "y": 392
-    },
-    {
-      "fileName": "7",
-      "width": 24,
-      "height": 36,
-      "x": 812,
-      "y": 428
-    },
-    {
-      "fileName": "8",
-      "width": 24,
-      "height": 36,
-      "x": 836,
-      "y": 428
-    },
-    {
-      "fileName": "9",
-      "width": 24,
-      "height": 36,
-      "x": 812,
-      "y": 464
-    },
-    {
-      "fileName": "background-day",
-      "width": 288,
-      "height": 512,
-      "x": 0,
-      "y": 0
-    },
-    {
-      "fileName": "background-night",
-      "width": 288,
-      "height": 512,
-      "x": 288,
-      "y": 0
-    },
-    {
-      "fileName": "base",
-      "width": 336,
-      "height": 112,
-      "x": 0,
-      "y": 512
-    },
-    {
-      "fileName": "bluebird-downflap",
-      "width": 34,
-      "height": 24,
-      "x": 812,
-      "y": 500
-    },
-    {
-      "fileName": "bluebird-midflap",
-      "width": 34,
-      "height": 24,
-      "x": 812,
-      "y": 524
-    },
-    {
-      "fileName": "bluebird-upflap",
-      "width": 34,
-      "height": 24,
-      "x": 812,
-      "y": 548
-    },
-    {
-      "fileName": "gameover",
-      "width": 192,
-      "height": 42,
-      "x": 336,
-      "y": 512
-    },
-    {
-      "fileName": "message",
-      "width": 184,
-      "height": 267,
-      "x": 576,
-      "y": 0
-    },
-    {
-      "fileName": "pipe-green",
-      "width": 52,
-      "height": 320,
-      "x": 760,
-      "y": 0
-    },
-    {
-      "fileName": "pipe-red",
-      "width": 52,
-      "height": 320,
-      "x": 812,
-      "y": 0
-    },
-    {
-      "fileName": "redbird-downflap",
-      "width": 34,
-      "height": 24,
-      "x": 812,
-      "y": 572
-    },
-    {
-      "fileName": "redbird-midflap",
-      "width": 34,
-      "height": 24,
-      "x": 812,
-      "y": 596
-    },
-    {
-      "fileName": "redbird-upflap",
-      "width": 34,
-      "height": 24,
-      "x": 760,
-      "y": 320
-    },
-    {
-      "fileName": "yellowbird-downflap",
-      "width": 34,
-      "height": 24,
-      "x": 760,
-      "y": 344
-    },
-    {
-      "fileName": "yellowbird-midflap",
-      "width": 34,
-      "height": 24,
-      "x": 760,
-      "y": 368
-    },
-    {
-      "fileName": "yellowbird-upflap",
-      "width": 34,
-      "height": 24,
-      "x": 760,
-      "y": 392
-    }
-  ],
-  "packMode": "bin",
-  "padding": 0,
-  "backgroundColor": "rgba(0, 0, 0, 0)",
-  "spriteSheetWidth": 864,
-  "spriteSheetHeight": 624
+    "sprites": [
+        {
+            "fileName": "1",
+            "x": 844,
+            "y": 894,
+            "width": 16,
+            "height": 36
+        },
+        {
+            "fileName": "2",
+            "x": 731,
+            "y": 937,
+            "width": 24,
+            "height": 36
+        },
+        {
+            "fileName": "3",
+            "x": 756,
+            "y": 937,
+            "width": 24,
+            "height": 36
+        },
+        {
+            "fileName": "4",
+            "x": 781,
+            "y": 937,
+            "width": 24,
+            "height": 36
+        },
+        {
+            "fileName": "5",
+            "x": 806,
+            "y": 937,
+            "width": 24,
+            "height": 36
+        },
+        {
+            "fileName": "6",
+            "x": 831,
+            "y": 937,
+            "width": 24,
+            "height": 36
+        },
+        {
+            "fileName": "7",
+            "x": 819,
+            "y": 894,
+            "width": 24,
+            "height": 36
+        },
+        {
+            "fileName": "8",
+            "x": 626,
+            "y": 781,
+            "width": 24,
+            "height": 36
+        },
+        {
+            "fileName": "9",
+            "x": 626,
+            "y": 818,
+            "width": 24,
+            "height": 36
+        },
+        {
+            "fileName": "bg_day",
+            "x": 0,
+            "y": 0,
+            "width": 288,
+            "height": 512
+        },
+        {
+            "fileName": "bg_night",
+            "x": 289,
+            "y": 0,
+            "width": 288,
+            "height": 512
+        },
+        {
+            "fileName": "barbie_background",
+            "x": 578,
+            "y": 0,
+            "width": 288,
+            "height": 512
+        },
+        {
+            "fileName": "barbie_base",
+            "x": 289,
+            "y": 781,
+            "width": 336,
+            "height": 112
+        },
+        {
+            "fileName": "barbie_pipe",
+            "x": 867,
+            "y": 0,
+            "width": 52,
+            "height": 320
+        },
+        {
+            "fileName": "barbielaco_0",
+            "x": 626,
+            "y": 937,
+            "width": 34,
+            "height": 36
+        },
+        {
+            "fileName": "barbielaco_1",
+            "x": 661,
+            "y": 937,
+            "width": 34,
+            "height": 36
+        },
+        {
+            "fileName": "barbielaco_2",
+            "x": 696,
+            "y": 937,
+            "width": 34,
+            "height": 36
+        },
+        {
+            "fileName": "base",
+            "x": 289,
+            "y": 894,
+            "width": 336,
+            "height": 112
+        },
+        {
+            "fileName": "bluebird-downflap",
+            "x": 626,
+            "y": 974,
+            "width": 34,
+            "height": 24
+        },
+        {
+            "fileName": "bluebird-midflap",
+            "x": 661,
+            "y": 974,
+            "width": 34,
+            "height": 24
+        },
+        {
+            "fileName": "bluebird-upflap",
+            "x": 696,
+            "y": 974,
+            "width": 34,
+            "height": 24
+        },
+        {
+            "fileName": "gameover",
+            "x": 626,
+            "y": 894,
+            "width": 192,
+            "height": 42
+        },
+        {
+            "fileName": "message",
+            "x": 289,
+            "y": 513,
+            "width": 184,
+            "height": 267
+        },
+        {
+            "fileName": "nerd_0",
+            "x": 731,
+            "y": 974,
+            "width": 34,
+            "height": 24
+        },
+        {
+            "fileName": "nerd_1",
+            "x": 766,
+            "y": 974,
+            "width": 34,
+            "height": 24
+        },
+        {
+            "fileName": "nerd_2",
+            "x": 801,
+            "y": 974,
+            "width": 34,
+            "height": 24
+        },
+        {
+            "fileName": "nerd_base",
+            "x": 474,
+            "y": 513,
+            "width": 336,
+            "height": 112
+        },
+        {
+            "fileName": "nerd_pipe",
+            "x": 867,
+            "y": 321,
+            "width": 52,
+            "height": 320
+        },
+        {
+            "fileName": "pig_0",
+            "x": 651,
+            "y": 855,
+            "width": 34,
+            "height": 24
+        },
+        {
+            "fileName": "pig_1",
+            "x": 686,
+            "y": 855,
+            "width": 34,
+            "height": 24
+        },
+        {
+            "fileName": "pig_2",
+            "x": 721,
+            "y": 855,
+            "width": 34,
+            "height": 24
+        },
+        {
+            "fileName": "pig_background",
+            "x": 0,
+            "y": 513,
+            "width": 288,
+            "height": 512
+        },
+        {
+            "fileName": "pig_base",
+            "x": 474,
+            "y": 626,
+            "width": 336,
+            "height": 112
+        },
+        {
+            "fileName": "pig_pipe",
+            "x": 867,
+            "y": 642,
+            "width": 52,
+            "height": 320
+        },
+        {
+            "fileName": "pipe-green",
+            "x": 920,
+            "y": 0,
+            "width": 52,
+            "height": 320
+        },
+        {
+            "fileName": "pipe-red",
+            "x": 920,
+            "y": 321,
+            "width": 52,
+            "height": 320
+        },
+        {
+            "fileName": "redbird-downflap",
+            "x": 756,
+            "y": 855,
+            "width": 34,
+            "height": 24
+        },
+        {
+            "fileName": "redbird-midflap",
+            "x": 791,
+            "y": 855,
+            "width": 34,
+            "height": 24
+        },
+        {
+            "fileName": "redbird-upflap",
+            "x": 826,
+            "y": 855,
+            "width": 34,
+            "height": 24
+        },
+        {
+            "fileName": "yellowbird-downflap",
+            "x": 651,
+            "y": 818,
+            "width": 34,
+            "height": 24
+        },
+        {
+            "fileName": "yellowbird-midflap",
+            "x": 686,
+            "y": 818,
+            "width": 34,
+            "height": 24
+        },
+        {
+            "fileName": "yellowbird-upflap",
+            "x": 721,
+            "y": 818,
+            "width": 34,
+            "height": 24
+        },
+        {
+            "fileName": "0",
+            "x": 626,
+            "y": 855,
+            "width": 24,
+            "height": 36
+        }
+    ],
+    "packMode": "bin",
+    "padding": 0,
+    "backgroundColor": "rgba(0, 0, 0, 0)",
+    "spriteSheetWidth": 864,
+    "spriteSheetHeight": 624
 }

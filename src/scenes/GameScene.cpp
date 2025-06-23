@@ -20,13 +20,6 @@ GameScene::GameScene(SceneManager* sceneManager, Theme theme)
       dist(0.0f, 1.0f)
 {
     // --- 1. Criação dos Objetos ---
-    // A propriedade dos objetos é mantida em unique_ptr ou como membros diretos.
-    std::vector<ALLEGRO_BITMAP*> bird_frames = {
-        ResourceManager::getInstance().getBitmap("yellowbird-downflap"),
-        ResourceManager::getInstance().getBitmap("yellowbird-midflap"),
-        ResourceManager::getInstance().getBitmap("yellowbird-upflap")
-    };
-
     bird = std::make_unique<Bird>(BIRD_START_X, BIRD_START_Y, BIRD_WIDTH, BIRD_HEIGHT, theme.bird_frames);
     
     background = std::make_unique<ParallaxBackground>(theme.background, BACKGROUND_SCROLL_SPEED);

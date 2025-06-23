@@ -58,9 +58,10 @@ void Game::initialize() {
     al_register_event_source(queue, al_get_keyboard_event_source());
     al_register_event_source(queue, al_get_mouse_event_source());
     // Carrega recursos globais
-    ResourceManager::getInstance().loadAtlasJson("assets/sprites/sprite_sheet.json", "atlas", "assets/sprites/sprite_sheet.png");
-    ResourceManager& rm = ResourceManager::getInstance();
     try {
+        ResourceManager::getInstance().loadAtlasJson("assets/sprites/sprite_sheet.json", "atlas", "assets/sprites/sprite_sheet.png");
+        ResourceManager& rm = ResourceManager::getInstance();
+
         // Imagens do Menu
         rm.loadBitmap("logo_text", "data/flappy_bird.png");
         

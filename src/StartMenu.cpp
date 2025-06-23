@@ -7,6 +7,7 @@
 #include "managers/SceneManager.hpp"
 #include "managers/ResourceManager.hpp"
 #include "Constants.hpp"
+#include "scenes/CharacterSelectionScene.hpp"
 #include "util/Theme.hpp"
 #include <iostream>
 #include <allegro5/allegro_image.h>
@@ -41,7 +42,7 @@ void StartMenu::buildUI()
     float logo_y = 50.0f;
 
     flappyLogo = std::make_unique<FlappyLogo>(logo_x, logo_y, logo_w, logo_h, rm.getBitmap("logo_text"), bird_frames);
-    background_image = rm.getBitmap("background-day");
+    background_image = rm.getBitmap("bg_day");
 
     // 2. CONFIGURAÇÃO DA GUI (WIDGETZ)
     memset(&skin_theme, 0, sizeof(skin_theme));
@@ -123,19 +124,7 @@ void StartMenu::processEvent(const ALLEGRO_EVENT &event)
         { // Iniciar
             if (editbox->text->slen >= 3 && editbox->text->slen <= 20)
             {
-                ResourceManager &rm = ResourceManager::getInstance();
-                Theme defaultTheme;
-                std::vector<ALLEGRO_BITMAP*> bird_frames = {
-                    ResourceManager::getInstance().getBitmap("yellowbird-downflap"),
-                    ResourceManager::getInstance().getBitmap("yellowbird-midflap"),
-                    ResourceManager::getInstance().getBitmap("yellowbird-upflap")
-                };
-
-                defaultTheme.bird_frames = bird_frames;
-                defaultTheme.background = rm.getBitmap("background-day");
-                defaultTheme.floor = rm.getBitmap("base");
-
-                sceneManager->setCurrentScene(std::make_unique<GameScene>(sceneManager, defaultTheme));
+                sceneManager->setCurrentScene(std::make_unique<CharacterSelectionScene>(sceneManager));
             }
             else
             {
