@@ -49,3 +49,9 @@ void SplashScreen::draw() const {
     // Desenha um retângulo que preenche a tela inteira
     al_draw_filled_rectangle(0, 0, BUFFER_W, BUFFER_H, a_color);
 }
+
+void SplashScreen::reset() {
+    isActive = false;
+    currentAlpha = 0.0f;
+    elapsedTime = 0.0f;
+}

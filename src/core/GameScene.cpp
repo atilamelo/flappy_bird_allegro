@@ -8,7 +8,8 @@
 #include <allegro5/allegro_font.h>
 #include "managers/ResourceManager.hpp"
 #include "managers/SceneManager.hpp"
-#include <algorithm> // Para std::find_if
+#include <algorithm>
+#include "actors/ui/GameOverScreen.hpp"
 
 GameScene::GameScene(SceneManager* sceneManager)
     : Scene(sceneManager),
@@ -29,6 +30,7 @@ GameScene::GameScene(SceneManager* sceneManager)
     background = std::make_unique<ParallaxBackground>(ResourceManager::getInstance().getBitmap("background-day"), BACKGROUND_SCROLL_SPEED);
     floor = std::make_unique<Floor>(ResourceManager::getInstance().getBitmap("base"));
     flashEffect = std::make_unique<SplashScreen>(0.5f, al_map_rgb(255, 255, 255)); // Flash branco de meio segundo
+    gameOverScreen = std::make_unique<GameOverScreen>(100.0f, 0.7f, ResourceManager::getInstance().getBitmap("gameover"));
 
     // --- 2. Construção das Listas de Interfaces ---
     // Populamos as listas de observadores para os loops polimórficos.
@@ -46,6 +48,7 @@ void GameScene::buildEntityLists() {
     updatables.push_back(floor.get());
     updatables.push_back(&pipePool);
     updatables.push_back(flashEffect.get()); 
+    updatables.push_back(gameOverScreen.get());
 
     // Ordem é importante aqui, define em que ordem vai ser desenhado
     drawables.push_back(background.get());
@@ -53,7 +56,8 @@ void GameScene::buildEntityLists() {
     drawables.push_back(floor.get());
     drawables.push_back(bird.get());
     drawables.push_back(&scoreManager);
-    drawables.push_back(flashEffect.get()); 
+    drawables.push_back(flashEffect.get());
+    drawables.push_back(gameOverScreen.get());
 }
 
 void GameScene::processEvent(const ALLEGRO_EVENT& event) {
@@ -91,6 +95,7 @@ void GameScene::update(float deltaTime) {
         // A lógica de morte agora pode ser integrada aqui ou em um método helper.
         if (bird->getY() >= (floor->getY() - bird->getHeight())) {
             state = GameState::GAME_OVER;
+            gameOverScreen->startAnimation();
             bird->setPhysicsEnabled(false);
         }
     }
@@ -146,7 +151,9 @@ void GameScene::initiateDeathSequence() {
         updatables.erase(std::remove(updatables.begin(), updatables.end(), &pipePool), updatables.end()); // Canos param de se mexer
         updatables.erase(std::remove(updatables.begin(), updatables.end(), background.get()), updatables.end()); // Fundo para de rolar
         updatables.erase(std::remove(updatables.begin(), updatables.end(), floor.get()), updatables.end());     // Chão para de rolar
-        
+
+        // Remove a pontuação
+        drawables.erase(std::remove(drawables.begin(), drawables.end(), &scoreManager), drawables.end());
     }
 }
 
@@ -154,6 +161,9 @@ void GameScene::restart() {
     bird->reset();
     pipePool.reset();
     scoreManager.reset();
+    gameOverScreen->reset();
+    flashEffect->reset();
+
     timeSinceLastPipe = 0.0f;
     
     // Reconstrói as listas para garantir que tudo está no estado correto (ex: pipePool volta a ser atualizável)

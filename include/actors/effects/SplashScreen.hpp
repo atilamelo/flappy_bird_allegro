@@ -43,4 +43,6 @@ public:
     // --- Implementação das Interfaces ---
     void update(float deltaTime) override;
     void draw() const override;
+
+    void reset();
 };

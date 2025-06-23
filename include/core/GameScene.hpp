@@ -14,6 +14,7 @@
 #include "actors/Floor.hpp"
 #include "actors/PipePool.hpp"
 #include "actors/effects/SplashScreen.hpp"
+#include "actors/ui/GameOverScreen.hpp"
 #include "managers/ScoreManager.hpp"
 #include <memory>
 #include <vector>
@@ -43,7 +44,8 @@ private:
     std::unique_ptr<ParallaxBackground> background;
     std::unique_ptr<Floor> floor;
     std::unique_ptr<SplashScreen> flashEffect;
-     
+    std::unique_ptr<GameOverScreen> gameOverScreen;
+ 
     PipePool pipePool;
     ScoreManager scoreManager;
     
