@@ -67,7 +67,6 @@ void CharacterSelectionScene::buildThemes()
         // rm.getSample("music_main")
     });
 
-    // Carrega os sprites de preview e define suas posições
     preview_sprites.push_back(rm.getBitmap("yellowbird-midflap"));
     preview_sprites.push_back(rm.getBitmap("nerd_1"));
     preview_sprites.push_back(rm.getBitmap("barbielaco_1"));
@@ -93,7 +92,6 @@ void CharacterSelectionScene::processEvent(const ALLEGRO_EVENT &event)
     {
         std::cout << "Tema selecionado: " << themes[selectedIndex].name << std::endl;
 
-        // Inicia a transição para a GameScene, passando o objeto Theme completo
         sceneManager->setCurrentScene(std::make_unique<GameScene>(sceneManager, themes[selectedIndex]));
     }
 }
@@ -104,29 +102,25 @@ void CharacterSelectionScene::update(float deltaTime)
 
 void CharacterSelectionScene::draw() const
 {
-    // Draw the background of the selected theme
-    // We assume the background bitmap is the size of the screen or will scale correctly.
-    // If your backgrounds are 288x512 as per your JSON, you might want to scale them to BUFFER_W, BUFFER_H.
-    // For simplicity, I'm drawing it at (0,0).
     al_draw_bitmap(themes[selectedIndex].background, 0, 0, 0);
 
-    // Draw the static overlay text
+    // Texto do tema
     al_draw_text(font, al_map_rgb(255, 255, 255), BUFFER_W / 2, 80, ALLEGRO_ALIGN_CENTER, "Escolha seu Tema");
 
-    // Draw preview sprites
+    // Sprites dos pássaros
     for (size_t i = 0; i < preview_sprites.size(); ++i)
     {
         float yPos = (themes[i].name == "Barbie") ? 122.0f : 132.0f;
         al_draw_bitmap(preview_sprites[i], positionsX[i], yPos, 0);
     }
 
-    // Draw selection rectangle
+    // Seleção retangular
     float x = positionsX[selectedIndex];
     float w = al_get_bitmap_width(preview_sprites[selectedIndex]);
     float h = al_get_bitmap_height(preview_sprites[selectedIndex]);
     float y = (themes[selectedIndex].name == "Barbie") ? 120.0f : 130.0f;
     al_draw_rectangle(x - 2, y - 2, x + w + 2, y + h + 2, selection_color, 2.0f);
 
-    // Draw theme name
+    // Nome do Tema
     al_draw_text(font, al_map_rgb(255, 255, 255), BUFFER_W / 2, 220, ALLEGRO_ALIGN_CENTER, themes[selectedIndex].name.c_str());
 }
