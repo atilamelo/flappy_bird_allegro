@@ -15,13 +15,11 @@ PipePair::PipePair()
     reset();
 }
 
-void PipePair::init(float startX, float startYGap, float gapSize, float scrollSpeed)
+void PipePair::init(float startX, float startYGap, float gapSize, float scrollSpeed, ALLEGRO_BITMAP* pipeTexture)
 {
     this->x = startX;
     this->speed = scrollSpeed;
     this->gap = gapSize;
-
-    ALLEGRO_BITMAP* pipeTexture = ResourceManager::getInstance().getBitmap("pipe-green");
 
     topPipe = Pipe(0, PIPE_WIDTH, startYGap, PipeType::TOP, pipeTexture);
     bottomPipe = Pipe(startYGap + gap, PIPE_WIDTH, PLAYABLE_AREA_HEIGHT - (startYGap + gap), PipeType::BOTTOM, pipeTexture);

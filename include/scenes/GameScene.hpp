@@ -61,6 +61,9 @@ private:
     std::mt19937 rng;
     std::uniform_real_distribution<float> dist;
 
+    // --- Tema ---
+    const Theme& selectedTheme;
+
     // --- Métodos de Lógica Interna ---
     void updatePlaying(float deltaTime);
     void checkCollisions();

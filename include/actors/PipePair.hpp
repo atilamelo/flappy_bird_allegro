@@ -40,8 +40,9 @@ public:
      * @param startYGap Posição Y do início do vão.
      * @param gapSize Tamanho do vão.
      * @param scrollSpeed Velocidade de movimento.
+     * @param pipeTexture Textura do cano
      */
-    void init(float startX, float startYGap, float gapSize, float scrollSpeed);
+    void init(float startX, float startYGap, float gapSize, float scrollSpeed, ALLEGRO_BITMAP* pipeTexture);
 
     /**
      * @brief Reseta o par de canos para o estado inativo.

@@ -15,7 +15,8 @@ GameScene::GameScene(SceneManager* sceneManager, const Theme& selectedTheme)
     : Scene(sceneManager),
       pipePool(PIPE_POOL_SIZE),
       rng(std::random_device{}()),
-      dist(0.0f, 1.0f)
+      dist(0.0f, 1.0f),
+      selectedTheme(selectedTheme)
 {
     ResourceManager& rm = ResourceManager::getInstance();
 
@@ -194,6 +195,6 @@ void GameScene::spawnPipe() {
         float playableHeight = floor->getY();
         int maxGapStart = static_cast<int>(playableHeight - PIPE_MIN_HEIGHT - PIPE_GAP);
         float startYGap = dist(rng) * maxGapStart;
-        newPipePair->init(BUFFER_W, startYGap, PIPE_GAP, PIPE_SPEED);
+        newPipePair->init(BUFFER_W, startYGap, PIPE_GAP, PIPE_SPEED, selectedTheme.pipe);
     }
 }
