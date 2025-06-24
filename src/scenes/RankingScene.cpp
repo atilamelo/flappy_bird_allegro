@@ -3,8 +3,10 @@
 #include "managers/ResourceManager.hpp"
 #include "scenes/StartMenu.hpp"
 #include "Constants.hpp"
+#include "util/ScoreSystem.hpp"
 #include <allegro5/allegro_primitives.h>
 #include <algorithm>
+#include <iostream>
 
 RankingScene::RankingScene(SceneManager* sceneManager)
     : Scene(sceneManager), currentPage(0) {
@@ -14,6 +16,7 @@ RankingScene::RankingScene(SceneManager* sceneManager)
 
 RankingScene::~RankingScene() {
     if (gui) {
+    std::cout << "Destruindo a GUI do Ranking." << std::endl;
         wz_destroy(gui);
     }
     if (text_font) {
@@ -22,13 +25,8 @@ RankingScene::~RankingScene() {
 }
 
 void RankingScene::loadDummyData() {
-    // Dados de exemplo para visualização
-    scores = {
-        {"12345678912", 1000}, {"PlayerTwo", 950}, {"PlayerThree", 900},
-        {"PlayerFour", 850}, {"PlayerFive", 800}, {"PlayerSix", 750},
-        {"PlayerSeven", 700}, {"PlayerEight", 650}, {"PlayerNine", 600},
-        {"PlayerTen", 550}, {"PlayerEleven", 500}
-    };
+    ScoreSystem& scoreSy = ScoreSystem::getInstance();
+    scores = scoreSy.getTopScores(20);
 }
 
 void RankingScene::buildUI() {
@@ -157,8 +155,8 @@ void RankingScene::drawScores() const {
         // Rank
         al_draw_textf(text_font, al_map_rgb(255, 255, 255), rank_x, current_y, ALLEGRO_ALIGN_LEFT, "%d.", i + 1);
         // Nome
-        al_draw_text(text_font, al_map_rgb(255, 255, 255), name_x, current_y, ALLEGRO_ALIGN_LEFT, playerScore.name.c_str());
+        al_draw_text(text_font, al_map_rgb(255, 255, 255), name_x, current_y, ALLEGRO_ALIGN_LEFT, playerScore.first.c_str());
         // Pontuação
-        al_draw_textf(text_font, al_map_rgb(255, 255, 255), score_x, current_y, ALLEGRO_ALIGN_RIGHT, "%d", playerScore.score);
+        al_draw_textf(text_font, al_map_rgb(255, 255, 255), score_x, current_y, ALLEGRO_ALIGN_RIGHT, "%d", playerScore.second);
     }
 }

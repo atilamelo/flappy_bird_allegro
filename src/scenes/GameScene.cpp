@@ -31,7 +31,8 @@ GameScene::GameScene(SceneManager* sceneManager, const Theme& selectedTheme)
     getReadyUI = std::make_unique<GetReadyUI>();
     
     gSound = std::make_unique<GameSound>();
-    gSound->init();
+    gSound->init(selectedTheme.music_path);
+    
     ALLEGRO_BITMAP *img_on = al_load_bitmap("assets/sprites/som_0.png");
 
     ALLEGRO_BITMAP *img_off = al_load_bitmap("assets/sprites/som_1.png");
