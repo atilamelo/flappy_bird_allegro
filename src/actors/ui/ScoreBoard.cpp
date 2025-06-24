@@ -59,8 +59,6 @@ void ScoreBoard::determineMedal() {
         currentMedal = rm.getBitmap("silver_medal");
     } else if (finalScore >= 10) {
         currentMedal = rm.getBitmap("bronze_medal");
-    } else {
-        currentMedal = rm.getBitmap("empty_medal"); 
     }
 }
 

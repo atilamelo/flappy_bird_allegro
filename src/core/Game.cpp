@@ -62,39 +62,8 @@ void Game::initialize() {
         ResourceManager::getInstance().loadAtlasJson("assets/sprites/sprite_sheet.json", "atlas", "assets/sprites/sprite_sheet.png");
         ResourceManager& rm = ResourceManager::getInstance();
 
-        // Imagens do Menu
-        rm.loadBitmap("logo_text", "data/flappy_bird.png");
-        
-        // Botões do Menu
-        rm.loadBitmap("btn_start_normal", "data/home_start_button.png");
-        rm.loadBitmap("btn_start_pressed", "data/home_start_button_pressed.png");
-        rm.loadBitmap("btn_start_focused", "data/home_start_button_focused.png");
-        
-        rm.loadBitmap("btn_rank_normal", "data/rank_button.png");
-        rm.loadBitmap("btn_rank_pressed", "data/rank_button_pressed.png");
-        rm.loadBitmap("btn_rank_focused", "data/rank_button_focused.png");
-
-        rm.loadBitmap("btn_quit_normal", "data/quit_button.png");
-        rm.loadBitmap("btn_quit_pressed", "data/quit_button_pressed.png");
-        rm.loadBitmap("btn_quit_focused", "data/quit_button_focused.png");
-                
-        rm.loadBitmap("btn_menu_normal", "data/menu_button.png");
-        rm.loadBitmap("btn_menu_pressed", "data/menu_button_pressed.png");
-        rm.loadBitmap("btn_menu_focused", "data/menu_button_focused.png");
-
-        rm.loadBitmap("ranking_box", "data/ranking_box.png");
-
-        rm.loadBitmap("edit_box", "data/editbox.png");
-        rm.loadBitmap("get_ready", "assets/sprites/getready.png");
-
-        rm.loadBitmap("bronze_medal", "assets/sprites/bronze_medal.png");
-        rm.loadBitmap("silver_medal", "assets/sprites/silver_medal.png");
-        rm.loadBitmap("gold_medal", "assets/sprites/gold_medal.png");
-        rm.loadBitmap("empty_medal", "assets/sprites/empty_medal.png");
-        rm.loadBitmap("score_board", "assets/sprites/score_board.png");
-
-        rm.loadBitmap("new_record", "data/new_button.png");
-
+        rm.loadAtlasJson("assets/sprites/sprite_sheet.json", "atlas", "assets/sprites/sprite_sheet.png");
+        rm.loadAtlasJson("assets/sprites/sprite_sheet_ui.json", "atlasUI", "assets/sprites/sprite_sheet_ui.png");
 
         std::cout << "Recursos carregados com sucesso." << std::endl;
     } catch (const std::runtime_error& e) {
@@ -102,7 +71,6 @@ void Game::initialize() {
         exit(-1);
     }
 
-    // Prepara a cena inicial
     sceneManager.setEventQueue(queue);
     sceneManager.setCurrentScene(std::make_unique<StartMenu>(&sceneManager));
 

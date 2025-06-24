@@ -33,8 +33,8 @@ void RankingScene::buildUI() {
     ResourceManager& rm = ResourceManager::getInstance();
 
     // Carregar recursos visuais
-    background_image = rm.getBitmap("bg_day");
-    title_image = rm.getBitmap("logo_text");// TROCAR PARA LOGO RANKING
+    background_image = rm.getBitmap("background-day");
+    title_image = rm.getBitmap("logo_text");
     scoreboard_image = rm.getBitmap("ranking_box");
     text_font = al_create_builtin_font();
 
@@ -59,13 +59,13 @@ void RankingScene::buildUI() {
     float page_buttons_total_width = button_w * 2 + spacing;
     float page_buttons_start_x = (BUFFER_W - page_buttons_total_width) / 2.0f;
     
-    wz_create_image_button(gui, page_buttons_start_x, buttons_y, button_w, button_h, rm.getBitmap("btn_quit_normal"), rm.getBitmap("btn_quit_pressed"), rm.getBitmap("btn_quit_focused"), nullptr, 1); // Voltar Página
-    wz_create_image_button(gui, page_buttons_start_x + button_w + spacing, buttons_y, button_w, button_h, rm.getBitmap("btn_quit_normal"), rm.getBitmap("btn_quit_pressed"), rm.getBitmap("btn_quit_focused"), nullptr, 2); // Avançar Página
+    wz_create_image_button(gui, page_buttons_start_x, buttons_y, button_w, button_h, rm.getBitmap("quit_button"), rm.getBitmap("quit_button_pressed"), rm.getBitmap("quit_button_focused"), nullptr, 1); // Voltar Página
+    wz_create_image_button(gui, page_buttons_start_x + button_w + spacing, buttons_y, button_w, button_h, rm.getBitmap("quit_button"), rm.getBitmap("quit_button_pressed"), rm.getBitmap("quit_button_focused"), nullptr, 2); // Avançar Página
 
     // Botão de Voltar para o Menu
     float back_button_x = (BUFFER_W - button_w) / 2.0f;
     float back_button_y = buttons_y + button_h + spacing;
-    wz_create_image_button(gui, back_button_x, back_button_y, button_w, button_h, rm.getBitmap("btn_menu_normal"), rm.getBitmap("btn_menu_pressed"), rm.getBitmap("btn_menu_focused"), nullptr, 3); // Voltar ao menu
+    wz_create_image_button(gui, back_button_x, back_button_y, button_w, button_h, rm.getBitmap("menu_button"), rm.getBitmap("menu_button_pressed"), rm.getBitmap("menu_button_focused"), nullptr, 3); // Voltar ao menu
 
     ALLEGRO_EVENT_QUEUE* queue = sceneManager->get_event_queue();
     wz_register_sources(gui, queue);

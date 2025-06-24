@@ -1,217 +1,259 @@
 {
   "sprites": [
     {
-      "fileName": "editbox.png",
-      "width": 25,
-      "height": 25,
-      "x": 376,
-      "y": 114
-    },
-    {
-      "fileName": "flappy_bird.png",
-      "width": 89,
-      "height": 24,
-      "x": 320,
-      "y": 252
-    },
-    {
-      "fileName": "gameover.png",
-      "width": 192,
-      "height": 42,
-      "x": 184,
-      "y": 114
-    },
-    {
-      "fileName": "getready.png",
-      "width": 184,
-      "height": 167,
-      "x": 0,
-      "y": 0
-    },
-    {
-      "fileName": "home_button.png",
+      "fileName": "arrow_left",
       "width": 40,
       "height": 14,
       "x": 353,
       "y": 167
     },
     {
-      "fileName": "home_start_button.png",
+      "fileName": "arrow_left_focused",
+      "width": 40,
+      "height": 14,
+      "x": 353,
+      "y": 181
+    },
+    {
+      "fileName": "arrow_left_pressed",
+      "width": 40,
+      "height": 14,
+      "x": 353,
+      "y": 195
+    },
+    {
+      "fileName": "arrow_right",
+      "width": 40,
+      "height": 14,
+      "x": 353,
+      "y": 209
+    },
+    {
+      "fileName": "arrow_right_focused",
+      "width": 40,
+      "height": 14,
+      "x": 0,
+      "y": 312
+    },
+    {
+      "fileName": "arrow_right_pressed",
+      "width": 40,
+      "height": 14,
+      "x": 40,
+      "y": 312
+    },
+    {
+      "fileName": "editbox",
+      "width": 25,
+      "height": 25,
+      "x": 376,
+      "y": 114
+    },
+    {
+      "fileName": "gameover",
+      "width": 192,
+      "height": 42,
+      "x": 184,
+      "y": 114
+    },
+    {
+      "fileName": "getready",
+      "width": 184,
+      "height": 167,
+      "x": 0,
+      "y": 0
+    },
+    {
+      "fileName": "home_button",
+      "width": 40,
+      "height": 14,
+      "x": 80,
+      "y": 312
+    },
+    {
+      "fileName": "home_start_button",
       "width": 52,
       "height": 29,
       "x": 100,
       "y": 280
     },
     {
-      "fileName": "home_start_button_focused.png",
+      "fileName": "home_start_button_focused",
       "width": 52,
       "height": 29,
       "x": 152,
       "y": 280
     },
     {
-      "fileName": "home_start_button_pressed.png",
+      "fileName": "home_start_button_pressed",
       "width": 52,
       "height": 29,
       "x": 204,
       "y": 280
     },
     {
-      "fileName": "menu_button.png",
+      "fileName": "logo_text",
+      "width": 89,
+      "height": 24,
+      "x": 320,
+      "y": 252
+    },
+    {
+      "fileName": "menu_button",
       "width": 80,
       "height": 28,
       "x": 113,
       "y": 167
     },
     {
-      "fileName": "menu_button_focused.png",
+      "fileName": "menu_button_focused",
       "width": 80,
       "height": 28,
       "x": 193,
       "y": 167
     },
     {
-      "fileName": "menu_button_pressed.png",
+      "fileName": "menu_button_pressed",
       "width": 80,
       "height": 28,
       "x": 273,
       "y": 167
     },
     {
-      "fileName": "new_button.png",
+      "fileName": "new_button",
       "width": 19,
       "height": 11,
       "x": 376,
       "y": 139
     },
     {
-      "fileName": "ok_button.png",
+      "fileName": "ok_button",
       "width": 80,
       "height": 28,
       "x": 113,
       "y": 195
     },
     {
-      "fileName": "ok_button_focused.png",
+      "fileName": "ok_button_focused",
       "width": 80,
       "height": 28,
       "x": 193,
       "y": 195
     },
     {
-      "fileName": "ok_button_pressed.png",
+      "fileName": "ok_button_pressed",
       "width": 80,
       "height": 28,
       "x": 273,
       "y": 195
     },
     {
-      "fileName": "quit_button.png",
+      "fileName": "quit_button",
       "width": 80,
       "height": 28,
       "x": 0,
       "y": 224
     },
     {
-      "fileName": "quit_button_focused.png",
+      "fileName": "quit_button_focused",
       "width": 80,
       "height": 28,
       "x": 80,
       "y": 224
     },
     {
-      "fileName": "quit_button_pressed.png",
+      "fileName": "quit_button_pressed",
       "width": 80,
       "height": 28,
       "x": 160,
       "y": 224
     },
     {
-      "fileName": "rank_button.png",
+      "fileName": "rank_button",
       "width": 52,
       "height": 29,
       "x": 256,
       "y": 280
     },
     {
-      "fileName": "rank_button_focused.png",
+      "fileName": "rank_button_focused",
       "width": 52,
       "height": 29,
       "x": 308,
       "y": 280
     },
     {
-      "fileName": "rank_button_pressed.png",
+      "fileName": "rank_button_pressed",
       "width": 52,
       "height": 29,
       "x": 360,
       "y": 280
     },
     {
-      "fileName": "ranking_box.png",
+      "fileName": "ranking_box",
       "width": 228,
       "height": 114,
       "x": 184,
       "y": 0
     },
     {
-      "fileName": "score_board.png",
+      "fileName": "score_board",
       "width": 113,
       "height": 57,
       "x": 0,
       "y": 167
     },
     {
-      "fileName": "score_button.png",
+      "fileName": "score_button",
       "width": 80,
       "height": 28,
       "x": 240,
       "y": 224
     },
     {
-      "fileName": "score_button_focused.png",
+      "fileName": "score_button_focused",
       "width": 80,
       "height": 28,
       "x": 320,
       "y": 224
     },
     {
-      "fileName": "score_button_pressed.png",
+      "fileName": "score_button_pressed",
       "width": 80,
       "height": 28,
       "x": 0,
       "y": 252
     },
     {
-      "fileName": "som_0.png",
+      "fileName": "som_0",
       "width": 50,
       "height": 32,
       "x": 0,
       "y": 280
     },
     {
-      "fileName": "som_1.png",
+      "fileName": "som_1",
       "width": 50,
       "height": 32,
       "x": 50,
       "y": 280
     },
     {
-      "fileName": "start_button.png",
+      "fileName": "start_button",
       "width": 80,
       "height": 28,
       "x": 80,
       "y": 252
     },
     {
-      "fileName": "start_button_focused.png",
+      "fileName": "start_button_focused",
       "width": 80,
       "height": 28,
       "x": 160,
       "y": 252
     },
     {
-      "fileName": "start_button_pressed.png",
+      "fileName": "start_button_pressed",
       "width": 80,
       "height": 28,
       "x": 240,
@@ -222,5 +264,5 @@
   "padding": 0,
   "backgroundColor": "rgba(0, 0, 0, 0)",
   "spriteSheetWidth": 412,
-  "spriteSheetHeight": 312
+  "spriteSheetHeight": 326
 }

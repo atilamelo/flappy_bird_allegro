@@ -35,7 +35,7 @@ void CharacterSelectionScene::buildThemes()
     themes.push_back({
         "Amarelo",
         {rm.getBitmap("yellowbird-downflap"), rm.getBitmap("yellowbird-midflap"), rm.getBitmap("yellowbird-upflap")},
-        rm.getBitmap("bg_day"),
+        rm.getBitmap("background-day"),
         rm.getBitmap("base"),
         rm.getBitmap("pipe-green"),
         "assets/audio/8bit.ogg"
@@ -44,7 +44,7 @@ void CharacterSelectionScene::buildThemes()
     themes.push_back({
         "Nerd",
         {rm.getBitmap("nerd_0"), rm.getBitmap("nerd_1"), rm.getBitmap("nerd_2")},
-        rm.getBitmap("bg_night"),
+        rm.getBitmap("background-night"),
         rm.getBitmap("nerd_base"),
         rm.getBitmap("nerd_pipe"),
         "assets/audio/star.ogg"

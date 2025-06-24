@@ -18,7 +18,7 @@ GameOverScreen::GameOverScreen(const ScoreManager& scManager)
     // Carrega as texturas necessárias
     gameOverTexture = rm.getBitmap("gameover");
     boardTexture = rm.getBitmap("score_board");
-    newTexture = rm.getBitmap("new_record");
+    newTexture = rm.getBitmap("new_button");
 
     // Configura as dimensões e posições finais dos elementos
     if (gameOverTexture) {
