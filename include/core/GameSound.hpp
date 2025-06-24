@@ -10,14 +10,14 @@ public:
     void play_background();       
     void play_point();         
     void play_death();           
-    void pause_all();           
-    void resume_all();
-    void setActive(bool active);
-    bool isActive() const;
+    void mute_music();
+    void unmute_music();
+    bool isMusicMuted() const;
 
 private:
     ALLEGRO_AUDIO_STREAM* back_music = nullptr;
     ALLEGRO_SAMPLE* point_sound = nullptr;
     ALLEGRO_SAMPLE* died_sound = nullptr;
-    bool active_sound = true;
+    bool active_sound;
+    bool music_muted = false;
 };

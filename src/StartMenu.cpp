@@ -9,6 +9,7 @@
 #include "Constants.hpp"
 #include "scenes/CharacterSelectionScene.hpp"
 #include "util/Theme.hpp"
+#include "core/PlayerData.hpp"
 #include <iostream>
 #include <allegro5/allegro_image.h>
 
@@ -123,7 +124,8 @@ void StartMenu::processEvent(const ALLEGRO_EVENT &event)
         if (button_id == 11)
         { // Iniciar
             if (editbox->text->slen >= 3 && editbox->text->slen <= 20)
-            {
+            {              
+                PlayerData::getInstance().setName(reinterpret_cast<char*>(editbox->text->data));
                 sceneManager->setCurrentScene(std::make_unique<CharacterSelectionScene>(sceneManager));
             }
             else

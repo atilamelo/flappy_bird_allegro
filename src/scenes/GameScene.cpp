@@ -8,6 +8,7 @@
 #include <iostream>
 #include <string>
 #include "util/ScoreSystem.hpp"
+#include "core/PlayerData.hpp"
 
 // O construtor permanece o mesmo, mas vamos usar o ResourceManager para os botões de som.
 GameScene::GameScene(SceneManager* sceneManager, const Theme& selectedTheme)
@@ -167,6 +168,8 @@ void GameScene::initiateDeathSequence() {
         bird->die();
         gSound->play_death();
         flashEffect->trigger();
+
+        PlayerData::getInstance().setScore(scoreManager->getScore());
     }
 }
 

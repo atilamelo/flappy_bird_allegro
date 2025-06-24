@@ -156,7 +156,21 @@ void Game::draw() {
 }
 
 void Game::shutdown() {
-    al_destroy_display(display);
-    al_destroy_timer(timer);
-    al_destroy_event_queue(queue);
+    if (display) {
+        al_destroy_display(display);
+    }
+    if (timer) {
+        al_destroy_timer(timer);
+    }
+    if (queue) {
+        al_destroy_event_queue(queue);
+    }
+
+    // Desinstalação dos recursos carregados, do ultimo ao primeiro inicializado
+    al_uninstall_mouse();
+    al_uninstall_audio();
+    al_uninstall_keyboard();
+    al_shutdown_primitives_addon();
+    al_shutdown_font_addon();
+    al_shutdown_image_addon();
 }

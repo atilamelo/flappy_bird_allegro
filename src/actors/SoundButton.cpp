@@ -25,6 +25,10 @@ void SoundButton::processEvent(const ALLEGRO_EVENT& event) {
 
 void SoundButton::setMuted(bool value) {
     muted = value;
-    if (soundManager) // soundManager é o GameSound*
-        soundManager->setActive(!muted); // ativa/desativa o som global
+   if (soundManager) {
+    if (muted)
+        soundManager->mute_music();
+    else
+        soundManager->unmute_music();
+}
 }
