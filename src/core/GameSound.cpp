@@ -16,13 +16,13 @@ void GameSound::init() {
     ResourceManager& rm = ResourceManager::getInstance();
 
     // Carrega a música de fundo como ALLEGRO_AUDIO_STREAM
-    back_music = rm.loadAudioStream("8bit", "assets/audio/8bit.ogg", 2, 2048);
+    back_music = rm.loadAudioStream("8bit", "assets/audio/8bit.ogg", 4, 4096);
     if (!back_music) {
         std::cerr << "Erro ao carregar stream de música de fundo: 8bit.ogg\n";
     } else {
         al_set_audio_stream_playmode(back_music, ALLEGRO_PLAYMODE_LOOP);
         al_attach_audio_stream_to_mixer(back_music, al_get_default_mixer());
-        al_set_audio_stream_gain(back_music, 0.05f);
+        al_set_audio_stream_gain(back_music, 0.5f);
     }
 
     // Carrega os sons de evento como ALLEGRO_SAMPLE
@@ -35,6 +35,16 @@ void GameSound::init() {
     died_sound = rm.loadSample("die", "assets/audio/die.wav");
     if (!died_sound) {
         std::cerr << "Erro ao carregar som de morte: die.wav\n";
+    }
+
+     hit_sound = rm.loadSample("hit", "assets/audio/hit.wav");
+    if (!hit_sound) {
+        std::cerr << "Erro ao carregar som de morte: die.wav\n";
+    }
+
+     fly_sound = rm.loadSample("fly", "assets/audio/wing.wav");
+    if (!fly_sound) {
+        std::cerr << "Erro ao carregar som de voo.wav\n";
     }
 }
 
@@ -55,6 +65,19 @@ void GameSound::play_death() {
         al_play_sample(died_sound, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, nullptr);
     }
 }
+
+void GameSound::play_fly() {
+    if (fly_sound && active_sound) {
+        al_play_sample(fly_sound, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, nullptr);
+    }
+}
+
+void GameSound::play_hit() {
+    if (hit_sound && active_sound) {
+        al_play_sample(hit_sound, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, nullptr);
+    }
+}
+
 
 bool music_muted = false;
 

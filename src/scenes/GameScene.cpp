@@ -39,6 +39,7 @@ GameScene::GameScene(SceneManager* sceneManager, Theme theme)
     gSound = std::make_unique<GameSound>();
     gSound->init();
     soundButton = std::make_unique<SoundButton>(10, 10, 20, 20, img_on, img_off, gSound.get());
+
     // --- 2. Construção das Listas de Interfaces ---
     // Populamos as listas de observadores para os loops polimórficos.
     buildEntityLists();
@@ -86,9 +87,11 @@ void GameScene::processEvent(const ALLEGRO_EVENT& event) {
             bird->setHoverEnabled(false);
             getReadyUI->hide(); 
             bird->jump();
+            gSound->play_fly();
             break;
         case GameState::PLAYING:
             bird->jump();
+            gSound->play_fly();
             break;
         case GameState::GAME_OVER:
             restart();
@@ -170,6 +173,7 @@ void GameScene::checkCollisions() {
 
 void GameScene::initiateDeathSequence() {
     if (state == GameState::PLAYING) {
+        gSound->play_hit();
         state = GameState::DYING;
         bird->die();
         gSound->play_death();
