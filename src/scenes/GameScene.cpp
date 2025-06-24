@@ -31,9 +31,9 @@ GameScene::GameScene(SceneManager* sceneManager, const Theme& selectedTheme)
     
     gSound = std::make_unique<GameSound>();
     gSound->init();
-    ALLEGRO_BITMAP *img_on = al_load_bitmap("assets/sprites/som_0.bmp");
+    ALLEGRO_BITMAP *img_on = al_load_bitmap("assets/sprites/som_0.png");
 
-    ALLEGRO_BITMAP *img_off = al_load_bitmap("assets/sprites/som_1.bmp");
+    ALLEGRO_BITMAP *img_off = al_load_bitmap("assets/sprites/som_1.png");
     soundButton = std::make_unique<SoundButton>(10, 10, 20, 20, img_on, img_off, gSound.get());
 
 
