@@ -15,11 +15,6 @@
 class SceneManager;
 
 // STRUCT PARA ARMAZENAR DADOS DE EXIBIÇÃO DO PLACAR
-struct PlayerScore {
-    std::string name;
-    int score;
-};
-
 class RankingScene : public Scene {
 private:
     // --- Recursos Visuais ---
@@ -29,7 +24,7 @@ private:
     ALLEGRO_FONT* text_font = nullptr;
 
     // --- Dados do Ranking ---
-    std::vector<PlayerScore> scores;
+    std::vector<std::pair<std::string, int>> scores;
     int currentPage = 0;
     const int scoresPerPage = 5;
 
