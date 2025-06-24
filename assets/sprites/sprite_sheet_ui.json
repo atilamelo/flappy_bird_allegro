@@ -1,0 +1,226 @@
+{
+  "sprites": [
+    {
+      "fileName": "editbox.png",
+      "width": 25,
+      "height": 25,
+      "x": 376,
+      "y": 114
+    },
+    {
+      "fileName": "flappy_bird.png",
+      "width": 89,
+      "height": 24,
+      "x": 320,
+      "y": 252
+    },
+    {
+      "fileName": "gameover.png",
+      "width": 192,
+      "height": 42,
+      "x": 184,
+      "y": 114
+    },
+    {
+      "fileName": "getready.png",
+      "width": 184,
+      "height": 167,
+      "x": 0,
+      "y": 0
+    },
+    {
+      "fileName": "home_button.png",
+      "width": 40,
+      "height": 14,
+      "x": 353,
+      "y": 167
+    },
+    {
+      "fileName": "home_start_button.png",
+      "width": 52,
+      "height": 29,
+      "x": 100,
+      "y": 280
+    },
+    {
+      "fileName": "home_start_button_focused.png",
+      "width": 52,
+      "height": 29,
+      "x": 152,
+      "y": 280
+    },
+    {
+      "fileName": "home_start_button_pressed.png",
+      "width": 52,
+      "height": 29,
+      "x": 204,
+      "y": 280
+    },
+    {
+      "fileName": "menu_button.png",
+      "width": 80,
+      "height": 28,
+      "x": 113,
+      "y": 167
+    },
+    {
+      "fileName": "menu_button_focused.png",
+      "width": 80,
+      "height": 28,
+      "x": 193,
+      "y": 167
+    },
+    {
+      "fileName": "menu_button_pressed.png",
+      "width": 80,
+      "height": 28,
+      "x": 273,
+      "y": 167
+    },
+    {
+      "fileName": "new_button.png",
+      "width": 19,
+      "height": 11,
+      "x": 376,
+      "y": 139
+    },
+    {
+      "fileName": "ok_button.png",
+      "width": 80,
+      "height": 28,
+      "x": 113,
+      "y": 195
+    },
+    {
+      "fileName": "ok_button_focused.png",
+      "width": 80,
+      "height": 28,
+      "x": 193,
+      "y": 195
+    },
+    {
+      "fileName": "ok_button_pressed.png",
+      "width": 80,
+      "height": 28,
+      "x": 273,
+      "y": 195
+    },
+    {
+      "fileName": "quit_button.png",
+      "width": 80,
+      "height": 28,
+      "x": 0,
+      "y": 224
+    },
+    {
+      "fileName": "quit_button_focused.png",
+      "width": 80,
+      "height": 28,
+      "x": 80,
+      "y": 224
+    },
+    {
+      "fileName": "quit_button_pressed.png",
+      "width": 80,
+      "height": 28,
+      "x": 160,
+      "y": 224
+    },
+    {
+      "fileName": "rank_button.png",
+      "width": 52,
+      "height": 29,
+      "x": 256,
+      "y": 280
+    },
+    {
+      "fileName": "rank_button_focused.png",
+      "width": 52,
+      "height": 29,
+      "x": 308,
+      "y": 280
+    },
+    {
+      "fileName": "rank_button_pressed.png",
+      "width": 52,
+      "height": 29,
+      "x": 360,
+      "y": 280
+    },
+    {
+      "fileName": "ranking_box.png",
+      "width": 228,
+      "height": 114,
+      "x": 184,
+      "y": 0
+    },
+    {
+      "fileName": "score_board.png",
+      "width": 113,
+      "height": 57,
+      "x": 0,
+      "y": 167
+    },
+    {
+      "fileName": "score_button.png",
+      "width": 80,
+      "height": 28,
+      "x": 240,
+      "y": 224
+    },
+    {
+      "fileName": "score_button_focused.png",
+      "width": 80,
+      "height": 28,
+      "x": 320,
+      "y": 224
+    },
+    {
+      "fileName": "score_button_pressed.png",
+      "width": 80,
+      "height": 28,
+      "x": 0,
+      "y": 252
+    },
+    {
+      "fileName": "som_0.png",
+      "width": 50,
+      "height": 32,
+      "x": 0,
+      "y": 280
+    },
+    {
+      "fileName": "som_1.png",
+      "width": 50,
+      "height": 32,
+      "x": 50,
+      "y": 280
+    },
+    {
+      "fileName": "start_button.png",
+      "width": 80,
+      "height": 28,
+      "x": 80,
+      "y": 252
+    },
+    {
+      "fileName": "start_button_focused.png",
+      "width": 80,
+      "height": 28,
+      "x": 160,
+      "y": 252
+    },
+    {
+      "fileName": "start_button_pressed.png",
+      "width": 80,
+      "height": 28,
+      "x": 240,
+      "y": 252
+    }
+  ],
+  "packMode": "bin",
+  "padding": 0,
+  "backgroundColor": "rgba(0, 0, 0, 0)",
+  "spriteSheetWidth": 412,
+  "spriteSheetHeight": 312
+}
