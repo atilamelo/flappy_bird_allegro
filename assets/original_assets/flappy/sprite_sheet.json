@@ -1,0 +1,310 @@
+{
+  "sprites": [
+    {
+      "fileName": "0.png",
+      "width": 24,
+      "height": 36,
+      "x": 156,
+      "y": 238
+    },
+    {
+      "fileName": "1.png",
+      "width": 16,
+      "height": 36,
+      "x": 496,
+      "y": 238
+    },
+    {
+      "fileName": "2.png",
+      "width": 24,
+      "height": 36,
+      "x": 828,
+      "y": 238
+    },
+    {
+      "fileName": "3.png",
+      "width": 24,
+      "height": 36,
+      "x": 1164,
+      "y": 238
+    },
+    {
+      "fileName": "4.png",
+      "width": 24,
+      "height": 36,
+      "x": 1500,
+      "y": 238
+    },
+    {
+      "fileName": "5.png",
+      "width": 24,
+      "height": 36,
+      "x": 1836,
+      "y": 238
+    },
+    {
+      "fileName": "6.png",
+      "width": 24,
+      "height": 36,
+      "x": 2172,
+      "y": 238
+    },
+    {
+      "fileName": "7.png",
+      "width": 24,
+      "height": 36,
+      "x": 156,
+      "y": 750
+    },
+    {
+      "fileName": "8.png",
+      "width": 24,
+      "height": 36,
+      "x": 492,
+      "y": 750
+    },
+    {
+      "fileName": "9.png",
+      "width": 24,
+      "height": 36,
+      "x": 828,
+      "y": 750
+    },
+    {
+      "fileName": "background-day.png",
+      "width": 288,
+      "height": 512,
+      "x": 1032,
+      "y": 512
+    },
+    {
+      "fileName": "background-night.png",
+      "width": 288,
+      "height": 512,
+      "x": 1368,
+      "y": 512
+    },
+    {
+      "fileName": "barbie_background.png",
+      "width": 288,
+      "height": 512,
+      "x": 1704,
+      "y": 512
+    },
+    {
+      "fileName": "barbie_base.png",
+      "width": 336,
+      "height": 112,
+      "x": 2016,
+      "y": 712
+    },
+    {
+      "fileName": "barbie_pipe.png",
+      "width": 52,
+      "height": 320,
+      "x": 142,
+      "y": 1120
+    },
+    {
+      "fileName": "barbielaco_0.png",
+      "width": 34,
+      "height": 36,
+      "x": 487,
+      "y": 1262
+    },
+    {
+      "fileName": "barbielaco_1.png",
+      "width": 34,
+      "height": 36,
+      "x": 823,
+      "y": 1262
+    },
+    {
+      "fileName": "barbielaco_2.png",
+      "width": 34,
+      "height": 36,
+      "x": 1159,
+      "y": 1262
+    },
+    {
+      "fileName": "base.png",
+      "width": 336,
+      "height": 112,
+      "x": 1344,
+      "y": 1224
+    },
+    {
+      "fileName": "bluebird-downflap.png",
+      "width": 34,
+      "height": 24,
+      "x": 1831,
+      "y": 1268
+    },
+    {
+      "fileName": "bluebird-midflap.png",
+      "width": 34,
+      "height": 24,
+      "x": 2167,
+      "y": 1268
+    },
+    {
+      "fileName": "bluebird-upflap.png",
+      "width": 34,
+      "height": 24,
+      "x": 151,
+      "y": 1780
+    },
+    {
+      "fileName": "gameover.png",
+      "width": 192,
+      "height": 42,
+      "x": 408,
+      "y": 1771
+    },
+    {
+      "fileName": "message.png",
+      "width": 184,
+      "height": 267,
+      "x": 748,
+      "y": 1658
+    },
+    {
+      "fileName": "nerd_0.png",
+      "width": 34,
+      "height": 24,
+      "x": 1159,
+      "y": 1780
+    },
+    {
+      "fileName": "nerd_1.png",
+      "width": 34,
+      "height": 24,
+      "x": 1495,
+      "y": 1780
+    },
+    {
+      "fileName": "nerd_2.png",
+      "width": 34,
+      "height": 24,
+      "x": 1831,
+      "y": 1780
+    },
+    {
+      "fileName": "nerd_base.png",
+      "width": 336,
+      "height": 112,
+      "x": 2016,
+      "y": 1736
+    },
+    {
+      "fileName": "nerd_pipe.png",
+      "width": 52,
+      "height": 320,
+      "x": 142,
+      "y": 2144
+    },
+    {
+      "fileName": "pig_0.png",
+      "width": 34,
+      "height": 24,
+      "x": 487,
+      "y": 2292
+    },
+    {
+      "fileName": "pig_1.png",
+      "width": 34,
+      "height": 24,
+      "x": 823,
+      "y": 2292
+    },
+    {
+      "fileName": "pig_2.png",
+      "width": 34,
+      "height": 24,
+      "x": 1159,
+      "y": 2292
+    },
+    {
+      "fileName": "pig_background.png",
+      "width": 288,
+      "height": 512,
+      "x": 1368,
+      "y": 2048
+    },
+    {
+      "fileName": "pig_base.png",
+      "width": 336,
+      "height": 112,
+      "x": 1680,
+      "y": 2248
+    },
+    {
+      "fileName": "pig_pipe.png",
+      "width": 52,
+      "height": 320,
+      "x": 2158,
+      "y": 2144
+    },
+    {
+      "fileName": "pipe-green.png",
+      "width": 52,
+      "height": 320,
+      "x": 142,
+      "y": 2656
+    },
+    {
+      "fileName": "pipe-red.png",
+      "width": 52,
+      "height": 320,
+      "x": 478,
+      "y": 2656
+    },
+    {
+      "fileName": "redbird-downflap.png",
+      "width": 34,
+      "height": 24,
+      "x": 823,
+      "y": 2804
+    },
+    {
+      "fileName": "redbird-midflap.png",
+      "width": 34,
+      "height": 24,
+      "x": 1159,
+      "y": 2804
+    },
+    {
+      "fileName": "redbird-upflap.png",
+      "width": 34,
+      "height": 24,
+      "x": 1495,
+      "y": 2804
+    },
+    {
+      "fileName": "yellowbird-downflap.png",
+      "width": 34,
+      "height": 24,
+      "x": 1831,
+      "y": 2804
+    },
+    {
+      "fileName": "yellowbird-midflap.png",
+      "width": 34,
+      "height": 24,
+      "x": 2167,
+      "y": 2804
+    },
+    {
+      "fileName": "yellowbird-upflap.png",
+      "width": 34,
+      "height": 24,
+      "x": 151,
+      "y": 3316
+    }
+  ],
+  "packMode": "grid",
+  "padding": 0,
+  "backgroundColor": "rgba(0, 0, 0, 0)",
+  "spriteSheetWidth": 2352,
+  "spriteSheetHeight": 3584
+}
