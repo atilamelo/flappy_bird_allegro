@@ -18,6 +18,7 @@
 #include <algorithm>
 
 namespace {
+    /// @brief Função utilitária para verificar se uma inicialização do Allegro foi bem-sucedida.
     void must_init(bool test, const char* description) {
         if (test) return;
         printf("Não pode inicializar %s\n", description);
@@ -34,6 +35,7 @@ Game::~Game() {
 }
 
 void Game::initialize() {
+    // --- Inicialização de todos os módulos do Allegro ---
     must_init(al_init(), "Allegro");
     must_init(al_init_primitives_addon(), "primitives");
     must_init(al_init_font_addon(), "font addon");
@@ -53,11 +55,15 @@ void Game::initialize() {
     display = al_create_display(BUFFER_W, BUFFER_H);
     must_init(display, "display");
 
+    // --- Registro das fontes de eventos ---
     al_register_event_source(queue, al_get_display_event_source(display));
     al_register_event_source(queue, al_get_timer_event_source(timer));
     al_register_event_source(queue, al_get_keyboard_event_source());
     al_register_event_source(queue, al_get_mouse_event_source());
-    // Carrega recursos globais
+    
+    // --- Carregamento de Recursos Globais ---
+    // Todos os assets usados em múltiplas cenas são pré-carregados aqui para evitar
+    // acessos a disco durante a transição de cenas.
     try {
         ResourceManager::getInstance().loadAtlasJson("assets/sprites/sprite_sheet.json", "atlas", "assets/sprites/sprite_sheet.png");
         ResourceManager& rm = ResourceManager::getInstance();
@@ -102,7 +108,8 @@ void Game::initialize() {
         exit(-1);
     }
 
-    // Prepara a cena inicial
+    // --- Setup da Cena Inicial ---
+    // O jogo começa no menu principal.
     sceneManager.setEventQueue(queue);
     sceneManager.setCurrentScene(std::make_unique<StartMenu>(&sceneManager));
 
@@ -114,28 +121,34 @@ void Game::run() {
     bool redraw = true;
     auto lastUpdateTime = std::chrono::steady_clock::now();
 
+    // --- Loop Principal do Jogo (Game Loop) ---
     while (isRunning) {
         ALLEGRO_EVENT event;
         al_wait_for_event(queue, &event);
 
         processEvent(event);
 
-        // A lógica de update com delta time variável foi movida para cá.
+        // A atualização da lógica (update) é atrelada ao timer do Allegro,
+        // mas usa um deltaTime variável para movimentos mais suaves e consistentes.
         if (event.type == ALLEGRO_EVENT_TIMER) {
             auto currentTime = std::chrono::steady_clock::now();
             std::chrono::duration<float> elapsed = currentTime - lastUpdateTime;
             float deltaTime = elapsed.count();
             lastUpdateTime = currentTime;
             
+            // Medida de segurança para evitar o "espiral da morte": se o deltaTime for
+            // muito grande (ex: lag), ele é limitado para não quebrar a física do jogo.
             const float max_deltaTime = 1.0f / 30.0f;
             if (deltaTime > max_deltaTime) {
                 deltaTime = max_deltaTime;
             }
             
             update(deltaTime);
-            redraw = true;
+            redraw = true; // Marca que uma atualização de lógica ocorreu, então precisamos redesenhar.
         }
 
+        // A renderização (draw) só ocorre se a fila de eventos estiver vazia e
+        // a flag 'redraw' estiver ativa. Isso evita renderizações desnecessárias.
         if (redraw && al_is_event_queue_empty(queue)) {
             redraw = false;
             draw();
@@ -147,10 +160,12 @@ void Game::processEvent(const ALLEGRO_EVENT& event) {
     if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
         isRunning = false;
     }
+    // Delega o processamento de eventos para a cena ativa.
     sceneManager.processEvent(event);
 }
 
 void Game::update(float deltaTime) {
+    // Delega a atualização da lógica para a cena ativa.
     sceneManager.update(deltaTime);
     if (!sceneManager.isRunning()) {
         isRunning = false;
@@ -159,11 +174,13 @@ void Game::update(float deltaTime) {
 
 void Game::draw() {
     al_clear_to_color(al_map_rgb(0, 0, 0));
+    // Delega a renderização para a cena ativa.
     sceneManager.draw();
     al_flip_display();
 }
 
 void Game::shutdown() {
+    // Destrói os recursos do Allegro na ordem inversa da criação.
     if (display) {
         al_destroy_display(display);
     }
@@ -174,7 +191,7 @@ void Game::shutdown() {
         al_destroy_event_queue(queue);
     }
 
-    // Desinstalação dos recursos carregados, do ultimo ao primeiro inicializado
+    // Desinstala os addons do Allegro.
     al_uninstall_mouse();
     al_uninstall_audio();
     al_uninstall_keyboard();
