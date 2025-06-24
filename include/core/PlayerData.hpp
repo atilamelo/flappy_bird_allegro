@@ -7,6 +7,7 @@
  */
 
 #pragma once
+#include <iostream>
 #include <string>
 
 /**
@@ -21,7 +22,10 @@ public:
      * @brief Obtém a instância singleton da classe PlayerData.
      * @return Referência para a instância única.
      */
-    static PlayerData& getInstance();
+    static PlayerData& getInstance() {
+        static PlayerData instance; // Instância única
+        return instance;
+    }
 
     /**
      * @brief Define o nome do jogador.
