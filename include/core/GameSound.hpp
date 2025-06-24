@@ -7,30 +7,46 @@
 #include <string>
 #include <allegro5/allegro_audio.h>
 
+/**
+ * @brief Classe responsável por gerenciar todos os sons do jogo (música e efeitos).
+ */
 class GameSound {
 public:
     GameSound();
     ~GameSound();
 
     /**
-     * Inicializa os sons do jogo carregando a música de fundo específica do tema selecionado
-     * e os efeitos sonoros padrão.
-     * @param music_path Caminho para o arquivo de música de fundo do tema.
+     * @brief Inicializa os sons do jogo, carregando música de fundo e efeitos.
+     * @param music_path Caminho para o arquivo de música de fundo.
      */
     void init(const std::string& music_path);
 
+    /// Reproduz a música de fundo, se ativa.
     void play_background();
+
+    /// Reproduz o efeito sonoro de ponto.
     void play_point();
+
+    /// Reproduz o efeito sonoro de morte.
     void play_death();
+
+    /// Reproduz o efeito sonoro de voo.
     void play_fly();
+
+    /// Reproduz o efeito sonoro de batida.
     void play_hit();
 
+    /// Muta a música de fundo.
     void mute_music();
+
+    /// Desmuta a música de fundo.
     void unmute_music();
+
+    /// Retorna se a música está mutada.
     bool isMusicMuted() const;
 
     /**
-     * Troca a música de fundo durante o jogo, destruindo a anterior se necessário.
+     * @brief Troca a música de fundo durante o jogo, destruindo a anterior se necessário.
      * @param music_path Caminho para o novo arquivo de música.
      */
     void setBackgroundMusic(const std::string& music_path);
