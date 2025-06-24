@@ -12,6 +12,7 @@
 #include "actors/SoundButton.hpp"
 #include <algorithm>
 #include "actors/ui/GameOverScreen.hpp"
+#include "core/PlayerData.hpp"
 
 GameScene::GameScene(SceneManager* sceneManager, Theme theme)
     : Scene(sceneManager),
@@ -181,6 +182,9 @@ void GameScene::initiateDeathSequence() {
 
         // Remove a pontuação
         drawables.erase(std::remove(drawables.begin(), drawables.end(), &scoreManager), drawables.end());
+
+        // Registra pontuacao do jogador
+        PlayerData::getInstance().setScore(scoreManager.getScore());
     }
 }
 
