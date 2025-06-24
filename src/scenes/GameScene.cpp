@@ -30,10 +30,11 @@ GameScene::GameScene(SceneManager* sceneManager, const Theme& selectedTheme)
     getReadyUI = std::make_unique<GetReadyUI>();
     
     gSound = std::make_unique<GameSound>();
-    gSound->init();
-    ALLEGRO_BITMAP *img_on = al_load_bitmap("assets/sprites/som_0.bmp");
+    gSound->init(selectedTheme.music_path);
+    
+    ALLEGRO_BITMAP *img_on = al_load_bitmap("assets/sprites/som_0.png");
 
-    ALLEGRO_BITMAP *img_off = al_load_bitmap("assets/sprites/som_1.bmp");
+    ALLEGRO_BITMAP *img_off = al_load_bitmap("assets/sprites/som_1.png");
     soundButton = std::make_unique<SoundButton>(10, 10, 20, 20, img_on, img_off, gSound.get());
 
 
@@ -96,9 +97,9 @@ void GameScene::update(float deltaTime) {
             if (bird->getY() >= BUFFER_H  && flashEffect->isFinished()) {
                 state = GameState::GAME_OVER;
                 ScoreSystem& scoreSystem = ScoreSystem::getInstance();
-                
-                scoreSystem.registerOrUpdateScore("atila", scoreManager->getScore());
-                gameOverScreen->startSequence(scoreManager->getScore(), scoreSystem.getPlayerScore("atila"));
+                std::string name = PlayerData::getName();
+                scoreSystem.registerOrUpdateScore(name, scoreManager->getScore());
+                gameOverScreen->startSequence(scoreManager->getScore(), scoreSystem.getPlayerScore(name));
             }
             break;
         case GameState::GAME_OVER:

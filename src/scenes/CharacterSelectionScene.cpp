@@ -2,6 +2,7 @@
  * @file CharacterSelectionScene.cpp
  * @brief Implementação da cena de seleção de temas.
  */
+
 #include "scenes/CharacterSelectionScene.hpp"
 #include "scenes/GameScene.hpp"
 #include "managers/SceneManager.hpp"
@@ -30,14 +31,14 @@ void CharacterSelectionScene::buildThemes()
 {
     ResourceManager &rm = ResourceManager::getInstance();
 
-    // Adiciona os dados de cada tema
+    // Adiciona os dados de cada tema, incluindo o caminho da música
     themes.push_back({
         "Amarelo",
         {rm.getBitmap("yellowbird-downflap"), rm.getBitmap("yellowbird-midflap"), rm.getBitmap("yellowbird-upflap")},
         rm.getBitmap("bg_day"),
         rm.getBitmap("base"),
         rm.getBitmap("pipe-green"),
-        // rm.getSample("music_main")
+        "assets/audio/8bit.ogg"
     });
 
     themes.push_back({
@@ -46,7 +47,7 @@ void CharacterSelectionScene::buildThemes()
         rm.getBitmap("bg_night"),
         rm.getBitmap("nerd_base"),
         rm.getBitmap("nerd_pipe"),
-        // rm.getSample("music_main")
+        "assets/audio/star.ogg"
     });
 
     themes.push_back({
@@ -55,7 +56,7 @@ void CharacterSelectionScene::buildThemes()
         rm.getBitmap("barbie_background"),
         rm.getBitmap("barbie_base"),
         rm.getBitmap("barbie_pipe"),
-        // rm.getSample("music_main")
+        "assets/audio/barbie.ogg"
     });
 
     themes.push_back({
@@ -64,7 +65,7 @@ void CharacterSelectionScene::buildThemes()
         rm.getBitmap("pig_background"),
         rm.getBitmap("pig_base"),
         rm.getBitmap("pig_pipe"),
-        // rm.getSample("music_main")
+        "assets/audio/yoshi.ogg"
     });
 
     preview_sprites.push_back(rm.getBitmap("yellowbird-midflap"));
@@ -91,7 +92,7 @@ void CharacterSelectionScene::processEvent(const ALLEGRO_EVENT &event)
     else if (event.keyboard.keycode == ALLEGRO_KEY_ENTER)
     {
         std::cout << "Tema selecionado: " << themes[selectedIndex].name << std::endl;
-
+        // Ao criar a GameScene, o tema selecionado será passado e a música correta será usada
         sceneManager->setCurrentScene(std::make_unique<GameScene>(sceneManager, themes[selectedIndex]));
     }
 }
