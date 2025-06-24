@@ -78,11 +78,11 @@ void GameScene::processEvent(const ALLEGRO_EVENT& event) {
     }
 
         if (e.type == WZ_BUTTON_PRESSED) {
+            sceneManager->setCurrentScene(std::make_unique<StartMenu>(sceneManager));
             if (gui) {
                 std::cout << "Destruindo a GUI do Ranking." << std::endl;
                 wz_destroy(gui);
             }
-            sceneManager->setCurrentScene(std::make_unique<StartMenu>(sceneManager));
         }
 }
 
