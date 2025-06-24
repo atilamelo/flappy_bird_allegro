@@ -96,9 +96,9 @@ void GameScene::update(float deltaTime) {
             if (bird->getY() >= BUFFER_H  && flashEffect->isFinished()) {
                 state = GameState::GAME_OVER;
                 ScoreSystem& scoreSystem = ScoreSystem::getInstance();
-                
-                scoreSystem.registerOrUpdateScore("atila", scoreManager->getScore());
-                gameOverScreen->startSequence(scoreManager->getScore(), scoreSystem.getPlayerScore("atila"));
+                std::string name = PlayerData::getName();
+                scoreSystem.registerOrUpdateScore(name, scoreManager->getScore());
+                gameOverScreen->startSequence(scoreManager->getScore(), scoreSystem.getPlayerScore(name));
             }
             break;
         case GameState::GAME_OVER:
