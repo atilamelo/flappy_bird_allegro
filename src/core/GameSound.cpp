@@ -22,7 +22,7 @@ void GameSound::init() {
     } else {
         al_set_audio_stream_playmode(back_music, ALLEGRO_PLAYMODE_LOOP);
         al_attach_audio_stream_to_mixer(back_music, al_get_default_mixer());
-        al_set_audio_stream_gain(back_music, 0.05f);
+        al_set_audio_stream_gain(back_music, 0.5f);
     }
 
     // Carrega os sons de evento como ALLEGRO_SAMPLE

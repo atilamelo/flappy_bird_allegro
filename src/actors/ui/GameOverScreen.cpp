@@ -1,55 +1,138 @@
 /**
  * @file GameOverScreen.cpp
- * @brief Implementação da classe GameOverScreen.
+ * @brief Implementação da classe unificada GameOverScreen com escala no placar.
  */
 #include "actors/ui/GameOverScreen.hpp"
+#include "managers/ResourceManager.hpp"
 #include "Constants.hpp"
-#include <cmath> // Para sin() na função de easing
+#include <cmath>
 
-GameOverScreen::GameOverScreen(float finalY, float duration, ALLEGRO_BITMAP* gameOverTexture)
-    // Inicializa a largura e altura com base na textura, e a posição X já centralizada.
-    : GameObject((BUFFER_W - al_get_bitmap_width(gameOverTexture)) / 2.0f, 0, al_get_bitmap_width(gameOverTexture), al_get_bitmap_height(gameOverTexture)),
-      isActive(false),
-      elapsedTime(0.0f),
-      animationDuration(duration),
-      endY(finalY),
-      texture(gameOverTexture)
+
+GameOverScreen::GameOverScreen(const ScoreManager& scManager)
+    : scoreManagerRef(scManager),
+      gameOverGO(0,0,0,0),
+      scoreBoardGO(0,0,0,0)
 {
-    // A posição inicial é acima da tela para o efeito de "cair"
-    this->startY = -this->height;
-    this->y = this->startY;
+    ResourceManager& rm = ResourceManager::getInstance();
+
+    // Carrega as texturas necessárias
+    gameOverTexture = rm.getBitmap("gameover");
+    boardTexture = rm.getBitmap("score_board");
+
+    // Configura as dimensões e posições finais dos elementos
+    if (gameOverTexture) {
+        gameOverGO.setWidth(al_get_bitmap_width(gameOverTexture));
+        gameOverGO.setHeight(al_get_bitmap_height(gameOverTexture));
+        gameOverGO.setX((BUFFER_W - gameOverGO.getWidth()) / 2.0f);
+        this->gameOver_endY = 100.0f;
+        this->gameOver_startY = -gameOverGO.getHeight();
+    }
+    if (boardTexture) {
+        scoreBoardGO.setWidth(al_get_bitmap_width(boardTexture) * SCOREBOARD_SCALE);
+        scoreBoardGO.setHeight(al_get_bitmap_height(boardTexture) * SCOREBOARD_SCALE);
+        scoreBoardGO.setX((BUFFER_W - scoreBoardGO.getWidth()) / 2.0f);
+        this->scoreBoard_endY = 180.0f;
+        this->scoreBoard_startY = -scoreBoardGO.getHeight();
+    }
+
+    this->animationDuration = 0.6f; // Duração para cada estágio da animação
+    reset();
 }
 
-void GameOverScreen::startAnimation() {
-    // Reseta o estado para garantir que a animação comece do início
+void GameOverScreen::startSequence(int score, int best) {
+    this->finalScore = score;
+    this->bestScore = best;
+    determineMedal();
+
     this->elapsedTime = 0.0f;
-    this->y = this->startY;
-    this->isActive = true;
+    this->gameOverGO.setY(gameOver_startY);
+    this->scoreBoardGO.setY(scoreBoard_startY);
+    this->currentState = AnimationState::SLIDING_GAMEOVER_BITMAP;
 }
 
 void GameOverScreen::reset() {
-    this->isActive = false;
+    this->currentState = AnimationState::INACTIVE;
     this->elapsedTime = 0.0f;
-    this->y = this->startY;
+    this->gameOverGO.setY(gameOver_startY);
+    this->scoreBoardGO.setY(scoreBoard_startY);
+    this->currentMedal = nullptr;
+}
+
+void GameOverScreen::determineMedal() {
+    ResourceManager& rm = ResourceManager::getInstance();
+    if (finalScore >= 30) currentMedal = rm.getBitmap("gold_medal");
+    else if (finalScore >= 20) currentMedal = rm.getBitmap("silver_medal");
+    else if (finalScore >= 10) currentMedal = rm.getBitmap("bronze_medal");
+    else currentMedal = nullptr;
 }
 
 void GameOverScreen::update(float deltaTime) {
-    if (!isActive || elapsedTime >= animationDuration) return;
+    if (currentState == AnimationState::INACTIVE || currentState == AnimationState::FINISHED) return;
 
     elapsedTime += deltaTime;
-    
-    // Garante que o tempo não ultrapasse a duração
     float progress = elapsedTime / animationDuration;
     if (progress > 1.0f) progress = 1.0f;
 
-    // --- Animação Suave com seno ---
+    // Animação com desaceleração suave na chegada (ease-out)
     float easedProgress = sin(progress * (ALLEGRO_PI / 2.0));
 
-    // Interpola a posição Y com base no progresso suavizado
-    this->y = startY + (endY - startY) * easedProgress;
+    if (currentState == AnimationState::SLIDING_GAMEOVER_BITMAP) {
+        // Anima o bitmap "Game Over"
+        gameOverGO.setY(gameOver_startY + (gameOver_endY - gameOver_startY) * easedProgress);
+        if (progress >= 1.0f) {
+            // Quando terminar, inicia a próxima animação
+            currentState = AnimationState::SLIDING_SCOREBOARD;
+            elapsedTime = 0.0f; // Reseta o tempo para a animação do placar
+        }
+    }
+    else if (currentState == AnimationState::SLIDING_SCOREBOARD) {
+        // Anima o painel de score
+        scoreBoardGO.setY(scoreBoard_startY + (scoreBoard_endY - scoreBoard_startY) * easedProgress);
+        if (progress >= 1.0f) {
+            // Quando terminar, a sequência está completa
+            currentState = AnimationState::FINISHED;
+        }
+    }
 }
 
 void GameOverScreen::draw() const {
-    if (!isActive || !texture) return;
-    al_draw_bitmap(texture, x, y, 0);
+    if (currentState == AnimationState::INACTIVE) return;
+
+    // 1. Desenha o bitmap "Game Over" em sua posição animada.
+    if (gameOverTexture) {
+        al_draw_bitmap(gameOverTexture, gameOverGO.getX(), gameOverGO.getY(), 0);
+    }
+
+    // 2. Só começa a desenhar o placar DEPOIS que a primeira animação começou.
+    if (currentState == AnimationState::SLIDING_SCOREBOARD || currentState == AnimationState::FINISHED) {
+        // 2a. Desenha o painel do placar em sua posição animada e escalado
+        if (boardTexture) {
+            al_draw_scaled_bitmap(boardTexture,
+                                    0, 0,
+                                    al_get_bitmap_width(boardTexture), al_get_bitmap_height(boardTexture),
+                                    scoreBoardGO.getX(), scoreBoardGO.getY(),
+                                    scoreBoardGO.getWidth(), scoreBoardGO.getHeight(),
+                                    0);
+        }
+
+        // 2b. Desenha o conteúdo interno (medalha, scores) apenas quando o painel parar.
+        if (currentState == AnimationState::FINISHED) {
+            const float medalOffsetX = 13 * SCOREBOARD_SCALE, medalOffsetY = 21 * SCOREBOARD_SCALE;
+            const float scoreOffsetX = 101 * SCOREBOARD_SCALE, scoreOffsetY = 17 * SCOREBOARD_SCALE;
+            const float bestOffsetY = 38 * SCOREBOARD_SCALE;
+            const float numberScale = 0.5f;
+
+            if (currentMedal) {
+                al_draw_scaled_bitmap(currentMedal,
+                                        0, 0,
+                                        al_get_bitmap_width(currentMedal), al_get_bitmap_height(currentMedal),
+                                        scoreBoardGO.getX() + medalOffsetX, scoreBoardGO.getY() + medalOffsetY,
+                                        al_get_bitmap_width(currentMedal) * SCOREBOARD_SCALE, al_get_bitmap_height(currentMedal) * SCOREBOARD_SCALE,
+                                        0);
+            }
+
+            scoreManagerRef.drawNumberSprites(finalScore, scoreBoardGO.getX() + scoreOffsetX, scoreBoardGO.getY() + scoreOffsetY, numberScale, TextAlign::RIGHT);
+            scoreManagerRef.drawNumberSprites(bestScore, scoreBoardGO.getX() + scoreOffsetX, scoreBoardGO.getY() + bestOffsetY, numberScale, TextAlign::RIGHT);
+        }
+    }
 }

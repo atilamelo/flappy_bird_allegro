@@ -42,4 +42,6 @@ public:
     // --- Setters ---
     void setX(float newX) { this->x = newX; }
     void setY(float newY) { this->y = newY; }
+    void setWidth(float newWidth) { this->width = newWidth; }
+    void setHeight(float newHeight) { this->height = newHeight; }
 };

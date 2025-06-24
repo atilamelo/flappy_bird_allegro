@@ -28,7 +28,7 @@ const float PIPE_SPEED = 170.0f;            // Velocidade horizontal dos canos (
 const float PIPE_GAP = 150.0f;              // Espaço vertical entre o cano superior e inferior (pixels)
 const float PIPE_INTERVAL = 1.25f;          // Tempo entre o surgimento de novos pares de canos (segundos)
 
-const float PIPE_MIN_HEIGHT = 0.0f;         // Margem do topo da tela para a base do cano superior
+const float PIPE_MIN_HEIGHT = 20.0f;         // Margem do topo da tela para a base do cano superior
 const float PIPE_MAX_HEIGHT = BUFFER_H - PIPE_GAP; // Margem do chão da tela para o topo do cano inferior
 
 // --- Configurações de Colisão ---

@@ -14,75 +14,56 @@ ScoreManager::ScoreManager() {
     }
 }
 
-void ScoreManager::increaseScore() {
-    currentScore++;
-}
-
 void ScoreManager::draw() const {
-    // Centralizando o score
-    float currentScoreX = BUFFER_W / 2.0f;
-    float currentScoreY = 10.0f;
-
-    drawNumberSprites(currentScore, currentScoreX, currentScoreY);
+    drawNumberSprites(currentScore, BUFFER_W / 2.0f, 10.0f, 0.75f, TextAlign::CENTER);
 }
 
-
-void ScoreManager::drawNumberSprites(int number, int drawX, int drawY) const {
+void ScoreManager::drawNumberSprites(int number, float x, float y, float scale, TextAlign align) const {
     if (number < 0) number = 0;
 
-    // 1. FATOR DE ESCALA
-    // Defina o quão pequeno você quer o placar. 1.0f é o tamanho original,
-    const float scale = 0.75f;
-
     std::string s = std::to_string(number);
-    
-    // 2. CALCULA A LARGURA TOTAL JÁ COM A ESCALA APLICADA
-    // Isso é crucial para a centralização correta.
     float totalScaledWidth = 0;
+
+    // Etapa 1: Pré-calcula a largura total do número já com a escala.
+    // Este passo é necessário para os alinhamentos CENTER e RIGHT.
     for (char c : s) {
         int digit = c - '0';
         if (digit >= 0 && digit <= 9 && digitSprites[digit]) {
-            // Soma a largura de cada dígito, já multiplicada pela escala.
             totalScaledWidth += al_get_bitmap_width(digitSprites[digit]) * scale;
         }
     }
 
-    // 3. CENTRALIZA COM BASE NA LARGURA TOTAL ESCALADA
-    // Calcula a posição inicial X para que o número como um todo fique centralizado em drawX.
-    float currentDigitX = drawX - (totalScaledWidth / 2.0f);
+    // Etapa 2: Calcula a posição X inicial com base no modo de alinhamento.
+    float startX = 0;
+    switch (align) {
+        case TextAlign::LEFT:
+            // O desenho começa exatamente no 'x' fornecido.
+            startX = x;
+            break;
+        case TextAlign::CENTER:
+            // O desenho começa à esquerda do 'x' pela metade da largura total.
+            startX = x - (totalScaledWidth / 2.0f);
+            break;
+        case TextAlign::RIGHT:
+            // O desenho começa à esquerda do 'x' pela largura total.
+            startX = x - totalScaledWidth;
+            break;
+    }
 
-    // 4. DESENHA CADA DÍGITO DE FORMA ESCALADA
+    // Etapa 3: O loop de desenho agora é único e simples, sempre da esquerda para a direita.
+    float currentDigitX = startX;
+
     for (char c : s) {
         int digit = c - '0';
         if (digit >= 0 && digit <= 9 && digitSprites[digit]) {
             ALLEGRO_BITMAP* digitSprite = digitSprites[digit];
-
-            // Pega as dimensões originais do sprite do dígito
             float original_w = al_get_bitmap_width(digitSprite);
             float original_h = al_get_bitmap_height(digitSprite);
-
-            // Calcula as novas dimensões escaladas
             float scaled_w = original_w * scale;
             float scaled_h = original_h * scale;
             
-            // Usa a função de desenho escalado
-            al_draw_scaled_bitmap(digitSprite,
-                0, 0,           // Posição de origem no sprite (canto superior esquerdo)
-                original_w,     // Largura original do sprite
-                original_h,     // Altura original do sprite
-                currentDigitX,  // Posição X de destino na tela
-                drawY,          // Posição Y de destino na tela
-                scaled_w,       // Largura final (escalada) na tela
-                scaled_h,       // Altura final (escalada) na tela
-                0               // Flags
-            );
-            
-            // Avança a posição X para o próximo dígito usando a LARGURA ESCALADA.
+            al_draw_scaled_bitmap(digitSprite, 0, 0, original_w, original_h, currentDigitX, y, scaled_w, scaled_h, 0);
             currentDigitX += scaled_w;
         }
     }
-}
-
-void ScoreManager::reset() {
-    currentScore = 0;
 }
