@@ -77,6 +77,12 @@ void Game::initialize() {
         rm.loadBitmap("btn_quit_normal", "data/quit_button.png");
         rm.loadBitmap("btn_quit_pressed", "data/quit_button_pressed.png");
         rm.loadBitmap("btn_quit_focused", "data/quit_button_focused.png");
+                
+        rm.loadBitmap("btn_menu_normal", "data/menu_button.png");
+        rm.loadBitmap("btn_menu_pressed", "data/menu_button_pressed.png");
+        rm.loadBitmap("btn_menu_focused", "data/menu_button_focused.png");
+
+        rm.loadBitmap("ranking_box", "data/ranking_box.png");
 
         rm.loadBitmap("edit_box", "data/editbox.png");
         rm.loadBitmap("get_ready", "assets/sprites/getready.png");

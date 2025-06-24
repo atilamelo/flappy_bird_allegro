@@ -36,6 +36,7 @@ GameScene::GameScene(SceneManager* sceneManager, const Theme& selectedTheme)
     ALLEGRO_BITMAP *img_off = al_load_bitmap("assets/sprites/som_1.bmp");
     soundButton = std::make_unique<SoundButton>(10, 10, 20, 20, img_on, img_off, gSound.get());
 
+
     al_set_blender(ALLEGRO_ADD, ALLEGRO_ALPHA, ALLEGRO_INVERSE_ALPHA);
     
     restart();
@@ -47,27 +48,26 @@ void GameScene::processEvent(const ALLEGRO_EVENT& event) {
     if (soundButton)
         soundButton->processEvent(event);
 
-    // Lógica de pulo só funciona com a tecla ESPAÇO.
-    if (event.type == ALLEGRO_EVENT_KEY_DOWN && event.keyboard.keycode == ALLEGRO_KEY_SPACE) {
-        switch (state) {
-            case GameState::GAME_INIT:
-                state = GameState::PLAYING;
-                bird->setPhysicsEnabled(true);
-                bird->setHoverEnabled(false);
-                getReadyUI->hide(); 
-                bird->jump();
-                break;
-            case GameState::PLAYING:
-                bird->jump();
-                break;
-            case GameState::GAME_OVER:
-                // Somente após o fim de jogo completo, reinicia.
-                restart();
-                break;
-            case GameState::DYING:
-                // Input é ignorado durante a morte.
-                break;
-        }
+    if (event.type != ALLEGRO_EVENT_KEY_DOWN || event.keyboard.keycode != ALLEGRO_KEY_SPACE) return;
+
+    switch (state) {
+        case GameState::GAME_INIT:
+            state = GameState::PLAYING;
+            bird->setPhysicsEnabled(true);
+            bird->setHoverEnabled(false);
+            getReadyUI->hide(); 
+            bird->jump();
+            gSound->play_fly();
+            break;
+        case GameState::PLAYING:
+            bird->jump();
+            gSound->play_fly();
+            break;
+        case GameState::GAME_OVER:
+            restart();
+            break;
+        case GameState::DYING:
+            break;
     }
 }
 
@@ -164,6 +164,7 @@ void GameScene::checkCollisions() {
 
 void GameScene::initiateDeathSequence() {
     if (state == GameState::PLAYING) {
+        gSound->play_hit();
         state = GameState::DYING;
         bird->die();
         gSound->play_death();
