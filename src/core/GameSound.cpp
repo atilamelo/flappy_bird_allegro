@@ -56,27 +56,24 @@ void GameSound::play_death() {
     }
 }
 
-void GameSound::pause_all() {
+bool music_muted = false;
+
+// Método para mutar só a música de fundo:
+void GameSound::mute_music() {
     if (back_music) {
-        al_set_audio_stream_playing(back_music, false);
+        al_set_audio_stream_gain(back_music, 0.0f);
+        music_muted = true;
     }
 }
 
-void GameSound::resume_all() {
-    if (back_music && active_sound) {
-        al_set_audio_stream_playing(back_music, true);
+// Método para desmutar só a música de fundo:
+void GameSound::unmute_music() {
+    if (back_music) {
+        al_set_audio_stream_gain(back_music, 0.05f); 
+        music_muted = false;
     }
 }
 
-void GameSound::setActive(bool active) {
-    active_sound = active;
-    if (active) {
-        resume_all();
-    } else {
-        pause_all();
-    }
-}
-
-bool GameSound::isActive() const {
-    return active_sound;
+bool GameSound::isMusicMuted() const {
+    return music_muted;
 }
