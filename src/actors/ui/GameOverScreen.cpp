@@ -18,6 +18,7 @@ GameOverScreen::GameOverScreen(const ScoreManager& scManager)
     // Carrega as texturas necessárias
     gameOverTexture = rm.getBitmap("gameover");
     boardTexture = rm.getBitmap("score_board");
+    newTexture = rm.getBitmap("new_record");
 
     // Configura as dimensões e posições finais dos elementos
     if (gameOverTexture) {
@@ -41,7 +42,12 @@ GameOverScreen::GameOverScreen(const ScoreManager& scManager)
 
 void GameOverScreen::startSequence(int score, int best) {
     this->finalScore = score;
-    this->bestScore = best;
+    if(score > best) {
+        this->bestScore = score;
+        this->newBestScore = true;
+    } else {
+        this->bestScore = best;
+    }
     determineMedal();
 
     this->elapsedTime = 0.0f;
@@ -129,6 +135,34 @@ void GameOverScreen::draw() const {
                                         scoreBoardGO.getX() + medalOffsetX, scoreBoardGO.getY() + medalOffsetY,
                                         al_get_bitmap_width(currentMedal) * SCOREBOARD_SCALE, al_get_bitmap_height(currentMedal) * SCOREBOARD_SCALE,
                                         0);
+            }
+
+            if(newBestScore) {
+                // Largura escalada do bitmap 'newTexture'
+                const float NEW_SCALE = 1.5f;
+                const float scaledNewTextureWidth = al_get_bitmap_width(newTexture) * NEW_SCALE;
+
+                // Calcula a coordenada X da direita onde os números do best score serão desenhados.
+                const float bestScoreRightX = scoreBoardGO.getX() + scoreOffsetX;
+
+                // Calcula a coordenada X da esquerda dos números do best score, considerando alinhamento à direita.
+                const float bestScoreLeftX = bestScoreRightX - scoreManagerRef.getNumberWidth(bestScore, numberScale);
+
+                const float newBitmapX = bestScoreLeftX - scaledNewTextureWidth - 10.0f;
+
+                const float digitHeight = al_get_bitmap_height(ResourceManager::getInstance().getBitmap("0")) * numberScale;
+                const float scaledNewTextureHeight = al_get_bitmap_height(newTexture) * NEW_SCALE;
+                const float bestScoreTopY = scoreBoardGO.getY() + bestOffsetY;
+
+                const float newBitmapY = bestScoreTopY + (digitHeight / 2.0f) - (scaledNewTextureHeight / 2.0f);
+
+                al_draw_scaled_bitmap(newTexture,
+                                      0, 0,
+                                      al_get_bitmap_width(newTexture), al_get_bitmap_height(newTexture),
+                                      newBitmapX, newBitmapY,
+                                      scaledNewTextureWidth, al_get_bitmap_height(newTexture) * NEW_SCALE,
+                                      0);
+
             }
 
             scoreManagerRef.drawNumberSprites(finalScore, scoreBoardGO.getX() + scoreOffsetX, scoreBoardGO.getY() + scoreOffsetY, numberScale, TextAlign::RIGHT);

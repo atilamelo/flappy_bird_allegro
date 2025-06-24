@@ -93,6 +93,8 @@ void Game::initialize() {
         rm.loadBitmap("empty_medal", "assets/sprites/empty_medal.png");
         rm.loadBitmap("score_board", "assets/sprites/score_board.png");
 
+        rm.loadBitmap("new_record", "data/new_button.png");
+
 
         std::cout << "Recursos carregados com sucesso." << std::endl;
     } catch (const std::runtime_error& e) {

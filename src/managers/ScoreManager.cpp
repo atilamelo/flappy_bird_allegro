@@ -18,20 +18,27 @@ void ScoreManager::draw() const {
     drawNumberSprites(currentScore, BUFFER_W / 2.0f, 10.0f, 0.75f, TextAlign::CENTER);
 }
 
-void ScoreManager::drawNumberSprites(int number, float x, float y, float scale, TextAlign align) const {
+
+float ScoreManager::getNumberWidth(int number, float scale) const {
     if (number < 0) number = 0;
 
     std::string s = std::to_string(number);
     float totalScaledWidth = 0;
-
-    // Etapa 1: Pré-calcula a largura total do número já com a escala.
-    // Este passo é necessário para os alinhamentos CENTER e RIGHT.
+    
     for (char c : s) {
         int digit = c - '0';
         if (digit >= 0 && digit <= 9 && digitSprites[digit]) {
             totalScaledWidth += al_get_bitmap_width(digitSprites[digit]) * scale;
         }
     }
+    return totalScaledWidth;
+}
+
+void ScoreManager::drawNumberSprites(int number, float x, float y, float scale, TextAlign align) const {
+    if (number < 0) number = 0;
+
+    std::string s = std::to_string(number);
+    float totalScaledWidth = getNumberWidth(number, scale);
 
     // Etapa 2: Calcula a posição X inicial com base no modo de alinhamento.
     float startX = 0;

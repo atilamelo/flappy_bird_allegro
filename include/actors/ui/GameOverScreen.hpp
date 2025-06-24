@@ -35,6 +35,7 @@ private:
     // --- Recursos Visuais ---
     ALLEGRO_BITMAP* gameOverTexture; // Bitmap para o título "Game Over"
     ALLEGRO_BITMAP* boardTexture;    // Bitmap para o painel de score
+    ALLEGRO_BITMAP* newTexture;      // Bitmap do new
     ALLEGRO_BITMAP* currentMedal;
 
     // --- Objetos e Referências ---
@@ -55,6 +56,7 @@ private:
     // --- Dados do Jogo ---
     int finalScore;
     int bestScore;
+    bool newBestScore = false; ///< Flag que aponta se o novo score é o maior
 
     /**
      * @brief Define qual medalha deve ser exibida com base na pontuação.

@@ -36,6 +36,14 @@ public:
     void draw() const override;
 
     /**
+     * @brief Calcula a largura total em pixels que um número ocupará ao ser renderizado.
+     * @param number O número a ser medido.
+     * @param scale O fator de escala que será aplicado aos sprites.
+     * @return A largura total em pixels.
+     */
+    float getNumberWidth(int number, float scale) const;
+
+    /**
      * @brief Utilitário público para desenhar qualquer número com alinhamento customizável.
      * @param number O número a ser desenhado.
      * @param x A coordenada X de referência para o alinhamento.

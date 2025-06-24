@@ -97,8 +97,11 @@ void GameScene::update(float deltaTime) {
                 state = GameState::GAME_OVER;
                 ScoreSystem& scoreSystem = ScoreSystem::getInstance();
                 std::string name = PlayerData::getName();
-                scoreSystem.registerOrUpdateScore(name, scoreManager->getScore());
-                gameOverScreen->startSequence(scoreManager->getScore(), scoreSystem.getPlayerScore(name));
+                int actualScore = PlayerData::getScore();
+                int bestScore = scoreSystem.getPlayerScore(name);
+
+                gameOverScreen->startSequence(actualScore, bestScore);
+                scoreSystem.registerOrUpdateScore(name, actualScore);
             }
             break;
         case GameState::GAME_OVER:
