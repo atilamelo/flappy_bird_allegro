@@ -82,8 +82,8 @@ void StartMenu::buildUI()
     memcpy(&skin_theme, &wz_skin_theme, sizeof(skin_theme));
     font = al_create_builtin_font();
     skin_theme.theme.font = font;
-    skin_theme.theme.color1 = al_map_rgba_f(0.37, 0.89, 0.44, 1);
-    skin_theme.theme.color2 = al_map_rgba_f(0.99, 0.63, 0.27, 1);
+    skin_theme.theme.color1 = al_map_rgba_f(0.97, 0.97, 0.96, 1);
+    skin_theme.theme.color2 = al_map_rgba_f(0.98, 0.53, 0.07, 1);
     skin_theme.editbox_bitmap = al_load_bitmap("data/editbox.png");
 
     wz_init_skin_theme(&skin_theme);

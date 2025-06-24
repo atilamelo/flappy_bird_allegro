@@ -5,10 +5,12 @@
 #include "scenes/GameScene.hpp"
 #include "managers/ResourceManager.hpp"
 #include "managers/SceneManager.hpp"
+#include "scenes/StartMenu.hpp"
 #include <iostream>
 #include <string>
 #include "util/ScoreSystem.hpp"
 #include "core/PlayerData.hpp"
+#include "widgetz/widgetz.h"
 
 // O construtor permanece o mesmo, mas vamos usar o ResourceManager para os botões de som.
 GameScene::GameScene(SceneManager* sceneManager, const Theme& selectedTheme)
@@ -46,14 +48,17 @@ GameScene::GameScene(SceneManager* sceneManager, const Theme& selectedTheme)
 
 
 void GameScene::processEvent(const ALLEGRO_EVENT& event) {
+    ALLEGRO_EVENT e = event;
+    wz_send_event(gui, &e);
     // O botão de som sempre pode ser clicado.
     if (soundButton)
         soundButton->processEvent(event);
 
-    if (event.type != ALLEGRO_EVENT_KEY_DOWN || event.keyboard.keycode != ALLEGRO_KEY_SPACE) return;
+    if ((event.type != ALLEGRO_EVENT_KEY_DOWN || event.keyboard.keycode != ALLEGRO_KEY_SPACE) && state!=GameState::GAME_OVER) return;
 
     switch (state) {
         case GameState::GAME_INIT:
+            initGUI();
             state = GameState::PLAYING;
             bird->setPhysicsEnabled(true);
             bird->setHoverEnabled(false);
@@ -66,11 +71,19 @@ void GameScene::processEvent(const ALLEGRO_EVENT& event) {
             gSound->play_fly();
             break;
         case GameState::GAME_OVER:
-            restart();
+            if (event.keyboard.keycode == ALLEGRO_KEY_SPACE) restart();
             break;
         case GameState::DYING:
             break;
     }
+
+        if (e.type == WZ_BUTTON_PRESSED) {
+            sceneManager->setCurrentScene(std::make_unique<StartMenu>(sceneManager));
+            if (gui) {
+                std::cout << "Destruindo a GUI do Ranking." << std::endl;
+                wz_destroy(gui);
+            }
+        }
 }
 
 void GameScene::update(float deltaTime) {
@@ -108,6 +121,7 @@ void GameScene::update(float deltaTime) {
             break;
         case GameState::GAME_OVER:
             gameOverScreen->update(deltaTime);
+            wz_update(gui,deltaTime);
             break;
     }
 }
@@ -133,6 +147,12 @@ void GameScene::draw() const {
     
     // Camada 5: Efeitos por cima de tudo
     flashEffect->draw();
+
+    if (state == GameState::GAME_OVER) {
+        wz_draw(gui);
+    }
+
+    
 }
 
 // --- MÉTODOS DE LÓGICA INTERNA ---
@@ -180,6 +200,10 @@ void GameScene::initiateDeathSequence() {
 }
 
 void GameScene::restart() {
+    if (gui) {
+        std::cout << "Destruindo a GUI do Ranking." << std::endl;
+        wz_destroy(gui);
+    }
     bird->reset();
     pipePool.reset();
     scoreManager->reset();
@@ -188,6 +212,7 @@ void GameScene::restart() {
     getReadyUI->show();
     timeSinceLastPipe = 0.0f;
     state = GameState::GAME_INIT;
+    initGUI();
 }
 
 void GameScene::spawnPipe() {
@@ -198,4 +223,24 @@ void GameScene::spawnPipe() {
         float startYGap = dist(rng) * maxGapStart;
         newPipePair->init(BUFFER_W, startYGap, PIPE_GAP, PIPE_SPEED, selectedTheme.pipe);
     }
+}
+
+void GameScene::initGUI(){
+    ResourceManager& rm = ResourceManager::getInstance();
+    // Configuração da GUI (WidgetZ)
+    memset(&skin_theme, 0, sizeof(skin_theme));
+    memcpy(&skin_theme, &wz_skin_theme, sizeof(skin_theme));
+    wz_init_skin_theme(&skin_theme);
+    gui = wz_create_widget(0, 0, 0, -1);
+    wz_set_theme(gui, (WZ_THEME*)&skin_theme);
+    float button_w = 80.0f;
+    float button_h = 28.0f;
+    float button_x = (BUFFER_W - button_w) / 2.0f;
+    scoreboard_h;
+    buttons_y = 350;
+    wz_create_image_button(gui, button_x, buttons_y, button_w, button_h, rm.getBitmap("btn_menu_normal"), rm.getBitmap("btn_menu_pressed"), rm.getBitmap("btn_menu_focused"), nullptr, 1); // Voltar Página
+
+    ALLEGRO_EVENT_QUEUE* queue = sceneManager->get_event_queue();
+    wz_register_sources(gui, queue);
+
 }
