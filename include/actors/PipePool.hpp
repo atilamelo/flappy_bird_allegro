@@ -18,7 +18,7 @@
  * Se não houver PipePair inativo disponível, um novo será criado.
  */
 class PipePool : public IDrawable, public IUpdatable
-}
+{
 public:
     /**
      * @brief Construtor que inicializa o pool com um número inicial de PipePairs.
