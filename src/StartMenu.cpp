@@ -2,6 +2,7 @@
  * @file StartMenu.cpp
  * @brief Implementação dos métodos da cena do menu principal.
  */
+#include "scenes/RankingScene.hpp"
 #include "scenes/StartMenu.hpp"
 #include "scenes/GameScene.hpp"
 #include "managers/SceneManager.hpp"
@@ -135,7 +136,7 @@ void StartMenu::processEvent(const ALLEGRO_EVENT &event)
         }
         else if (button_id == 12)
         { // Ranking
-            std::cout << "Placar!" << std::endl;
+        sceneManager->setCurrentScene(std::make_unique<RankingScene>(sceneManager));
         }
         else if (button_id == 13)
         { // Sair
