@@ -35,15 +35,23 @@ GameScene::GameScene(SceneManager* sceneManager, const Theme& selectedTheme)
     gSound = std::make_unique<GameSound>();
     gSound->init(selectedTheme.music_path);
     
-    ALLEGRO_BITMAP *img_on = al_load_bitmap("assets/sprites/som_0.png");
-
-    ALLEGRO_BITMAP *img_off = al_load_bitmap("assets/sprites/som_1.png");
+    ALLEGRO_BITMAP *img_on = rm.getBitmap("som_0");
+    ALLEGRO_BITMAP *img_off = rm.getBitmap("som_1");
     soundButton = std::make_unique<SoundButton>(10, 10, 20, 20, img_on, img_off, gSound.get());
-
 
     al_set_blender(ALLEGRO_ADD, ALLEGRO_ALPHA, ALLEGRO_INVERSE_ALPHA);
     
+    initGUI();
+    
     restart();
+}
+
+GameScene::~GameScene() {
+    gSound->mute_music();
+    if (gui) {
+        std::cout << "Destruindo a GUI do Ranking." << std::endl;
+        wz_destroy(gui);
+    }
 }
 
 
@@ -58,7 +66,6 @@ void GameScene::processEvent(const ALLEGRO_EVENT& event) {
 
     switch (state) {
         case GameState::GAME_INIT:
-            initGUI();
             state = GameState::PLAYING;
             bird->setPhysicsEnabled(true);
             bird->setHoverEnabled(false);
@@ -77,13 +84,9 @@ void GameScene::processEvent(const ALLEGRO_EVENT& event) {
             break;
     }
 
-        if (e.type == WZ_BUTTON_PRESSED) {
-            sceneManager->setCurrentScene(std::make_unique<StartMenu>(sceneManager));
-            if (gui) {
-                std::cout << "Destruindo a GUI do Ranking." << std::endl;
-                wz_destroy(gui);
-            }
-        }
+    if (e.type == WZ_BUTTON_PRESSED) {
+        sceneManager->setCurrentScene(std::make_unique<StartMenu>(sceneManager));
+    }
 }
 
 void GameScene::update(float deltaTime) {
@@ -151,8 +154,6 @@ void GameScene::draw() const {
     if (state == GameState::GAME_OVER) {
         wz_draw(gui);
     }
-
-    
 }
 
 // --- MÉTODOS DE LÓGICA INTERNA ---
@@ -200,10 +201,6 @@ void GameScene::initiateDeathSequence() {
 }
 
 void GameScene::restart() {
-    if (gui) {
-        std::cout << "Destruindo a GUI do Ranking." << std::endl;
-        wz_destroy(gui);
-    }
     bird->reset();
     pipePool.reset();
     scoreManager->reset();
@@ -212,7 +209,6 @@ void GameScene::restart() {
     getReadyUI->show();
     timeSinceLastPipe = 0.0f;
     state = GameState::GAME_INIT;
-    initGUI();
 }
 
 void GameScene::spawnPipe() {
@@ -238,7 +234,7 @@ void GameScene::initGUI(){
     float button_x = (BUFFER_W - button_w) / 2.0f;
     scoreboard_h;
     buttons_y = 350;
-    wz_create_image_button(gui, button_x, buttons_y, button_w, button_h, rm.getBitmap("btn_menu_normal"), rm.getBitmap("btn_menu_pressed"), rm.getBitmap("btn_menu_focused"), nullptr, 1); // Voltar Página
+    wz_create_image_button(gui, button_x, buttons_y, button_w, button_h, rm.getBitmap("menu_button"), rm.getBitmap("menu_button_focused"), rm.getBitmap("menu_button_pressed"), rm.getBitmap("menu_button_pressed"), 45);
 
     ALLEGRO_EVENT_QUEUE* queue = sceneManager->get_event_queue();
     wz_register_sources(gui, queue);

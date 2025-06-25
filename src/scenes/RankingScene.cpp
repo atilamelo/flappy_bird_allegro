@@ -49,9 +49,9 @@ void RankingScene::loadDummyData() {
 void RankingScene::buildUI() {
     ResourceManager& rm = ResourceManager::getInstance();
 
-    // Pega as imagens que vamos usar na tela.
-    background_image = rm.getBitmap("bg_day");
-    title_image = rm.getBitmap("logo_text"); // TODO: Trocar pela imagem de título do ranking.
+    // Carregar recursos visuais
+    background_image = rm.getBitmap("background-day");
+    title_image = rm.getBitmap("logo_text");
     scoreboard_image = rm.getBitmap("ranking_box");
     text_font = al_create_builtin_font(); // Usa uma fonte padrão do Allegro pro texto.
 
@@ -79,13 +79,13 @@ void RankingScene::buildUI() {
     
     // Cria os botões e associa um ID a cada um (1, 2, 3...).
     // TODO: Usar imagens de setas em vez dos botões de "quit".
-    wz_create_image_button(gui, page_buttons_start_x, buttons_y, button_w, button_h, rm.getBitmap("btn_quit_normal"), rm.getBitmap("btn_quit_pressed"), rm.getBitmap("btn_quit_focused"), nullptr, 1); // Voltar Página
-    wz_create_image_button(gui, page_buttons_start_x + button_w + spacing, buttons_y, button_w, button_h, rm.getBitmap("btn_quit_normal"), rm.getBitmap("btn_quit_pressed"), rm.getBitmap("btn_quit_focused"), nullptr, 2); // Avançar Página
+    wz_create_image_button(gui, page_buttons_start_x, buttons_y, button_w, button_h, rm.getBitmap("quit_button"), rm.getBitmap("quit_button_pressed"), rm.getBitmap("quit_button_focused"), nullptr, 1); // Voltar Página
+    wz_create_image_button(gui, page_buttons_start_x + button_w + spacing, buttons_y, button_w, button_h, rm.getBitmap("quit_button"), rm.getBitmap("quit_button_pressed"), rm.getBitmap("quit_button_focused"), nullptr, 2); // Avançar Página
 
     // Botão de Voltar para o Menu
     float back_button_x = (BUFFER_W - button_w) / 2.0f;
     float back_button_y = buttons_y + button_h + spacing;
-    wz_create_image_button(gui, back_button_x, back_button_y, button_w, button_h, rm.getBitmap("btn_menu_normal"), rm.getBitmap("btn_menu_pressed"), rm.getBitmap("btn_menu_focused"), nullptr, 3); // Voltar ao menu
+    wz_create_image_button(gui, back_button_x, back_button_y, button_w, button_h, rm.getBitmap("menu_button"), rm.getBitmap("menu_button_pressed"), rm.getBitmap("menu_button_focused"), nullptr, 3); // Voltar ao menu
 
     // Diz pra GUI escutar os eventos da fila principal do jogo.
     ALLEGRO_EVENT_QUEUE* queue = sceneManager->get_event_queue();

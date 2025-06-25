@@ -24,7 +24,11 @@ struct AllegroSampleDeleter { void operator()(ALLEGRO_SAMPLE* sample) const { if
 
 /** @struct AllegroAudioStreamDeleter
  * @brief Functor para destruir um ALLEGRO_AUDIO_STREAM, para uso com std::unique_ptr. */
-struct AllegroAudioStreamDeleter { void operator()(ALLEGRO_AUDIO_STREAM* stream) const { if (stream) al_destroy_audio_stream(stream); } };
+struct AllegroAudioStreamDeleter { void operator()(ALLEGRO_AUDIO_STREAM* stream) const { 
+
+    if (stream) al_destroy_audio_stream(stream);
+} 
+};
 
 
 // --- Apelidos para Smart Pointers ---

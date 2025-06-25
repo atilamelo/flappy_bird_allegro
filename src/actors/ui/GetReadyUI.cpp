@@ -11,10 +11,10 @@ GetReadyUI::GetReadyUI() : isVisible(false), tapAlpha(1.0f), pulseTime(0.0f) {
     ResourceManager& rm = ResourceManager::getInstance();
     
     // Carrega as texturas através do ResourceManager
-    tapInstructionsTexture = rm.getBitmap("get_ready");
+    tapInstructionsTexture = rm.getBitmap("getready");
 
     if(!tapInstructionsTexture) {
-        throw std::runtime_error("Falha ao carregar get_ready");
+        throw std::runtime_error("Falha ao carregar getready");
     }
 
     if (tapInstructionsTexture) {

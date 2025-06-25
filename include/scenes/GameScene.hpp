@@ -86,6 +86,7 @@ public:
      * @param selectedTheme O tema escolhido pelo jogador, passado por referência constante.
      */
     GameScene(SceneManager* sceneManager, const Theme& selectedTheme);
+    ~GameScene();
 
     // --- Implementação dos contratos de Scene, IDrawable, IUpdatable ---
     void processEvent(const ALLEGRO_EVENT& event) override;

@@ -75,7 +75,7 @@ void StartMenu::buildUI()
     float logo_y = 50.0f;
 
     flappyLogo = std::make_unique<FlappyLogo>(logo_x, logo_y, logo_w, logo_h, rm.getBitmap("logo_text"), bird_frames);
-    background_image = rm.getBitmap("bg_day");
+    background_image = rm.getBitmap("background-day");
 
     // 2. CONFIGURAÇÃO DA GUI (WIDGETZ)
     memset(&skin_theme, 0, sizeof(skin_theme));
@@ -84,7 +84,7 @@ void StartMenu::buildUI()
     skin_theme.theme.font = font;
     skin_theme.theme.color1 = al_map_rgba_f(0.97, 0.97, 0.96, 1);
     skin_theme.theme.color2 = al_map_rgba_f(0.98, 0.53, 0.07, 1);
-    skin_theme.editbox_bitmap = al_load_bitmap("data/editbox.png");
+    skin_theme.editbox_bitmap = rm.getBitmap("editbox");
 
     wz_init_skin_theme(&skin_theme);
     gui = wz_create_widget(0, 0, 0, -1);
@@ -104,10 +104,10 @@ void StartMenu::buildUI()
     // Caixa de entrada de nome do jogador
     editbox = wz_create_editbox(gui, 0, 0, 150, 30, al_ustr_new(""), 1, 10);
 
-    // Botões principais
-    wz_create_image_button(gui, 0, 0, 52, 29, rm.getBitmap("btn_start_normal"), rm.getBitmap("btn_start_pressed"), rm.getBitmap("btn_start_focused"), rm.getBitmap("btn_start_focused"), 11);
-    wz_create_image_button(gui, 0, 0, 52, 29, rm.getBitmap("btn_rank_normal"), rm.getBitmap("btn_rank_pressed"), rm.getBitmap("btn_rank_focused"), rm.getBitmap("btn_start_focused"), 12);
-    wz_create_image_button(gui, 0, 0, 40, 14, rm.getBitmap("btn_quit_normal"), rm.getBitmap("btn_quit_pressed"), rm.getBitmap("btn_quit_focused"), rm.getBitmap("btn_start_focused"), 13);
+    // Botões adicionados ao layout.
+    wz_create_image_button(gui, 0, 0, 52, 29, rm.getBitmap("home_start_button"), rm.getBitmap("home_start_button_pressed"), rm.getBitmap("home_start_button_focused"), rm.getBitmap("home_start_button_focused"), 11);
+    wz_create_image_button(gui, 0, 0, 52, 29, rm.getBitmap("rank_button"), rm.getBitmap("rank_button_pressed"), rm.getBitmap("rank_button_focused"), rm.getBitmap("home_start_button_focused"), 12);
+    wz_create_image_button(gui, 0, 0, 40, 14, rm.getBitmap("quit_button"), rm.getBitmap("quit_button_pressed"), rm.getBitmap("quit_button_focused"), rm.getBitmap("home_start_button_focused"), 13);
 
     // Registrar eventos
     ALLEGRO_EVENT_QUEUE *queue = sceneManager->get_event_queue();

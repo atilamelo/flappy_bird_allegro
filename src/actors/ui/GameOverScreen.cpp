@@ -26,7 +26,7 @@ GameOverScreen::GameOverScreen(const ScoreManager& scManager)
     // Carrega as texturas que serão usadas na tela de Game Over.
     gameOverTexture = rm.getBitmap("gameover");
     boardTexture = rm.getBitmap("score_board");
-    newTexture = rm.getBitmap("new_record");
+    newTexture = rm.getBitmap("new_button");
 
     // Configura as dimensões e as posições finais dos elementos principais.
     if (gameOverTexture) {
@@ -83,6 +83,8 @@ void GameOverScreen::reset() {
     this->scoreBoardGO.setY(scoreBoard_startY);
     this->currentMedal = nullptr;
     this->newBestScore = false;
+    this->finalScore = 0;
+    this->bestScore = 0;
 }
 
 /**
