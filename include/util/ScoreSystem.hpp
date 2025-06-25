@@ -86,6 +86,9 @@ public:
      * @return A melhor pontuação do jogador, ou 0 se o jogador não for encontrado.
      */
     int getPlayerScore(const std::string& name) const;
+       // --- Funções Utilitárias Privadas ---
+    static std::string trim(const std::string& str);
+    static std::string toUpper(const std::string& str);
 
 private:
     /**
@@ -98,8 +101,6 @@ private:
     const std::string dataFile;
 
     // --- Funções Utilitárias Privadas ---
-    static std::string trim(const std::string& str);
-    static std::string toUpper(const std::string& str);
     bool validateNameChars(const std::string& name) const;
     void loadData();
     void saveData() const;
