@@ -72,7 +72,7 @@ make run_(nome-da-pasta)_(nome-do-arquivo)
 
 * **Sistema de Cenas:** O fluxo do jogo é controlado por um `SceneManager` que gerencia múltiplas cenas, incluindo um Menu Inicial (`StartMenu`), uma tela de Seleção de Personagens (`CharacterSelectionScene`) e a cena principal do jogo (`GameScene`).
 
-* **Arquitetura Orientada a Objetos:** O projeto foi construído sobre uma base sólida de POO, conforme os critérios de avaliação. Foi criada uma hierarquia de classes com uma classe base abstrata (`GameObject`) para os elementos do jogo [cite_start]e interfaces desacopladas como `IDrawable` e `IUpdatable` para definir comportamentos, permitindo alta flexibilidade e extensibilidade.
+* **Arquitetura Orientada a Objetos:** O projeto foi construído sobre uma base sólida de POO, conforme os critérios de avaliação. Foi criada uma hierarquia de classes com uma classe base abstrata (`GameObject`) para os elementos do jogo e interfaces desacopladas como `IDrawable` e `IUpdatable` para definir comportamentos, permitindo alta flexibilidade e extensibilidade.
 
 * **Sistema de Pontuação e Persistência:** Foi implementado um `ScoreSystem` no padrão Singleton para gerenciar o cadastro de jogadores por apelido único e suas estatísticas. O sistema salva os dados em um arquivo .csv, garantindo que as melhores pontuações persistam entre as sessões de jogo, e é capaz de indicar o jogador com a maior pontuação ou um ranking personalizado pegando os top N jogadores.
 
