@@ -1,95 +1,85 @@
-# --- Compilador e Flags ---
-CXX = g++
-CXXFLAGS = -std=c++17 -g -Wall
-LDFLAGS = $(shell pkg-config --libs allegro-5 allegro_font-5 allegro_image-5 allegro_primitives-5 allegro_audio-5 allegro_acodec-5 allegro_ttf-5)
-TESTFLAGS = -I./doctest -DTESTING 
+CXX       := g++
+INCDIR    := include
+CXXFLAGS  := -std=c++17 -g -Wall -I$(INCDIR) -MMD -MP -I/usr/local/include
+LDFLAGS   := $(shell pkg-config --libs allegro-5 allegro_font-5 allegro_image-5 allegro_primitives-5 allegro_audio-5 allegro_acodec-5 allegro_ttf-5)
+LDLIBS    := -L/usr/local/lib -lwidgetz
+TESTFLAGS := -I./doctest -DTESTING
 
-# --- Diretórios ---
-SRCDIR = src
-OBJDIR = obj
-BINDIR = bin
-INCDIR = include
-TESTDIR = tests
+SRCDIR    := src
+TESTDIR   := tests
+OBJDIR    := obj
+BINDIR    := bin
 
-CXXFLAGS += -I$(INCDIR)
-CXXFLAGS += -MMD -MP
-
-# INCLUDES WIDGETZ
-CXXFLAGS += -I/usr/local/include
-LDLIBS = -L/usr/local/lib -lwidgetz
-
-# --- Arquivos ---
-TARGET = $(BINDIR)/flappy_bird
-
-# Busca recursiva pelos arquivos .cpp
-SOURCES := $(shell find $(SRCDIR) -name '*.cpp')
-TEST_SOURCES := $(shell find $(TESTDIR) -name '*.cpp')
-
-# Gera os objetos espelhando a estrutura de pastas
-OBJECTS := $(patsubst $(SRCDIR)/%.cpp,$(OBJDIR)/%.o,$(SOURCES))
-
-# Gera lista de arquivos .d a partir dos .o
-DEPS := $(OBJECTS:.o=.d)
-
-# --- Regras ---
+# --- jogo ---
+TARGET := $(BINDIR)/flappy_bird
+SRCS   := $(shell find $(SRCDIR) -name '*.cpp')
+OBJS   := $(patsubst $(SRCDIR)/%.cpp,$(OBJDIR)/$(SRCDIR)/%.o,$(SRCS))
+DEPS   := $(OBJS:.o=.d)
 
 all: $(TARGET) assets
 
-$(TARGET): $(filter-out $(OBJDIR)/main.o, $(OBJECTS)) $(OBJDIR)/main.o
-	@echo "Ligando os arquivos para criar o executável do jogo..."
+$(TARGET): $(OBJS)
 	@mkdir -p $(BINDIR)
-	$(CXX) $(filter-out $(OBJDIR)/main.o, $(OBJECTS)) $(OBJDIR)/main.o -o $(TARGET) $(LDLIBS) $(LDFLAGS)
-	@echo "Executável '$(TARGET)' criado com sucesso!"
+	$(CXX) $^ -o $@ $(LDLIBS) $(LDFLAGS)
 
-# Compilação de objetos do jogo
-$(OBJDIR)/%.o: $(SRCDIR)/%.cpp
+$(OBJDIR)/$(SRCDIR)/%.o: $(SRCDIR)/%.cpp
 	@mkdir -p $(dir $@)
-	@echo "Compilando $< -> $@"
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 assets:
-	@echo "Copiando a pasta de assets..."
 	@cp -r assets $(BINDIR)/
 
-clean:
-	@echo "Limpando os diretórios de compilação..."
-	@rm -rf $(OBJDIR) $(BINDIR)
-	@echo "Limpeza concluída."
-
 run: all
-	@echo "Executando o jogo..."
-	./bin/flappy_bird
+	./$(TARGET)
 
-# --- Regras para Testes Individuais ---
-# Lista de nomes de testes (sem extensão)
-TEST_NAMES := $(basename $(notdir $(TEST_SOURCES)))
+# --- testes ---
+TEST_SRCS  := $(shell find $(TESTDIR) -name '*.cpp')
+# Mantém caminho completo para testes em subpastas, apenas nome para testes na raiz
+TEST_NAMES := $(foreach test,$(basename $(TEST_SRCS)),$(if $(filter $(TESTDIR)/%,$(test)),$(patsubst $(TESTDIR)/%,%,$(test)),$(notdir $(test))))
+TEST_OBJS  := $(patsubst $(TESTDIR)/%.cpp,$(OBJDIR)/$(TESTDIR)/%.o,$(TEST_SRCS))
+TEST_DEPS  := $(TEST_OBJS:.o=.d)
 
-# Alvos phony para execução de testes
-.PHONY: $(addprefix run_,$(TEST_NAMES))
+# Todos os objetos do jogo, exceto main.o
+GAME_OBJS := $(filter-out $(OBJDIR)/$(SRCDIR)/main.o,$(OBJS))
 
-# Regra para cada teste individual
-define TEST_RULE
-run_$(1): $(BINDIR)/$(1)
-	@echo "Executando teste: $(1)"
+# Compila cada objeto de teste
+$(OBJDIR)/$(TESTDIR)/%.o: $(TESTDIR)/%.cpp
+	@mkdir -p $(dir $@)
+	$(CXX) $(CXXFLAGS) $(TESTFLAGS) -c $< -o $@
+
+# Função para gerar regras dinâmicas
+define MAKE_TEST_RULE
+TEST_PATH := $(1)
+TEST_NAME := $(if $(findstring /,$(1)),$(subst /,_,$(1)),$(1))
+
+TEST_EXE := $(BINDIR)/tests/$(TEST_PATH)
+$$(TEST_EXE): $(OBJDIR)/$(TESTDIR)/$(TEST_PATH).o $$(GAME_OBJS)
+	@mkdir -p $$(dir $$@)
+	$$(CXX) $$^ -o $$@ $$(LDFLAGS) $$(TESTFLAGS) $$(LDLIBS)
+
+.PHONY: run_$$(TEST_NAME)
+run_$$(TEST_NAME): $$(TEST_EXE)
 	@./$$<
 endef
 
-# Cria regras dinâmicas para cada teste
-$(foreach test,$(TEST_NAMES),$(eval $(call TEST_RULE,$(test))))
+# Aplica a função para cada teste
+$(foreach t,$(TEST_NAMES),$(eval $(call MAKE_TEST_RULE,$(t))))
 
-# Regra para compilar cada teste
-$(BINDIR)/%: $(OBJDIR)/$(TESTDIR)/%.o $(filter-out $(OBJDIR)/main.o, $(OBJECTS))
-	@mkdir -p $(BINDIR)
-	@echo "Construindo teste: $@"
-	@$(CXX) $(filter-out $(OBJDIR)/main.o, $(OBJECTS)) $< -o $@ $(LDFLAGS) $(TESTFLAGS)
+# Alvo para construir todos os testes
+.PHONY: tests
+tests: $(addprefix $(BINDIR)/tests/,$(TEST_NAMES))
 
-# Compilação de objetos de teste
-$(OBJDIR)/$(TESTDIR)/%.o: $(TESTDIR)/%.cpp
-	@mkdir -p $(dir $@)
-	@echo "Compilando teste: $< -> $@"
-	@$(CXX) $(CXXFLAGS) $(TESTFLAGS) -c $< -o $@
+# Lista todos os alvos run_ disponíveis
+.PHONY: list_tests
+list_tests:
+	@echo "Test targets available:"
+	@for t in $(TEST_NAMES); do \
+		tname=$$(echo $$t | tr '/' '_'); \
+		echo "run_$$tname"; \
+	done
 
-.PHONY: all clean assets run
+clean:
+	@rm -rf $(OBJDIR) $(BINDIR)
 
-# Inclui os arquivos de dependência, se existirem
 -include $(DEPS)
+-include $(TEST_DEPS)
