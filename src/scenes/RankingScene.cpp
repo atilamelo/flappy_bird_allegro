@@ -78,9 +78,8 @@ void RankingScene::buildUI() {
     float page_buttons_start_x = (BUFFER_W - page_buttons_total_width) / 2.0f;
     
     // Cria os botões e associa um ID a cada um (1, 2, 3...).
-    // TODO: Usar imagens de setas em vez dos botões de "quit".
-    wz_create_image_button(gui, page_buttons_start_x, buttons_y, button_w, button_h, rm.getBitmap("quit_button"), rm.getBitmap("quit_button_pressed"), rm.getBitmap("quit_button_focused"), nullptr, 1); // Voltar Página
-    wz_create_image_button(gui, page_buttons_start_x + button_w + spacing, buttons_y, button_w, button_h, rm.getBitmap("quit_button"), rm.getBitmap("quit_button_pressed"), rm.getBitmap("quit_button_focused"), nullptr, 2); // Avançar Página
+    wz_create_image_button(gui, page_buttons_start_x, buttons_y, button_w, button_h, rm.getBitmap("arrow_left"), rm.getBitmap("arrow_left_pressed"), rm.getBitmap("arrow_left_focused"), nullptr, 1); // Voltar Página
+    wz_create_image_button(gui, page_buttons_start_x + button_w + spacing, buttons_y, button_w, button_h, rm.getBitmap("arrow_right"), rm.getBitmap("arrow_right_pressed"), rm.getBitmap("arrow_right_focused"), nullptr, 2); // Avançar Página
 
     // Botão de Voltar para o Menu
     float back_button_x = (BUFFER_W - button_w) / 2.0f;
