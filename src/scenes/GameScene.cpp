@@ -232,7 +232,6 @@ void GameScene::initGUI(){
     float button_w = 80.0f;
     float button_h = 28.0f;
     float button_x = (BUFFER_W - button_w) / 2.0f;
-    scoreboard_h;
     buttons_y = 350;
     wz_create_image_button(gui, button_x, buttons_y, button_w, button_h, rm.getBitmap("menu_button"), rm.getBitmap("menu_button_focused"), rm.getBitmap("menu_button_pressed"), rm.getBitmap("menu_button_pressed"), 45);
 
