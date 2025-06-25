@@ -13,8 +13,7 @@
 class GameSound {
 public:
     GameSound();
-    ~GameSound();
-
+    
     /**
      * @brief Inicializa os sons do jogo, carregando música de fundo e efeitos.
      * @param music_path Caminho para o arquivo de música de fundo.

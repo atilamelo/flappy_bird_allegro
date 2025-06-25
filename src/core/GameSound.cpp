@@ -15,57 +15,26 @@ GameSound::GameSound()
     : back_music(nullptr), point_sound(nullptr), died_sound(nullptr), hit_sound(nullptr), fly_sound(nullptr), active_sound(true), music_muted(false)
 {}
 
-/**
- * @brief Destrutor: libera a stream de música de fundo se ela existir.
- */
-GameSound::~GameSound() {
-    if (back_music) {
-        al_destroy_audio_stream(back_music);
-        back_music = nullptr;
-    }
-}
 
 /**
  * @brief Inicializa a música de fundo e os efeitos do jogo, usando ResourceManager.
- * @param music_path Caminho para a trilha de fundo.
+ * @param music_name Caminho para a trilha de fundo.
  */
-void GameSound::init(const std::string& music_path) {
+void GameSound::init(const std::string& music_name) {
     ResourceManager& rm = ResourceManager::getInstance();
 
     // Carrega a música de fundo do tema como ALLEGRO_AUDIO_STREAM
-    if (back_music) {
-        al_destroy_audio_stream(back_music);
-    }
-    back_music = rm.loadAudioStream("musica_tema", music_path, 4, 4096);
-    if (!back_music) {
-        std::cerr << "Erro ao carregar stream de música de fundo: " << music_path << std::endl;
-    } else {
-        al_set_audio_stream_playmode(back_music, ALLEGRO_PLAYMODE_LOOP);
-        al_attach_audio_stream_to_mixer(back_music, al_get_default_mixer());
-        al_set_audio_stream_gain(back_music, 0.5f); // Volume padrão
-        al_set_audio_stream_playing(back_music, true);
-    }
-
+    back_music = rm.getAudioStream(music_name);
+    al_set_audio_stream_playmode(back_music, ALLEGRO_PLAYMODE_LOOP);
+    al_attach_audio_stream_to_mixer(back_music, al_get_default_mixer());
+    al_set_audio_stream_gain(back_music, 0.10f); // Volume padrão
+    al_set_audio_stream_playing(back_music, true);
+    
     // Carrega os sons de evento como ALLEGRO_SAMPLE
-    point_sound = rm.loadSample("point", "assets/audio/point.wav");
-    if (!point_sound) {
-        std::cerr << "Erro ao carregar som de ponto: point.wav\n";
-    }
-
-    died_sound = rm.loadSample("die", "assets/audio/die.wav");
-    if (!died_sound) {
-        std::cerr << "Erro ao carregar som de morte: die.wav\n";
-    }
-
-    hit_sound = rm.loadSample("hit", "assets/audio/hit.wav");
-    if (!hit_sound) {
-        std::cerr << "Erro ao carregar som de batida: hit.wav\n";
-    }
-
-    fly_sound = rm.loadSample("fly", "assets/audio/wing.wav");
-    if (!fly_sound) {
-        std::cerr << "Erro ao carregar som de voo: wing.wav\n";
-    }
+    point_sound = rm.getSample("point");
+    died_sound = rm.getSample("die");
+    hit_sound = rm.getSample("hit");
+    fly_sound = rm.getSample("fly");
 }
 
 /**
@@ -118,7 +87,7 @@ void GameSound::play_hit() {
  */
 void GameSound::mute_music() {
     if (back_music) {
-        al_set_audio_stream_gain(back_music, 0.0f);
+        al_set_audio_stream_playing(back_music, false);
         music_muted = true;
     }
 }
@@ -128,7 +97,7 @@ void GameSound::mute_music() {
  */
 void GameSound::unmute_music() {
     if (back_music) {
-        al_set_audio_stream_gain(back_music, 0.5f);
+        al_set_audio_stream_playing(back_music, true);
         music_muted = false;
     }
 }
@@ -143,14 +112,14 @@ bool GameSound::isMusicMuted() const {
 
 /**
  * @brief Troca a música de fundo durante o jogo, destruindo a anterior se necessário.
- * @param music_path Caminho para o novo arquivo de música.
+ * @param music_name Caminho para o novo arquivo de música.
  */
-void GameSound::setBackgroundMusic(const std::string& music_path) {
+void GameSound::setBackgroundMusic(const std::string& music_name) {
     if (back_music) {
         al_destroy_audio_stream(back_music);
     }
     ResourceManager& rm = ResourceManager::getInstance();
-    back_music = rm.loadAudioStream("musica_tema", music_path, 4, 4096);
+    back_music = rm.loadAudioStream("musica_tema", music_name, 4, 4096);
     if (back_music) {
         al_set_audio_stream_playmode(back_music, ALLEGRO_PLAYMODE_LOOP);
         al_attach_audio_stream_to_mixer(back_music, al_get_default_mixer());

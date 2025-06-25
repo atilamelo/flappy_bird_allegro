@@ -8,8 +8,8 @@
 
 Pipe::Pipe(float y, float width, float height, PipeType type, ALLEGRO_BITMAP* texture)
     : GameObject(0, y, width, height), // O x do GameObject base é ignorado.
-      pipeType(type), 
-      texture(texture) 
+    texture(texture),
+    pipeType(type) 
 {}
 
 void Pipe::draw(float x) const {

@@ -5,10 +5,12 @@
 #include "scenes/GameScene.hpp"
 #include "managers/ResourceManager.hpp"
 #include "managers/SceneManager.hpp"
+#include "scenes/StartMenu.hpp"
 #include <iostream>
 #include <string>
 #include "util/ScoreSystem.hpp"
 #include "core/PlayerData.hpp"
+#include "widgetz/widgetz.h"
 
 // O construtor permanece o mesmo, mas vamos usar o ResourceManager para os botões de som.
 GameScene::GameScene(SceneManager* sceneManager, const Theme& selectedTheme)
@@ -33,24 +35,34 @@ GameScene::GameScene(SceneManager* sceneManager, const Theme& selectedTheme)
     gSound = std::make_unique<GameSound>();
     gSound->init(selectedTheme.music_path);
     
-    ALLEGRO_BITMAP *img_on = al_load_bitmap("assets/sprites/som_0.png");
-
-    ALLEGRO_BITMAP *img_off = al_load_bitmap("assets/sprites/som_1.png");
+    ALLEGRO_BITMAP *img_on = rm.getBitmap("som_0");
+    ALLEGRO_BITMAP *img_off = rm.getBitmap("som_1");
     soundButton = std::make_unique<SoundButton>(10, 10, 20, 20, img_on, img_off, gSound.get());
 
-
     al_set_blender(ALLEGRO_ADD, ALLEGRO_ALPHA, ALLEGRO_INVERSE_ALPHA);
+    
+    initGUI();
     
     restart();
 }
 
+GameScene::~GameScene() {
+    gSound->mute_music();
+    if (gui) {
+        std::cout << "Destruindo a GUI do Ranking." << std::endl;
+        wz_destroy(gui);
+    }
+}
+
 
 void GameScene::processEvent(const ALLEGRO_EVENT& event) {
+    ALLEGRO_EVENT e = event;
+    wz_send_event(gui, &e);
     // O botão de som sempre pode ser clicado.
     if (soundButton)
         soundButton->processEvent(event);
 
-    if (event.type != ALLEGRO_EVENT_KEY_DOWN || event.keyboard.keycode != ALLEGRO_KEY_SPACE) return;
+    if ((event.type != ALLEGRO_EVENT_KEY_DOWN || event.keyboard.keycode != ALLEGRO_KEY_SPACE) && state!=GameState::GAME_OVER) return;
 
     switch (state) {
         case GameState::GAME_INIT:
@@ -66,10 +78,14 @@ void GameScene::processEvent(const ALLEGRO_EVENT& event) {
             gSound->play_fly();
             break;
         case GameState::GAME_OVER:
-            restart();
+            if (event.keyboard.keycode == ALLEGRO_KEY_SPACE) restart();
             break;
         case GameState::DYING:
             break;
+    }
+
+    if (e.type == WZ_BUTTON_PRESSED) {
+        sceneManager->setCurrentScene(std::make_unique<StartMenu>(sceneManager));
     }
 }
 
@@ -108,6 +124,7 @@ void GameScene::update(float deltaTime) {
             break;
         case GameState::GAME_OVER:
             gameOverScreen->update(deltaTime);
+            wz_update(gui,deltaTime);
             break;
     }
 }
@@ -133,6 +150,10 @@ void GameScene::draw() const {
     
     // Camada 5: Efeitos por cima de tudo
     flashEffect->draw();
+
+    if (state == GameState::GAME_OVER) {
+        wz_draw(gui);
+    }
 }
 
 // --- MÉTODOS DE LÓGICA INTERNA ---
@@ -198,4 +219,23 @@ void GameScene::spawnPipe() {
         float startYGap = dist(rng) * maxGapStart;
         newPipePair->init(BUFFER_W, startYGap, PIPE_GAP, PIPE_SPEED, selectedTheme.pipe);
     }
+}
+
+void GameScene::initGUI(){
+    ResourceManager& rm = ResourceManager::getInstance();
+    // Configuração da GUI (WidgetZ)
+    memset(&skin_theme, 0, sizeof(skin_theme));
+    memcpy(&skin_theme, &wz_skin_theme, sizeof(skin_theme));
+    wz_init_skin_theme(&skin_theme);
+    gui = wz_create_widget(0, 0, 0, -1);
+    wz_set_theme(gui, (WZ_THEME*)&skin_theme);
+    float button_w = 80.0f;
+    float button_h = 28.0f;
+    float button_x = (BUFFER_W - button_w) / 2.0f;
+    buttons_y = 350;
+    wz_create_image_button(gui, button_x, buttons_y, button_w, button_h, rm.getBitmap("menu_button"), rm.getBitmap("menu_button_focused"), rm.getBitmap("menu_button_pressed"), rm.getBitmap("menu_button_pressed"), 45);
+
+    ALLEGRO_EVENT_QUEUE* queue = sceneManager->get_event_queue();
+    wz_register_sources(gui, queue);
+
 }

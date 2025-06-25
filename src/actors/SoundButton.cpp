@@ -11,7 +11,7 @@
  * @brief Inicializa o botão de som com posição, tamanho, imagens e referência ao gerenciador de som.
  */
 SoundButton::SoundButton(float x, float y, float w, float h, ALLEGRO_BITMAP* img_on, ALLEGRO_BITMAP* img_off, GameSound* soundManager)
-    : x(x), y(y), width(w), height(h), img_on(img_on), img_off(img_off), soundManager(soundManager), muted(false) {}
+    : x(x), y(y), width(w), height(h), img_on(img_on), img_off(img_off), muted(false), soundManager(soundManager){}
 
 /**
  * @brief Desenha a imagem correspondente ao estado de mute.
