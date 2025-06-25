@@ -48,9 +48,22 @@ public:
      */
     static int getScore();
 
+        /**
+     * @brief Define o número de jogos do jogador.
+     * @param games Número de jogos do jogador.
+     */
+    static void setGames(int games);
+
+    /**
+     * @brief Recupera o número de jogos do jogador.
+     * @return Número de jogos atual do jogador.
+     */
+    static int getGames();
+
 private:
     static std::string playerName; ///< Nome global do jogador.
     static int playerScore;        ///< Pontuação global do jogador.
+    static int gamesPlayed;        ///< Número de jogos global do jogador.
 
     PlayerData() = default;
 
