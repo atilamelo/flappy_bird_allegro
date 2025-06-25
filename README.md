@@ -56,7 +56,7 @@ Esse comando irá compilar todos os arquivos necessário e em seguida irá roda 
 make clean
 ```
 
-## Como Rodar os Testes
+## 🕹️Como Rodar os Testes
 Há testes unitarios que validam os métodos implementados. Para rodar esses teste é necessário fazer um de cada vez, para isso é preciso entrar na pasta de teste e executar o comando a seguir:
 ```bash
 cd testes
@@ -66,7 +66,7 @@ Caso esteja em uma subpasta, é preciso rodar o comando abaixo:
 ```bash
 make run_(nome-da-pasta)_(nome-do-arquivo)
 ```
-## Funcionalidades Principais
+## 🧪 Funcionalidades Principais
 
 * **Gameplay Clássico Flappy Bird:** A mecânica central do jogo foi implementada, incluindo o movimento do pássaro com física de gravidade, pulos controlados pelo jogador via teclado, e a geração randômica de canos como obstáculos. A colisão com os canos ou com o chão ou teto resulta no fim da partida.
 
@@ -110,7 +110,7 @@ Além disso, diversas funcionalidades extras foram implementadas:
     * **Validação de Input:** A caixa de texto no menu inicial possui validação para permitir apenas caracteres válidos (letras, números e espaço) e um comprimento específico para o nome do jogador.
     * **Exceções Customizadas:** Classes como `NameException` e `ScoreException` foram criadas para um tratamento de erros mais específico e claro no sistema de pontuação.
 
-## Autor(es)
+## 🤝Autor(es)
 
 * [Abraão de Oliveira Ferreira Couto] 
 * [Atila Melo de Souza]
