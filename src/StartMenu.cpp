@@ -148,6 +148,7 @@ void StartMenu::processEvent(const ALLEGRO_EVENT &event)
         {
             return;
         }
+        
         // Validação de tamanho máximo da string na editbox
         std::string aux = (reinterpret_cast<char*>(editbox->text->data));
         if (((key_char >= 'a' && key_char <= 'z') ||
@@ -157,8 +158,10 @@ void StartMenu::processEvent(const ALLEGRO_EVENT &event)
             return;
         }
     }
+
     ALLEGRO_EVENT e = event;
     wz_send_event(gui, &e);
+
     // Ações dos botões
     if (e.type == WZ_BUTTON_PRESSED)
     {
@@ -174,7 +177,7 @@ void StartMenu::processEvent(const ALLEGRO_EVENT &event)
                 aux = scoreSystem.trim(aux);
                 aux = scoreSystem.toUpper(aux);
                 std::cout << aux << std::endl;
-                // Armazenamento na PlayerData e chamada da proxima Scene
+                // Armazenamento na PlayerData e chamada da próxima Scene
                 PlayerData::getInstance().setName(aux);
                 sceneManager->setCurrentScene(std::make_unique<CharacterSelectionScene>(sceneManager));
             }
