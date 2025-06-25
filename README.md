@@ -30,7 +30,7 @@ Este projeto é uma recriação clássica do popular jogo Flappy Bird, desenvolv
 [Instalação do wsl2 no Windows 10 - Thiago Noronha](https://youtu.be/8-WZY4yIS54?si=WqlVA3qtRfcEkAXR)
 
 ### Por meio do terminal do Vscode
-Para estilizar a parte grafica do jogo utilizamos a biblioteca WidgetZ que deve ser instalada, dentro da pasta pds2_projeto_final, para isso é necessário rodar o comando:
+Para estilizar a parte gráfica do jogo utilizamos a biblioteca WidgetZ que deve ser instalada, dentro da pasta do projeto, para isso é necessário rodar o comando:
 ```bash
 git clone https://github.com/SiegeLord/WidgetZ
 ```
