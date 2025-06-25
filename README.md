@@ -1,5 +1,5 @@
-#  Flappy Bird Allegro
-## Visão Geral do Projeto
+# 🐦 Flappy Bird Allegro
+##  🎮Visão Geral do Projeto
 
 Este projeto é uma recriação clássica do popular jogo Flappy Bird, desenvolvido em C++ utilizando a biblioteca gráfica Allegro 5. O objetivo principal é proporcionar uma experiência de jogo fiel ao original, servindo como um projeto prático para demonstrar o uso de Allegro para desenvolvimento de jogos 2D. Nesse sentido foi desenvovlido:
 
@@ -11,7 +11,7 @@ Este projeto é uma recriação clássica do popular jogo Flappy Bird, desenvolv
 * **Temas de jogo:** Exibição personalização de sprites, canos, som de fundo, piso e cenário.
 * **Reinício de Jogo:** Opção para reiniciar a partida após o game over.
 
-## Tecnologias Utilizadas
+##  🚀 Tecnologias Utilizadas
 
 * **Linguagem:** C++
 * **Biblioteca Gráfica:** Allegro 5
@@ -24,7 +24,7 @@ Este projeto é uma recriação clássica do popular jogo Flappy Bird, desenvolv
     * `allegro5/allegro_acodec.h`
 * **Sistema de Build:** GNU Make
 
-# Como Instalar o WidgetZ
+## 📂 Como Instalar o WidgetZ
 É importante ressaltar que o utilizamos o Visual Studio Code, como ambiente de programação,  juntamente com a extensão WSL, pois a partir do wsl é possível desenvolver em um ambiente baseado em Linux, usar ferramentas e utilitários específicos do Linux e executar e depurar seus aplicativos baseados em Linux a partir do conforto do Windows. Portanto, o tutorial abaixo é baseado nesse ambiente. No entanto, há um tutorial abaixo para configurar o wsl no vscode:
 
 [Instalação do wsl2 no Windows 10 - Thiago Noronha](https://youtu.be/8-WZY4yIS54?si=WqlVA3qtRfcEkAXR)
@@ -43,7 +43,7 @@ make
 sudo make install
 ```
 
-## Como Compilar
+### ✨ Como Compilar
 Para compilar o projeto, no terminal, navegue até a pasta raiz do projeto e execute o seguinte comando:
 
 ```bash
