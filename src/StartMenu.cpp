@@ -12,6 +12,7 @@
 #include "scenes/CharacterSelectionScene.hpp"
 #include "util/Theme.hpp"
 #include "core/PlayerData.hpp"
+#include "util/ScoreSystem.hpp"
 #include <iostream>
 #include <allegro5/allegro_image.h>
 
@@ -134,9 +135,8 @@ void StartMenu::processEvent(const ALLEGRO_EVENT &event)
         bool is_valid = (key_char >= 'a' && key_char <= 'z') ||
                         (key_char >= 'A' && key_char <= 'Z') ||
                         (key_char >= '0' && key_char <= '9') ||
-                        (key_char == ' ') ||
-                        (keycode == ALLEGRO_KEY_BACKSPACE) ||
                         (keycode == ALLEGRO_KEY_DELETE) ||
+                        (keycode == ALLEGRO_KEY_BACKSPACE) ||
                         (keycode == ALLEGRO_KEY_LEFT) ||
                         (keycode == ALLEGRO_KEY_RIGHT) ||
                         (keycode == ALLEGRO_KEY_HOME) ||
@@ -148,25 +148,39 @@ void StartMenu::processEvent(const ALLEGRO_EVENT &event)
         {
             return;
         }
+        // Validação de tamanho máximo da string na editbox
+        std::string aux = (reinterpret_cast<char*>(editbox->text->data));
+        if (((key_char >= 'a' && key_char <= 'z') ||
+            (key_char >= 'A' && key_char <= 'Z') ||
+            (key_char >= '0' && key_char <= '9')) && aux.length()>11)
+        {
+            return;
+        }
     }
-
     ALLEGRO_EVENT e = event;
     wz_send_event(gui, &e);
-
     // Ações dos botões
     if (e.type == WZ_BUTTON_PRESSED)
     {
         int button_id = (int)e.user.data1;
         if (button_id == 11)
         {
-            if (editbox->text->slen >= 3 && editbox->text->slen <= 20)
+            // Validação do texto recebido no input
+            if (editbox->text->slen >= 3 && editbox->text->slen <= 12)
             {
-                PlayerData::getInstance().setName(reinterpret_cast<char*>(editbox->text->data));
+                ScoreSystem& scoreSystem = ScoreSystem::getInstance();
+                // Normalização do texto e conversão para string
+                std::string aux = (reinterpret_cast<char*>(editbox->text->data));
+                aux = scoreSystem.trim(aux);
+                aux = scoreSystem.toUpper(aux);
+                std::cout << aux << std::endl;
+                // Armazenamento na PlayerData e chamada da proxima Scene
+                PlayerData::getInstance().setName(aux);
                 sceneManager->setCurrentScene(std::make_unique<CharacterSelectionScene>(sceneManager));
             }
             else
             {
-                std::cout << "Nome de usuário inválido. Deve ter entre 3 e 20 caracteres." << std::endl;
+                std::cout << "Nome de usuário inválido. Deve ter entre 3 e 12 caracteres." << std::endl;
             }
         }
         else if (button_id == 12)
