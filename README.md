@@ -1,5 +1,5 @@
-#  Flappy Bird Allegro
-## Visão Geral do Projeto
+# 🐦 Flappy Bird Allegro
+##  🎮Visão Geral do Projeto
 
 Este projeto é uma recriação clássica do popular jogo Flappy Bird, desenvolvido em C++ utilizando a biblioteca gráfica Allegro 5. O objetivo principal é proporcionar uma experiência de jogo fiel ao original, servindo como um projeto prático para demonstrar o uso de Allegro para desenvolvimento de jogos 2D. Nesse sentido foi desenvovlido:
 
@@ -11,7 +11,7 @@ Este projeto é uma recriação clássica do popular jogo Flappy Bird, desenvolv
 * **Temas de jogo:** Exibição personalização de sprites, canos, som de fundo, piso e cenário.
 * **Reinício de Jogo:** Opção para reiniciar a partida após o game over.
 
-## Tecnologias Utilizadas
+##  🚀 Tecnologias Utilizadas
 
 * **Linguagem:** C++
 * **Biblioteca Gráfica:** Allegro 5
@@ -24,7 +24,7 @@ Este projeto é uma recriação clássica do popular jogo Flappy Bird, desenvolv
     * `allegro5/allegro_acodec.h`
 * **Sistema de Build:** GNU Make
 
-# Como Instalar o WidgetZ
+## 📂 Como Instalar o WidgetZ
 É importante ressaltar que o utilizamos o Visual Studio Code, como ambiente de programação,  juntamente com a extensão WSL, pois a partir do wsl é possível desenvolver em um ambiente baseado em Linux, usar ferramentas e utilitários específicos do Linux e executar e depurar seus aplicativos baseados em Linux a partir do conforto do Windows. Portanto, o tutorial abaixo é baseado nesse ambiente. No entanto, há um tutorial abaixo para configurar o wsl no vscode:
 
 [Instalação do wsl2 no Windows 10 - Thiago Noronha](https://youtu.be/8-WZY4yIS54?si=WqlVA3qtRfcEkAXR)
@@ -43,7 +43,7 @@ make
 sudo make install
 ```
 
-## Como Compilar
+### ✨ Como Compilar
 Para compilar o projeto, no terminal, navegue até a pasta raiz do projeto e execute o seguinte comando:
 
 ```bash
@@ -56,7 +56,7 @@ Esse comando irá compilar todos os arquivos necessário e em seguida irá roda 
 make clean
 ```
 
-## Como Rodar os Testes
+## 🕹️Como Rodar os Testes
 Há testes unitarios que validam os métodos implementados. Para rodar esses teste é necessário fazer um de cada vez, para isso é preciso entrar na pasta de teste e executar o comando a seguir:
 ```bash
 cd testes
@@ -66,13 +66,13 @@ Caso esteja em uma subpasta, é preciso rodar o comando abaixo:
 ```bash
 make run_(nome-da-pasta)_(nome-do-arquivo)
 ```
-## Funcionalidades Principais
+## 🧪 Funcionalidades Principais
 
 * **Gameplay Clássico Flappy Bird:** A mecânica central do jogo foi implementada, incluindo o movimento do pássaro com física de gravidade, pulos controlados pelo jogador via teclado, e a geração randômica de canos como obstáculos. A colisão com os canos ou com o chão ou teto resulta no fim da partida.
 
 * **Sistema de Cenas:** O fluxo do jogo é controlado por um `SceneManager` que gerencia múltiplas cenas, incluindo um Menu Inicial (`StartMenu`), uma tela de Seleção de Personagens (`CharacterSelectionScene`) e a cena principal do jogo (`GameScene`).
 
-* **Arquitetura Orientada a Objetos:** O projeto foi construído sobre uma base sólida de POO, conforme os critérios de avaliação. Foi criada uma hierarquia de classes com uma classe base abstrata (`GameObject`) para os elementos do jogo [cite_start]e interfaces desacopladas como `IDrawable` e `IUpdatable` para definir comportamentos, permitindo alta flexibilidade e extensibilidade.
+* **Arquitetura Orientada a Objetos:** O projeto foi construído sobre uma base sólida de POO, conforme os critérios de avaliação. Foi criada uma hierarquia de classes com uma classe base abstrata (`GameObject`) para os elementos do jogo e interfaces desacopladas como `IDrawable` e `IUpdatable` para definir comportamentos, permitindo alta flexibilidade e extensibilidade.
 
 * **Sistema de Pontuação e Persistência:** Foi implementado um `ScoreSystem` no padrão Singleton para gerenciar o cadastro de jogadores por apelido único e suas estatísticas. O sistema salva os dados em um arquivo .csv, garantindo que as melhores pontuações persistam entre as sessões de jogo, e é capaz de indicar o jogador com a maior pontuação ou um ranking personalizado pegando os top N jogadores.
 
@@ -110,7 +110,7 @@ Além disso, diversas funcionalidades extras foram implementadas:
     * **Validação de Input:** A caixa de texto no menu inicial possui validação para permitir apenas caracteres válidos (letras, números e espaço) e um comprimento específico para o nome do jogador.
     * **Exceções Customizadas:** Classes como `NameException` e `ScoreException` foram criadas para um tratamento de erros mais específico e claro no sistema de pontuação.
 
-## Autor(es)
+## 🤝Autor(es)
 
 * [Abraão de Oliveira Ferreira Couto] 
 * [Atila Melo de Souza]
