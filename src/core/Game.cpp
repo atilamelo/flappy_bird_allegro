@@ -60,7 +60,7 @@ void Game::initialize() {
     al_register_event_source(queue, al_get_timer_event_source(timer));
     al_register_event_source(queue, al_get_keyboard_event_source());
     al_register_event_source(queue, al_get_mouse_event_source());
-    
+        
     // --- Carregamento de Recursos Globais ---
     // Todos os assets usados em múltiplas cenas são pré-carregados aqui para evitar
     // acessos a disco durante a transição de cenas.
@@ -70,8 +70,9 @@ void Game::initialize() {
 
         rm.loadAtlasJson("assets/sprites/sprite_sheet.json", "atlas", "assets/sprites/sprite_sheet.png");
         rm.loadAtlasJson("assets/sprites/sprite_sheet_ui.json", "atlasUI", "assets/sprites/sprite_sheet_ui.png");
+        rm.loadBitmap("icon", "assets/sprites/icon.png");
 
-        // -- Load Sound --
+        // -- Som --
         rm.loadSample("point", "assets/audio/point.wav");
         rm.loadSample("die", "assets/audio/die.wav");
         rm.loadSample("hit", "assets/audio/hit.wav");
@@ -80,12 +81,34 @@ void Game::initialize() {
         rm.loadAudioStream("starMusicTheme", "assets/audio/star.ogg", 4, 4096);
         rm.loadAudioStream("barbie", "assets/audio/barbie.ogg", 4, 4096);
         rm.loadAudioStream("yoshi", "assets/audio/yoshi.ogg", 4, 4096);
-
+        
         std::cout << "Recursos carregados com sucesso." << std::endl;
     } catch (const std::runtime_error& e) {
         std::cerr << "Erro fatal ao carregar recursos: " << e.what() << std::endl;
         exit(-1);
     }
+
+    
+    // --- Configurações de janela ---
+
+    // 1. Obtém as informações do monitor principal (monitor 0).
+    ALLEGRO_MONITOR_INFO monitor_info;
+    al_get_monitor_info(0, &monitor_info);
+
+    // 2. Calcula a largura e altura do monitor a partir das informações obtidas.
+    int monitor_w = monitor_info.x2 - monitor_info.x1;
+    int monitor_h = monitor_info.y2 - monitor_info.y1;
+
+    // 3. Calcula a posição X e Y para a janela ficar centralizada.
+    int window_x = (monitor_w - BUFFER_W) / 2;
+    int window_y = (monitor_h - BUFFER_H) / 2;
+
+    // 4. Define a posição da janela com as coordenadas calculadas.
+    al_set_window_position(display, window_x, window_y);
+    
+    al_set_new_display_flags(ALLEGRO_WINDOWED);
+    al_set_window_title(display, "Flappy Bird | Clone - PDSII");
+    al_set_display_icon(display, ResourceManager::getInstance().getBitmap("icon"));
 
     // --- Setup da Cena Inicial ---
     // O jogo começa no menu principal.
@@ -139,6 +162,12 @@ void Game::processEvent(const ALLEGRO_EVENT& event) {
     if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
         isRunning = false;
     }
+
+    if (event.type == ALLEGRO_EVENT_DISPLAY_RESIZE) {
+        al_acknowledge_resize(display);
+    }
+
+
     // Delega o processamento de eventos para a cena ativa.
     sceneManager.processEvent(event);
 }
