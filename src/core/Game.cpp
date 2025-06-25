@@ -65,6 +65,16 @@ void Game::initialize() {
         rm.loadAtlasJson("assets/sprites/sprite_sheet.json", "atlas", "assets/sprites/sprite_sheet.png");
         rm.loadAtlasJson("assets/sprites/sprite_sheet_ui.json", "atlasUI", "assets/sprites/sprite_sheet_ui.png");
 
+        // -- Load Sound --
+        rm.loadSample("point", "assets/audio/point.wav");
+        rm.loadSample("die", "assets/audio/die.wav");
+        rm.loadSample("hit", "assets/audio/hit.wav");
+        rm.loadSample("fly", "assets/audio/wing.wav");
+        rm.loadAudioStream("8bitMusicTheme", "assets/audio/8bit.ogg", 4, 4096);
+        rm.loadAudioStream("starMusicTheme", "assets/audio/star.ogg", 4, 4096);
+        rm.loadAudioStream("barbie", "assets/audio/barbie.ogg", 4, 4096);
+        rm.loadAudioStream("yoshi", "assets/audio/yoshi.ogg", 4, 4096);
+
         std::cout << "Recursos carregados com sucesso." << std::endl;
     } catch (const std::runtime_error& e) {
         std::cerr << "Erro fatal ao carregar recursos: " << e.what() << std::endl;

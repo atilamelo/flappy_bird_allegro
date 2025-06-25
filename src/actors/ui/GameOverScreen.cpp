@@ -62,6 +62,9 @@ void GameOverScreen::reset() {
     this->gameOverGO.setY(gameOver_startY);
     this->scoreBoardGO.setY(scoreBoard_startY);
     this->currentMedal = nullptr;
+    this->newBestScore = false;
+    this->finalScore = 0;
+    this->bestScore = 0;
 }
 
 void GameOverScreen::determineMedal() {

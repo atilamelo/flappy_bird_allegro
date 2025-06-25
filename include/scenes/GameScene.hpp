@@ -20,6 +20,7 @@
 #include "actors/ui/GetReadyUI.hpp"
 #include "actors/SoundButton.hpp"
 #include "core/GameSound.hpp"
+#include "widgetz/widgetz.h"
 #include <memory>
 #include <vector>
 #include <random>
@@ -38,6 +39,10 @@ enum class GameState {
 class GameScene : public Scene
 {
 private:
+    float scoreboard_h;
+    float buttons_y;
+    float spacing;
+
     // --- Entidades e Gerenciadores ---
     std::unique_ptr<Bird> bird;
     std::unique_ptr<ParallaxBackground> background;
@@ -51,6 +56,8 @@ private:
     std::unique_ptr<SplashScreen> flashEffect;
     std::unique_ptr<GameOverScreen> gameOverScreen;
     std::unique_ptr<GetReadyUI> getReadyUI;
+    WZ_WIDGET* gui = nullptr;
+    WZ_SKIN_THEME skin_theme;
 
     // --- Estado e Controle ---
     GameState state;
@@ -70,6 +77,7 @@ private:
     void spawnPipe();
     void initiateDeathSequence();
     void restart();
+    void initGUI();
 
 public:
     /**
@@ -78,6 +86,7 @@ public:
      * @param selectedTheme O tema escolhido pelo jogador, passado por referência constante.
      */
     GameScene(SceneManager* sceneManager, const Theme& selectedTheme);
+    ~GameScene();
 
     // --- Implementação dos contratos de Scene, IDrawable, IUpdatable ---
     void processEvent(const ALLEGRO_EVENT& event) override;

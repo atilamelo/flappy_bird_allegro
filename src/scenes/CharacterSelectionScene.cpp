@@ -38,7 +38,7 @@ void CharacterSelectionScene::buildThemes()
         rm.getBitmap("background-day"),
         rm.getBitmap("base"),
         rm.getBitmap("pipe-green"),
-        "assets/audio/8bit.ogg"
+        "8bitMusicTheme"
     });
 
     themes.push_back({
@@ -47,7 +47,7 @@ void CharacterSelectionScene::buildThemes()
         rm.getBitmap("background-night"),
         rm.getBitmap("nerd_base"),
         rm.getBitmap("nerd_pipe"),
-        "assets/audio/star.ogg"
+        "starMusicTheme"
     });
 
     themes.push_back({
@@ -56,7 +56,7 @@ void CharacterSelectionScene::buildThemes()
         rm.getBitmap("barbie_background"),
         rm.getBitmap("barbie_base"),
         rm.getBitmap("barbie_pipe"),
-        "assets/audio/barbie.ogg"
+        "barbie"
     });
 
     themes.push_back({
@@ -65,7 +65,7 @@ void CharacterSelectionScene::buildThemes()
         rm.getBitmap("pig_background"),
         rm.getBitmap("pig_base"),
         rm.getBitmap("pig_pipe"),
-        "assets/audio/yoshi.ogg"
+        "yoshi"
     });
 
     preview_sprites.push_back(rm.getBitmap("yellowbird-midflap"));
