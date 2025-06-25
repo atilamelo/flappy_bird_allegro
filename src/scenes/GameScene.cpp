@@ -113,6 +113,8 @@ void GameScene::update(float deltaTime) {
             // A transição para GAME_OVER acontece quando o pássaro vai para fora da tela
             if (bird->getY() >= BUFFER_H  && flashEffect->isFinished()) {
                 state = GameState::GAME_OVER;
+                PlayerData::setGames(PlayerData::getGames()+1);
+                std::cout << "Partidas Jogadas por " << PlayerData::getName() << " : " << PlayerData::getGames() << std::endl;
                 ScoreSystem& scoreSystem = ScoreSystem::getInstance();
                 std::string name = PlayerData::getName();
                 int actualScore = PlayerData::getScore();

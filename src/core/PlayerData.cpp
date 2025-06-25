@@ -9,6 +9,7 @@
 // Definição dos membros estáticos globais
 std::string PlayerData::playerName = "";
 int PlayerData::playerScore = 0;
+int PlayerData::gamesPlayed = 0;
 
 /**
  * @brief Define o nome do jogador.
@@ -40,6 +41,22 @@ void PlayerData::setScore(int score){
  */
 int PlayerData::getScore(){
     return playerScore;
+}
+
+/**
+ * @brief Define número de jogos atual do jogador.
+ * @param games Valor do número de jogos.
+ */
+void PlayerData::setGames(int games){
+    gamesPlayed = games;
+}
+
+/**
+ * @brief Obtém o número de jogos atual do jogador.
+ * @return Número de jogos.
+ */
+int PlayerData::getGames(){
+    return gamesPlayed;
 }
 
 /**

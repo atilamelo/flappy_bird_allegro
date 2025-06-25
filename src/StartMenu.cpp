@@ -179,6 +179,7 @@ void StartMenu::processEvent(const ALLEGRO_EVENT &event)
                 std::cout << aux << std::endl;
                 // Armazenamento na PlayerData e chamada da próxima Scene
                 PlayerData::getInstance().setName(aux);
+                PlayerData::getInstance().setGames(0);
                 sceneManager->setCurrentScene(std::make_unique<CharacterSelectionScene>(sceneManager));
             }
             else
