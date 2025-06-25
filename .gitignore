@@ -7,3 +7,5 @@ bin/
 obj/
 .vscode/
 tmpfile* 
+html/
+latex/
