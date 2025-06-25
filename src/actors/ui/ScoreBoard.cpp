@@ -10,7 +10,7 @@
 ScoreBoard::ScoreBoard(float finalY, float duration, const ScoreManager& scManager, float initialScale)
     : GameObject((BUFFER_W - al_get_bitmap_width(ResourceManager::getInstance().getBitmap("score_board")) * initialScale) / 2.0f, 0, 0, 0),
       scoreManager(scManager),
-      currentScale(initialScale) // Inicializa o fator de escala
+      currentScale(initialScale)
 {
     // Carrega a textura principal do painel
     boardTexture = ResourceManager::getInstance().getBitmap("score_board");
@@ -21,10 +21,6 @@ ScoreBoard::ScoreBoard(float finalY, float duration, const ScoreManager& scManag
     
     // Configurações da animação
     this->animationDuration = duration;
-    // As posições Y inicial e final também precisam considerar a escala, se a animação for para a borda da tela.
-    // Para animações baseadas em coordenadas de tela e não no tamanho escalado do próprio objeto, manter como está.
-    // Se 'finalY' for uma coordenada absoluta e você quiser que o topo do objeto escalado termine lá,
-    // a matemática para 'startY' e 'endY' pode precisar de ajuste.
     this->endY = finalY;
     this->startY = -this->height * this->currentScale; // Começa totalmente acima da tela, considerando a escala
 
@@ -101,27 +97,11 @@ void ScoreBoard::draw() const {
                               al_get_bitmap_width(currentMedal) * currentScale, al_get_bitmap_height(currentMedal) * currentScale, // Destination W, H (aplicando escala)
                               0); // Flags
     }
-
-    // 3. Desenha os números do score e best score
-    const float scoreOffsetX = 225;
-    const float scoreOffsetY = 36;
-    const float bestOffsetY = 78;
-    
-    // Usa a função do ScoreManager para desenhar os números
-    // É CRUCIAL que drawNumberSprites no ScoreManager também lide com a escala internamente
-    // scoreManager.drawNumberSprites(finalScore, x + (scoreOffsetX * currentScale), y + (scoreOffsetY * currentScale), currentScale);
-    // scoreManager.drawNumberSprites(bestScore, x + (scoreOffsetX * currentScale), y + (bestOffsetY * currentScale), currentScale);
+ 
 }
 
 void ScoreBoard::setScale(float newScale) {
     this->currentScale = newScale;
-    // Opcional: Se as dimensões 'width' e 'height' do GameObject precisam refletir o tamanho escalado
-    // para outros cálculos (e.g., colisão), você pode atualizá-las aqui.
-    // this->width = al_get_bitmap_width(boardTexture) * newScale;
-    // this->height = al_get_bitmap_height(boardTexture) * newScale;
-
-    // Também recalcular startY, pois ele depende da altura escalada
     this->startY = -this->height * this->currentScale;
-    // A posição X também pode precisar ser ajustada para centralizar o scoreboard escalado
     this->x = (BUFFER_W - (al_get_bitmap_width(boardTexture) * currentScale)) / 2.0f;
 }

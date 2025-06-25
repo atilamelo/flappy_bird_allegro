@@ -77,7 +77,6 @@ void Bird::update(float deltaTime)
 
 void Bird::jump()
 {
-    // O pulo só funciona se a física estiver ativa e o pássaro não estiver morrendo.
     if (physicsEnabled && !isDying)
     {
         velY = JUMP_IMPULSE_VELOCITY;

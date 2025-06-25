@@ -47,7 +47,7 @@ void Floor::update(float deltaTime) {
 
     // Quando a primeira instância da textura sai completamente da tela pela esquerda,
     // a posição `x` é resetada para 0. Como a segunda instância estava em `x + width`,
-    // ela agora estará exatamente em `x=0`, garantindo a continuidade do movimento sem saltos.
+    // ela agora estará exatamente em `x=0`, garantindo a continuidade do movimento.
     if (x + width < 0) { 
         x = 0;
     }

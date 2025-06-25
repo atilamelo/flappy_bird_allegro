@@ -5,7 +5,7 @@
 #include "actors/ui/GetReadyUI.hpp"
 #include "managers/ResourceManager.hpp"
 #include "Constants.hpp"
-#include <cmath> // Para sin()
+#include <cmath>
 
 GetReadyUI::GetReadyUI() : isVisible(false), tapAlpha(1.0f), pulseTime(0.0f) {
     ResourceManager& rm = ResourceManager::getInstance();
