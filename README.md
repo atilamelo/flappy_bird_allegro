@@ -37,7 +37,7 @@ git clone https://github.com/SiegeLord/WidgetZ
 Esse comando irá criar a pasta WidgetZ no repositório, porém ainda é necessário entrar na pasta WidgetZ e rodar a sequeencia de comandos abaixo: 
 ```bash
 cd WidgetZ
-make mkdir build && cd build
+mkdir build && cd build
 cmake ..
 make
 sudo make install
